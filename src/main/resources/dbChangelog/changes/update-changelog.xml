@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- This change set defines the add column definition for the consent service
+    based off https://tideaccount.atlassian.net/browse/FSS-34
+    -->
+
+    <changeSet id="20190806100100-1" author="Ramesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+             ALTER TABLE account
+             ADD COLUMN branch_name VARCHAR(500) NOT NULL;
+            ]]>
+        </sql>
+    </changeSet>
+</databaseChangeLog>
+
