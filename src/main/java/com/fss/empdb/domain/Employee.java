@@ -60,10 +60,10 @@ public class Employee {
     Long locationId;
 
     @Column(name="GRADE_ID",nullable = false)
-    String gradeId;
+    Long gradeId;
 
     @Column(name="ACADEMICS_ID",nullable = false)
-    String academicsId;
+    Long academicId;
 
     @Column(name="DEFINITE_ROLE")
     String definiteRole;
