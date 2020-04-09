@@ -4,102 +4,100 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
 @Getter
 @Setter
 @Entity
+
 public class Employee {
 
-
-
     @Id
-    @Column(name="EMP_ID")
-    Long empId;
+    @Column(name = "EMPLOYEE_ID")
+    Long employeeId;
 
-    public Employee(){
-        /*
-        default constructor
-         */
+    public Employee() {
     }
 
-    @Column(name="EMP_CODE",nullable = false)
-    Long empCode;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departmentId")
+    private Collection<Department> department;
 
-    @Column(name="EMP_NAME",nullable = false)
-    String empName;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
+    private Collection<Account> account;
 
-    @Column(name="DESIGNATION_ID",nullable = false)
-    Long designationId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
+    private Collection<Region> region;
 
-    @Column(name="DEPARTMENT_ID",nullable = false)
-    Long departmentId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId")
+    private Collection<Location> location;
 
-    @Column(name="REGION_ID",nullable = false)
-    Long regionId;
+    @Column(name = "FIRST_NAME", nullable = false)
+    String firstName;
 
-    @Column(name="ACCOUNT_ID",nullable = false)
-    Long accountId;
+    @Column(name = "MIDDLE_NAME", nullable = false)
+    String middleName;
 
-    @Column(name="SERVICE_LINE_ID",nullable = false)
-    Long serviceLineId;
+    @Column(name = "LAST_NAME", nullable = false)
+    String lastName;
 
-    @Column(name="BILLABLE_STATUS_ID",nullable = false)
-    Long billableStatusId;
+    @Column(name = "MOBILE_NUM", nullable = false)
+    Long mobileNum;
 
-    @Column(name="PROJECT_ID",nullable = false)
-    Long projectId;
+    @Column(name = "EMAIL_ID", nullable = false)
+    String emailId;
 
-    @Column(name="ACTIVITY_NAME",nullable = false)
-    String activityName;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gradeId")
+    private Collection<Grade> grade;
 
-    @Column(name="REPORTING_HEAD",nullable = false)
-    String reportingHead;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "designationId")
+    private Collection<Designation> designation;
 
-    @Column(name="LOCATION_ID",nullable = false)
-    Long locationId;
+    @Column(name = "REPORTING_MANAGER", nullable = false)
+    String reportingManager;
 
-    @Column(name="GRADE_ID",nullable = false)
-    Long gradeId;
-
-    @Column(name="ACADEMICS_ID",nullable = false)
-    Long academicId;
-
-    @Column(name="DEFINITE_ROLE")
-    String definiteRole;
-
-    @Column(name="POSSIBLE_ROLE",nullable = false)
-    String possibleRole;
-
-    @Column(name="PREVIOUS_EXPERIENCE",nullable = false)
+    @Column(name = "PREVIOUS_EXP", nullable = false)
     String previousExp;
 
     @Temporal(TemporalType.DATE)
-    @Column(name="FSS_JOINING_DATE",nullable = false)
-    Date fssJoiningDate;
+    @Column(name = "JOINING_DATE", nullable = false)
+    Date joiningDate;
 
-    @Column(name="EXPERIENCE_CURRENT_ROLE",nullable = false)
-    String  experienceCureentRole;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "billableStatusId")
+    private Collection<BillableStatus> billableStatus;
 
-    @Column(name="SKILL",nullable = false)
-    String skill;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceLineId")
+    private Collection<ServiceLine> serviceLine;
 
-    @Column(name="TOOLS",nullable = false)
-    String tools;
+    @Column(name = "ACTIVITY_NAME", nullable = false)
+    String activityName;
 
-    @Column(name="PROJECT_TAGGING",nullable = false)
-    String projectTagging;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "skillId")
+    private Collection<Skill> primarySkill;
+
+    @Column(name = "EXPERIENCE_GAPS", nullable = false)
+    Long experienceGaps;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "academicsId")
+    private Collection<Academics> academics;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectTaggingId")
+    private Collection<ProjectTagging> ProjectTagging;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "definiteRoleId")
+    private Collection<DefiniteRole> DefiniteRole;
+
+    @Column(name = "INS_USER", nullable = false)
+    Long insUser;
 
     @Temporal(TemporalType.DATE)
-    @Column(name="PROJECT_START_DATE",nullable = false)
-    Date projectStartDate;
+    @Column(name = "INS_DATE", nullable = false)
+    Date insDate;
+
+    @Column(name = "LAST_UPDATE_USER", nullable = false)
+    Long lastUpdateUser;
 
     @Temporal(TemporalType.DATE)
-    @Column(name="PROJECT_END_DATE",nullable = false)
-    Date projectEndDate;
-
-    @Column(name="PROFILE",nullable = false)
-    String profile;
-
-
+    @Column(name = "LAST_UPDATE_DATE", nullable = false)
+    Date lastUpdateDate;
 }
