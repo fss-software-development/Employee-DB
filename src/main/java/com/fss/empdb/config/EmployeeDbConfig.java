@@ -1,23 +1,30 @@
 //package com.fss.empdb.config;
 //
+//import org.modelmapper.ModelMapper;
+//import org.springframework.context.annotation.Bean;
+//import org.springframework.stereotype.Component;
+//import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+//
+//
 //import org.springframework.context.annotation.ComponentScan;
 //import org.springframework.context.annotation.Configuration;
-//import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-//import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-//import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-//import org.springframework.web.servlet.view.InternalResourceViewResolver;
-//import org.springframework.web.servlet.view.JstlView;
+////
+////import org.springframework.context.annotation.ComponentScan;
+////import org.springframework.context.annotation.Configuration;
+////import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+////import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+////import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+////import org.springframework.web.servlet.view.InternalResourceViewResolver;
+////import org.springframework.web.servlet.view.JstlView;
+////
 //
-//@Configuration
-//@EnableWebMvc
-//@ComponentScan
-//public class EmployeeDbConfig extends WebMvcConfigurationSupport {
-//    @Override
-//    public void configureViewResolvers(ViewResolverRegistry registry) {
-//        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-//        resolver.setPrefix("/WEB-INF/view/");
-//        resolver.setSuffix(".jsp");
-//        resolver.setViewClass(JstlView.class);
-//        registry.viewResolver(resolver);
+//@Component
+//public class EmployeeDbConfig {
+//
+//    @Bean
+//    public ModelMapper modelMapper() {
+//        return new ModelMapper();
 //    }
+//
+//
 //}

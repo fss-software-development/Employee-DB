@@ -20,6 +20,7 @@ public class EmployeeService {
 
     private static Logger log = Logger.getLogger(EmployeeController.class);
 
+
     @Autowired
     EmployeeRepository employeeRepository;
 
@@ -45,7 +46,6 @@ public class EmployeeService {
                                          Long academicId,
                                          String projectTagging
     ) {
-
         log.info("------------------Search Field-----------------");
         log.info("employeeCode : " + employeeCode);
         log.info("employeeName : " + employeeName);
@@ -61,6 +61,7 @@ public class EmployeeService {
         log.info("academicId : " + academicId);
         log.info("projectTagging : " + projectTagging);
         log.info("------------------------------------------------");
+
         return employeeRepository.findAll(new Specification<Employee>() {
 
             @Override
