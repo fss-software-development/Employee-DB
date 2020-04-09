@@ -1,11 +1,13 @@
 package com.fss.empdb.domain;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,23 +16,14 @@ import java.util.Date;
 public class Employee {
 
     @Id
-    @Column(name = "EMPLOYEE_ID")
-    Long employeeId;
+    @Column(name = "EMPLOYEE_SQID")
+    Long employeeSqId;
 
     public Employee() {
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departmentId")
-    private Collection<Department> department;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
-    private Collection<Account> account;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
-    private Collection<Region> region;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId")
-    private Collection<Location> location;
+    @Column(name = "EMPLOYEE_ID")
+    Long employeeId;
 
     @Column(name = "FIRST_NAME", nullable = false)
     String firstName;
@@ -47,14 +40,20 @@ public class Employee {
     @Column(name = "EMAIL_ID", nullable = false)
     String emailId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gradeId")
-    private Collection<Grade> grade;
+    @OneToOne
+    @JoinColumn(name="GRADE_ID")
+    private Grade grade;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "designationId")
-    private Collection<Designation> designation;
+    @OneToOne
+    @JoinColumn(name="DESIGNATION_ID")
+    private Designation designation;
 
     @Column(name = "REPORTING_MANAGER", nullable = false)
     String reportingManager;
+
+    @OneToOne
+    @JoinColumn(name="DEPARTMENT_ID")
+    private Department department;
 
     @Column(name = "PREVIOUS_EXP", nullable = false)
     String previousExp;
@@ -63,29 +62,45 @@ public class Employee {
     @Column(name = "JOINING_DATE", nullable = false)
     Date joiningDate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "billableStatusId")
-    private Collection<BillableStatus> billableStatus;
+    @Column(name = "EXPERIENCE_GAPS", nullable = false)
+    Long experienceGaps;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceLineId")
-    private Collection<ServiceLine> serviceLine;
-
-    @Column(name = "ACTIVITY_NAME", nullable = false)
-    String activityName;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
+    private Collection<role> role;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "skillId")
     private Collection<Skill> primarySkill;
 
-    @Column(name = "EXPERIENCE_GAPS", nullable = false)
-    Long experienceGaps;
+    @OneToOne
+    @JoinColumn(name="ACADEMICS_ID")
+    private Academics academics;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "academicsId")
-    private Collection<Academics> academics;
+    @OneToOne
+    @JoinColumn(name="ACCOUNT_ID")
+    private Account account;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectTaggingId")
-    private Collection<ProjectTagging> ProjectTagging;
+    @OneToOne
+    @JoinColumn(name="REGION_ID")
+    private Region region;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "definiteRoleId")
-    private Collection<DefiniteRole> DefiniteRole;
+    @OneToOne
+    @JoinColumn(name="LOCATION_ID")
+    private Location location;
+
+    @OneToOne
+    @JoinColumn(name="BILLABLE_STATUS_ID")
+    private BillableStatus billableStatus;
+
+    @OneToOne
+    @JoinColumn(name="SERVICE_LINE_ID")
+    private ServiceLine serviceLine;
+
+    @Column(name = "ACTIVITY_NAME", nullable = false)
+    String activityName;
+
+    @OneToOne
+    @JoinColumn(name="PROJECT_TAGGING_ID")
+    private ProjectTagging ProjectTagging;
 
     @Column(name = "INS_USER", nullable = false)
     Long insUser;
@@ -100,4 +115,5 @@ public class Employee {
     @Temporal(TemporalType.DATE)
     @Column(name = "LAST_UPDATE_DATE", nullable = false)
     Date lastUpdateDate;
+
 }

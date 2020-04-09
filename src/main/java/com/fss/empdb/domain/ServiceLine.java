@@ -1,5 +1,6 @@
 package com.fss.empdb.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
@@ -19,5 +20,9 @@ public class ServiceLine {
 
     @Column(name = "SERVICE_LINE_NAME", nullable = false)
     String serviceLineName;
+
+    @JsonIgnore
+    @OneToOne(mappedBy="serviceLine")
+    private Employee employee;
 }
 

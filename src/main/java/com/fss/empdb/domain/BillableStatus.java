@@ -1,5 +1,6 @@
 package com.fss.empdb.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
@@ -19,4 +20,9 @@ public class BillableStatus {
 
     @Column(name = "BILLABLE_STATUS", nullable = false)
     String billableStatus;
+
+    @JsonIgnore
+    @OneToOne(mappedBy="billableStatus")
+    private Employee employee;
+
 }

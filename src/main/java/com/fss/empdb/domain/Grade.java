@@ -1,8 +1,10 @@
 package com.fss.empdb.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -18,4 +20,8 @@ public class Grade {
 
     @Column(name = "GRADE_NAME", nullable = false)
     String gradeName;
+
+    @JsonIgnore
+    @OneToOne(mappedBy="grade")
+    private Employee employee;
 }

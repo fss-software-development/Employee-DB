@@ -1,5 +1,6 @@
 package com.fss.empdb.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
@@ -19,6 +20,12 @@ public class ProjectTagging {
 
     @Column(name = "PROJECT_TAGGING", nullable = false)
     String projectTaggingName;
+
+
+    @JsonIgnore
+    @OneToOne(mappedBy="ProjectTagging")
+    private Employee employee;
+
 }
 
 
