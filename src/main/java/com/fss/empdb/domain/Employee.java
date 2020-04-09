@@ -1,7 +1,9 @@
 package com.fss.empdb.domain;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,16 +13,14 @@ import java.util.Set;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-
 public class Employee {
 
     @Id
     @Column(name = "EMPLOYEE_SQID")
     Long employeeSqId;
-
-    public Employee() {
-    }
 
     @Column(name = "EMPLOYEE_ID")
     Long employeeId;
@@ -90,8 +90,8 @@ public class Employee {
     @Column(name = "ACTIVITY_NAME", nullable = false)
     String activityName;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectTaggingId")
-    private Collection<ProjectTagging> ProjectTagging;
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "projectTaggingId")
+    private Collection<ProjectTagging> ProjectTagging;*/
 
     @Column(name = "INS_USER", nullable = false)
     Long insUser;
@@ -106,5 +106,40 @@ public class Employee {
     @Temporal(TemporalType.DATE)
     @Column(name = "LAST_UPDATE_DATE", nullable = false)
     Date lastUpdateDate;
+
+    @Column(name="DESIGNATION_ID",nullable = false,insertable = false, updatable = false)
+    Long designationId;
+
+    @Column(name = "DEPARTMENT_ID", nullable = false,insertable = false, updatable = false)
+    private Long departmentId;
+
+    @Column(name = "REGION_Id", nullable = false,insertable = false, updatable = false)
+    private Long regionId;
+
+    @Column(name="ACCOUNT_ID",nullable = false,insertable = false, updatable = false)
+    Long accountId;
+
+    @Column(name="SERVICE_LINE_ID",nullable = false,insertable = false, updatable = false)
+    Long serviceLineId;
+
+    @Column(name="BILLABLE_STATUS_ID",nullable = false,insertable = false, updatable = false)
+    Long billableStatusId;
+
+    /*@Column(name="PROJECT_ID",nullable = false,insertable = false, updatable = false)
+    Long projectId;*/
+
+    @Column(name="LOCATION_ID",nullable = false,insertable = false, updatable = false)
+    Long locationId;
+
+    @Column(name="GRADE_ID",nullable = false,insertable = false, updatable = false)
+    Long gradeId;
+
+    @Column(name="ACADEMICS_ID",nullable = false,insertable = false, updatable = false)
+    Long academicId;
+
+   /* @Column(name="PROJECT_TAGGING_ID",nullable = false,insertable = false, updatable = false)
+    Long projectTaggingId;*/
+
+
 
 }

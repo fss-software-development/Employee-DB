@@ -34,8 +34,8 @@ public class EmployeeController {
         return employeeService.getEmployeeById(employeeId);
     }
 
-    @PostMapping(path = "/emp-search-criteria", consumes = "application/json", produces = "application/json")
-    //@RequestMapping(value = "/emp-search-criteria", method = RequestMethod.POST)
+//    @PostMapping(path = "/emp-search-criteria", consumes = "application/json", produces = "application/json")
+    @RequestMapping(value = "/emp-search-criteria", method = RequestMethod.POST)
     public List<Employee> getEmployeeBySearchCriteria1(@RequestBody Employee employee) {
         System.out.println("inside search");
         return  employeeService.findByEmp(employee);

@@ -117,15 +117,15 @@ public class EmployeeService {
 
 
         log.info("------------------Search Field-----------------");
-        log.info("employeeCode : " + employee.getEmpCode());
-        log.info("employeeName : " + employee.getEmpName());
+        log.info("employeeCode : " + employee.getEmployeeId());
+        log.info("employeeName : " + employee.getFirstName());
         log.info("designationId : " + employee.getDesignationId());
         log.info("departmentId : " + employee.getDepartmentId());
         log.info("regionId : " + employee.getRegionId());
         log.info("accountId : " + employee.getAccountId());
         log.info("serviceLineId : " + employee.getServiceLineId());
         log.info("billableStatusId : " + employee.getBillableStatusId());
-        log.info("projectId : " + employee.getProjectId());
+       // log.info("projectId : " + employee.getProjectId());
         log.info("locationId : " + employee.getLocationId());
         log.info("gradeId : " + employee.getGradeId());
         log.info("academicId : " + employee.getAcademicId());
@@ -138,11 +138,11 @@ public class EmployeeService {
 
                 List<Predicate> predicates = new ArrayList<>();
 
-                if (employee.getEmpCode()!=null) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("empCode"), employee.getEmpCode())));
+                if (employee.getEmployeeId()!=null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("employeeId"), employee.getEmployeeId())));
                 }
-                if (!(employee.getEmpName().equals("null"))) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("empName"), "%" + employee.getEmpName() + "%")));
+                if (!(employee.getFirstName().equals("null"))) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("firstName"), "%" + employee.getFirstName() + "%")));
                 }
                 if (employee.getDesignationId() !=null) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("designationId"), employee.getDesignationId())));
@@ -162,9 +162,9 @@ public class EmployeeService {
                 if (employee.getBillableStatusId() != null) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("billableStatusId"), employee.getBillableStatusId())));
                 }
-                if (employee.getProjectId() != null) {
+               /* if (employee.getProjectId() != null) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("projectId"), employee.getProjectId())));
-                }
+                }*/
                 if (employee.getLocationId() != null) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("locationId"), employee.getLocationId())));
                 }
@@ -174,9 +174,9 @@ public class EmployeeService {
                 if (employee.getAcademicId() != null) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("academicId"), employee.getAcademicId())));
                 }
-                if (!(employee.getProjectTaggingId().equals("null"))) {
+               /* if (!(employee.getProjectTaggingId().equals("null"))) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("projectTagging"), employee.getProjectTaggingId())));
-                }
+                }*/
                 log.info("Search filter Size :" + predicates.size());
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }
