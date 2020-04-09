@@ -225,47 +225,47 @@
     <changeSet id="31" author="Rakesh">
         <sql dbms="mysql" splitStatements="true" stripComments="true">
             <![CDATA[
-			     INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+			     INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (1, "Project Manager");
-			    INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+			     INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (2, "Program Manager");
-			    INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+			     INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (3, "Technical Architect");
-				INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+				 INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (4, "Payment Application SME");
-			    INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+			     INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (5, "Development Engineer");
-			    INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+			     INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (6, "Implementation Engineer");
-				 INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+				 INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (7, "Golden Gate/Prognosis");
-			   INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+			    INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (8, "L1 Support Engineers");
-			   INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+			    INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (9, "L2 Support Engineers");
-				INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+				 INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (10, "Database Administrator");
-			    INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+			    INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (11, "Middleware Administrator");
-			    INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+			     INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (12, "System Administrator");
-			    INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+			    INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (13, "Business Analyst");
-			    INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+			    INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (14, "Solution Architect");
-			    INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+			    INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (15, "Automation Engineer (RPA)");
-		        INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+		        INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (16, "Database Developer");
-			    INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+			    INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (17, "Java Developer");
-			    INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+			    INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (18, "Mobile Developer");
-		     	 INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+		     	INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (19, "Functional Tester");
-		        INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+		        INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (20, "Automation Tester");
-			     INSERT INTO definite_role (DEFINITE_ROLE_ID,DEFINITE_ROLE_NAME)
+			    INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (21, "Non Functional Tester");
             ]]>
         </sql>

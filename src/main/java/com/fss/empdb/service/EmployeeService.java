@@ -113,4 +113,74 @@ public class EmployeeService {
         });
     }
 
+    public List<Employee> findByEmp(Employee employee) {
+
+
+        log.info("------------------Search Field-----------------");
+        log.info("employeeCode : " + employee.getEmpCode());
+        log.info("employeeName : " + employee.getEmpName());
+        log.info("designationId : " + employee.getDesignationId());
+        log.info("departmentId : " + employee.getDepartmentId());
+        log.info("regionId : " + employee.getRegionId());
+        log.info("accountId : " + employee.getAccountId());
+        log.info("serviceLineId : " + employee.getServiceLineId());
+        log.info("billableStatusId : " + employee.getBillableStatusId());
+        log.info("projectId : " + employee.getProjectId());
+        log.info("locationId : " + employee.getLocationId());
+        log.info("gradeId : " + employee.getGradeId());
+        log.info("academicId : " + employee.getAcademicId());
+        //log.info("projectTagging : " + employee.getProjectTagging());
+        log.info("------------------------------------------------");
+        return employeeRepository.findAll(new Specification<Employee>() {
+
+            @Override
+            public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+
+                List<Predicate> predicates = new ArrayList<>();
+
+                if (employee.getEmpCode()!=null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("empCode"), employee.getEmpCode())));
+                }
+                if (!(employee.getEmpName().equals("null"))) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("empName"), "%" + employee.getEmpName() + "%")));
+                }
+                if (employee.getDesignationId() !=null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("designationId"), employee.getDesignationId())));
+                }
+                if (employee.getDepartmentId() != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("departmentId"), employee.getDepartmentId())));
+                }
+                if (employee.getRegionId() != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("regionId"), employee.getRegionId())));
+                }
+                /*f (employee.getAccountId() != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("accountId"), employee.getAccountId())));
+                }*/
+                if (employee.getServiceLineId() != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("serviceLineId"), employee.getServiceLineId())));
+                }
+                if (employee.getBillableStatusId() != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("billableStatusId"), employee.getBillableStatusId())));
+                }
+                if (employee.getProjectId() != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("projectId"), employee.getProjectId())));
+                }
+                if (employee.getLocationId() != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("locationId"), employee.getLocationId())));
+                }
+                if (employee.getGradeId() != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("gradeId"), employee.getGradeId())));
+                }
+                if (employee.getAcademicId() != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("academicId"), employee.getAcademicId())));
+                }
+                if (!(employee.getProjectTaggingId().equals("null"))) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("projectTagging"), employee.getProjectTaggingId())));
+                }
+                log.info("Search filter Size :" + predicates.size());
+                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+            }
+        });
+    }
+
 }
