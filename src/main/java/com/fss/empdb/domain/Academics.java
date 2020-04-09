@@ -20,8 +20,5 @@ public class Academics {
     @Column(name = "ACADEMICS_NAME", nullable = false)
     String academicsName;
 
-    @JsonIgnore
-    @OneToOne(mappedBy="academics")
-    private Employee employee;
 }
 

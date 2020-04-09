@@ -39,7 +39,4 @@ public class Region {
     @Column(name="LAST_UPDATE_DATE",nullable = false)
     Date lastUpdateDate;
 
-    @JsonIgnore
-    @OneToOne(mappedBy="region")
-    private Employee employee;
 }

@@ -22,10 +22,6 @@ public class ProjectTagging {
     String projectTaggingName;
 
 
-    @JsonIgnore
-    @OneToOne(mappedBy="ProjectTagging")
-    private Employee employee;
-
 }
 
 

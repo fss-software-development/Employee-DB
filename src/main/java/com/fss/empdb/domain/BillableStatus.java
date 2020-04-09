@@ -21,8 +21,4 @@ public class BillableStatus {
     @Column(name = "BILLABLE_STATUS", nullable = false)
     String billableStatus;
 
-    @JsonIgnore
-    @OneToOne(mappedBy="billableStatus")
-    private Employee employee;
-
 }

@@ -21,7 +21,4 @@ public class Grade {
     @Column(name = "GRADE_NAME", nullable = false)
     String gradeName;
 
-    @JsonIgnore
-    @OneToOne(mappedBy="grade")
-    private Employee employee;
 }

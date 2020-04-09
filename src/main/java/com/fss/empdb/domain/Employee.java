@@ -25,6 +25,7 @@ public class Employee {
     @Column(name = "EMPLOYEE_ID")
     Long employeeId;
 
+
     @Column(name = "FIRST_NAME", nullable = false)
     String firstName;
 
@@ -40,20 +41,17 @@ public class Employee {
     @Column(name = "EMAIL_ID", nullable = false)
     String emailId;
 
-    @OneToOne
-    @JoinColumn(name="GRADE_ID")
-    private Grade grade;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gradeId")
+    private Collection<Grade> grade;
 
-    @OneToOne
-    @JoinColumn(name="DESIGNATION_ID")
-    private Designation designation;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "designationId")
+    private Collection<Designation> designation;
 
     @Column(name = "REPORTING_MANAGER", nullable = false)
     String reportingManager;
 
-    @OneToOne
-    @JoinColumn(name="DEPARTMENT_ID")
-    private Department department;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departmentId")
+    private Collection<Department> department;
 
     @Column(name = "PREVIOUS_EXP", nullable = false)
     String previousExp;
@@ -66,41 +64,34 @@ public class Employee {
     Long experienceGaps;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
-    private Collection<role> role;
+    private Collection<Role> role;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "skillId")
     private Collection<Skill> primarySkill;
 
-    @OneToOne
-    @JoinColumn(name="ACADEMICS_ID")
-    private Academics academics;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "academicsId")
+    private Collection<Academics> academics;
 
-    @OneToOne
-    @JoinColumn(name="ACCOUNT_ID")
-    private Account account;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
+    private Collection<Account> account;
 
-    @OneToOne
-    @JoinColumn(name="REGION_ID")
-    private Region region;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
+    private Collection<Region> region;
 
-    @OneToOne
-    @JoinColumn(name="LOCATION_ID")
-    private Location location;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId")
+    private Collection<Location> location;
 
-    @OneToOne
-    @JoinColumn(name="BILLABLE_STATUS_ID")
-    private BillableStatus billableStatus;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "billableStatusId")
+    private Collection<BillableStatus> billableStatus;
 
-    @OneToOne
-    @JoinColumn(name="SERVICE_LINE_ID")
-    private ServiceLine serviceLine;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceLineId")
+    private Collection<ServiceLine> serviceLine;
 
     @Column(name = "ACTIVITY_NAME", nullable = false)
     String activityName;
 
-    @OneToOne
-    @JoinColumn(name="PROJECT_TAGGING_ID")
-    private ProjectTagging ProjectTagging;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectTaggingId")
+    private Collection<ProjectTagging> ProjectTagging;
 
     @Column(name = "INS_USER", nullable = false)
     Long insUser;

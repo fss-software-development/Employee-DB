@@ -8,12 +8,12 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "role")
-public class role {
+public class Role {
     @Id
     @Column(name = "ROLE_ID")
     Long roleId;
 
-    public role() {
+    public Role() {
 
     }
 

@@ -42,8 +42,4 @@ public class Department {
     @Column(name="LAST_UPDATE_DATE",nullable = false)
     Date lastUpdateDate;
 
-    @JsonIgnore
-    @OneToOne(mappedBy="department")
-    private Employee employee;
-
 }
