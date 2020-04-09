@@ -34,6 +34,13 @@ public class EmployeeController {
         return employeeService.getEmployeeById(employeeId);
     }
 
+    @PostMapping(path = "/emp-search-criteria", consumes = "application/json", produces = "application/json")
+    //@RequestMapping(value = "/emp-search-criteria", method = RequestMethod.POST)
+    public List<Employee> getEmployeeBySearchCriteria1(@RequestBody Employee employee) {
+        //return  employeeService.findByEmp(employee);
+        return null;
+    }
+
     @GetMapping("/search-criteria/{empCode}/{empName}/{designationId}/{departmentId}/{regionId}/{accountId}" +
             "/{serviceLineId}/{billableStatusId}/{projectId}/{locationId}/{gradeId}/{academicId}/{projectTagging}")
     public List<Employee> getEmployeeBySearchCriteria(@PathVariable(value = "empCode") Long employeeCode,
