@@ -25,6 +25,7 @@ public class EmployeeController {
 
     @GetMapping("/get-all-employee/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId) {
+        logger.info(" Started get-all-employee id :");
         return ResponseEntity.ok().body(employeeService.getEmployeeById(employeeId));
     }
 
