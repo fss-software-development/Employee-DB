@@ -2,19 +2,12 @@ package com.fss.empdb.controller;
 
 import com.fss.empdb.domain.Employee;
 import com.fss.empdb.service.EmployeeService;
-
-import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.ldap.embedded.EmbeddedLdapAutoConfiguration;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Map;
-
 
 @RestController
 public class EmployeeController {
@@ -25,44 +18,18 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @GetMapping("/get-all-employee")
-    public List<Employee> getAllEmployee() {
-        return employeeService.getAllEmployees();
+    public ResponseEntity<List<Employee>> getAllEmployee() {
+        return ResponseEntity.ok().body(employeeService.getAllEmployees());
     }
 
     @GetMapping("/get-all-employee/{id}")
-    public Employee getEmployeeById(@PathVariable(value = "id") Long employeeId) {
-        return employeeService.getEmployeeById(employeeId);
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId) {
+        return ResponseEntity.ok().body(employeeService.getEmployeeById(employeeId));
     }
 
-//    @PostMapping(path = "/emp-search-criteria", consumes = "application/json", produces = "application/json")
     @RequestMapping(value = "/emp-search-criteria", method = RequestMethod.POST)
-    public List<Employee> getEmployeeBySearchCriteria1(@RequestBody Employee employee) {
-        System.out.println("inside search");
-        return  employeeService.findByEmp(employee);
-        //return null;
+    public ResponseEntity<List<Employee>> getEmployeeBySearchCriteria1(@RequestBody Employee empSearch) {
+        return  ResponseEntity.ok().body(employeeService.findByEmp(empSearch));
     }
-
-    @GetMapping("/search-criteria/{empCode}/{empName}/{designationId}/{departmentId}/{regionId}/{accountId}" +
-            "/{serviceLineId}/{billableStatusId}/{projectId}/{locationId}/{gradeId}/{academicId}/{projectTagging}")
-    public List<Employee> getEmployeeBySearchCriteria(@PathVariable(value = "empCode") Long employeeCode,
-                                                      @PathVariable(value = "empName") String employeeName,
-                                                      @PathVariable(value = "designationId") Long designationId,
-                                                      @PathVariable(value = "departmentId") Long departmentId,
-                                                      @PathVariable(value = "regionId") Long regionId,
-                                                      @PathVariable(value = "accountId") Long accountId,
-                                                      @PathVariable(value = "serviceLineId") Long serviceLineId,
-                                                      @PathVariable(value = "billableStatusId") Long billableStatusId,
-                                                      @PathVariable(value = "projectId") Long projectId,
-                                                      @PathVariable(value = "locationId") Long locationId,
-                                                      @PathVariable(value = "gradeId") Long gradeId,
-                                                      @PathVariable(value = "academicId") Long academicId,
-                                                      @PathVariable(value = "projectTagging") String projectTagging){
-
-        return  employeeService.findByCriteria(employeeCode,employeeName,designationId,departmentId,regionId,accountId,
-                serviceLineId,billableStatusId,projectId,locationId,gradeId,academicId,projectTagging);
-
-    }
-
-
 
 }
