@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/services")
 public class EmployeeController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
