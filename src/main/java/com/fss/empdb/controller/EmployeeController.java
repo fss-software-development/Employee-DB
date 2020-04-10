@@ -30,8 +30,9 @@ public class EmployeeController {
 
     @PostMapping(path = "/emp-search-criteria", consumes = "application/json", produces = "application/json")
     public ResponseEntity<List<Employee>> getEmployeeBySearchCriteria1(@RequestBody Employee empSearch) {
-        logger.info(" Inside emp-search-criteria :");
+        logger.info(" Started emp-search-criteria :");
         return  ResponseEntity.ok().body(employeeService.findByEmp(empSearch));
+
     }
 
 }
