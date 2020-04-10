@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/services")
 public class EmployeeController {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
+    private static Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
     @Autowired
     EmployeeService employeeService;
@@ -28,9 +28,11 @@ public class EmployeeController {
         return ResponseEntity.ok().body(employeeService.getEmployeeById(employeeId));
     }
 
-    @RequestMapping(value = "/emp-search-criteria", method = RequestMethod.POST)
+    @PostMapping(path = "/emp-search-criteria", consumes = "application/json", produces = "application/json")
     public ResponseEntity<List<Employee>> getEmployeeBySearchCriteria1(@RequestBody Employee empSearch) {
+        logger.info(" Started emp-search-criteria :");
         return  ResponseEntity.ok().body(employeeService.findByEmp(empSearch));
+
     }
 
 }
