@@ -20,6 +20,7 @@ import java.util.Set;
 public class Employee {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EMPLOYEE_SQID")
     Long employeeSqId;
 
@@ -63,7 +64,7 @@ public class Employee {
     String reportingManager;
 
     @Column(name = "PREVIOUS_EXP", nullable = false)
-    String previousExp;
+    Long previousExp;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "JOINING_DATE", nullable = false)
@@ -90,8 +91,8 @@ public class Employee {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "academicsId")
     private Collection<Academics> academics;
 
-    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "projectTaggingId")
-    private Collection<ProjectTagging> ProjectTagging;*/
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectTaggingId")
+    private Collection<ProjectTagging> ProjectTagging;
 
     @Column(name = "INS_USER", nullable = false)
     Long insUser;
@@ -107,46 +108,55 @@ public class Employee {
     @Column(name = "LAST_UPDATE_DATE", nullable = false)
     Date lastUpdateDate;
 
-    @JsonIgnore
-    @Column(name="DESIGNATION_ID",nullable = false,insertable = false, updatable = false)
+//    @JsonIgnore
+    @Column(name="DESIGNATION_ID",nullable = false)
     Long designationId;
 
-    @JsonIgnore
-    @Column(name = "DEPARTMENT_ID", nullable = false,insertable = false, updatable = false)
+//    @JsonIgnore
+    @Column(name = "DEPARTMENT_ID", nullable = false)
     private Long departmentId;
 
-    @JsonIgnore
-    @Column(name = "REGION_Id", nullable = false,insertable = false, updatable = false)
+//    @JsonIgnore
+    @Column(name = "REGION_Id", nullable = false)
     private Long regionId;
 
-    @JsonIgnore
-    @Column(name="ACCOUNT_ID",nullable = false,insertable = false, updatable = false)
+//    @JsonIgnore
+    @Column(name="ACCOUNT_ID",nullable = false)
     Long accountId;
 
-    @JsonIgnore
-    @Column(name="SERVICE_LINE_ID",nullable = false,insertable = false, updatable = false)
+//    @JsonIgnore
+    @Column(name="SERVICE_LINE_ID",nullable = false)
     Long serviceLineId;
 
-    @JsonIgnore
-    @Column(name="BILLABLE_STATUS_ID",nullable = false,insertable = false, updatable = false)
+//    @JsonIgnore
+    @Column(name="BILLABLE_STATUS_ID",nullable = false)
     Long billableStatusId;
 
     /*@Column(name="PROJECT_ID",nullable = false,insertable = false, updatable = false)
     Long projectId;*/
 
-    @JsonIgnore
-    @Column(name="LOCATION_ID",nullable = false,insertable = false, updatable = false)
+//    @JsonIgnore
+    @Column(name="LOCATION_ID",nullable = false)
     Long locationId;
 
-    @JsonIgnore
-    @Column(name="GRADE_ID",nullable = false,insertable = false, updatable = false)
+//    @JsonIgnore
+    @Column(name="GRADE_ID",nullable = false)
     Long gradeId;
 
-    @JsonIgnore
-    @Column(name="ACADEMICS_ID",nullable = false,insertable = false, updatable = false)
+//    @JsonIgnore
+    @Column(name="ACADEMICS_ID",nullable = false)
     Long academicId;
 
-   /* @Column(name="PROJECT_TAGGING_ID",nullable = false,insertable = false, updatable = false)
-    Long projectTaggingId;*/
+//    @JsonIgnore
+    @Column(name="PROJECT_TAGGING_ID",nullable = false)
+    Long projectTaggingId;
+
+//    @JsonIgnore
+    @Column(name="ROLE_ID",nullable = false)
+    Long roleId;
+
+//    @JsonIgnore
+    @Column(name="PRIMARY_SKILL",nullable = false)
+    Long primarySkillId;
 
 }
