@@ -27,6 +27,7 @@ public class EmployeeController {
     //Get All Employee
     @PostMapping("/get-all-employee")
     public ResponseEntity<List<Employee>> getAllEmployee() {
+        logger.info(" Started get-all-employee :");
         return ResponseEntity.ok().body(employeeService.getAllEmployees());
     }
 
