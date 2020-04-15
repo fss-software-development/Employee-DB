@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -39,4 +40,7 @@ public class Location {
     @Column(name="LAST_UPDATE_DATE",nullable = false)
     Date lastUpdateDate;
 
+    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Employee> employees;
 }

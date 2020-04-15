@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,7 +27,6 @@ public class Department {
     @Column(name="DEPARTMENT_HEAD",nullable = false)
     String departmentHead;
 
-    @JsonIgnore
     @Column(name="INS_USER",nullable = false)
     Long insUser;
 
@@ -42,4 +44,31 @@ public class Department {
     @Column(name="LAST_UPDATE_DATE",nullable = false)
     Date lastUpdateDate;
 
+    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Employee> employees;
+
+//    @OneToMany(cascade={CascadeType.ALL},mappedBy="department")
+//    private Set<Employee> employees;
+
+//    @JoinColumn(name = "department_d", referencedColumnName = "EMPLOYEE_SQID")
+//    @ManyToOne(optional = false)
+//    private Employee emp;
+
+//    @OneToMany
+//    @JoinColumn(name = "EMPLOYEE_SQID")
+//    private Employee emp;
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "departmentId=" + departmentId +
+                ", departmentName='" + departmentName + '\'' +
+                ", departmentHead='" + departmentHead + '\'' +
+                ", insUser=" + insUser +
+                ", insDate=" + insDate +
+                ", lastUpdateUser=" + lastUpdateUser +
+                ", lastUpdateDate=" + lastUpdateDate +
+                '}';
+    }
 }

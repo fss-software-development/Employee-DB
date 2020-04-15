@@ -2,12 +2,16 @@ package com.fss.empdb.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
@@ -17,7 +21,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Employee {
+
+public class Employee implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,26 +32,29 @@ public class Employee {
     @Column(name = "EMPLOYEE_ID")
     Long employeeId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departmentId")
-    private Collection<Department> department;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departmentId")
+//    @ManyToOne
+//    @JoinColumn(name = "DEPARTMENT_ID")
+//    private Collection<Department> department;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
-    private Collection<Account> account;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(foreignKey = @ForeignKey(name = "DEPARTMENT_ID"), name = "DEPARTMENT_ID")
+    private Department department;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
-    private Collection<Region> region;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(foreignKey = @ForeignKey(name = "ACCOUNT_ID"), name = "ACCOUNT_ID")
+    private Account account;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId")
-    private Collection<Location> location;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(foreignKey = @ForeignKey(name = "REGION_ID"), name = "REGION_ID")
+    private Region region;
 
-    @Column(name = "FIRST_NAME", nullable = false)
-    String firstName;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(foreignKey = @ForeignKey(name = "LOCATION_ID"), name = "LOCATION_ID")
+    private Location location;
 
-    @Column(name = "MIDDLE_NAME", nullable = false)
-    String middleName;
-
-    @Column(name = "LAST_NAME", nullable = false)
-    String lastName;
+    @Column(name = "EMPLOYEE_NAME", nullable = false)
+    String employeeName;
 
     @Column(name = "MOBILE_NUM", nullable = false)
     Long mobileNum;
@@ -54,11 +62,13 @@ public class Employee {
     @Column(name = "EMAIL_ID", nullable = false)
     String emailId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gradeId")
-    private Collection<Grade> grade;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(foreignKey = @ForeignKey(name = "GRADE_ID"), name = "GRADE_ID")
+    private Grade grade;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "designationId")
-    private Collection<Designation> designation;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(foreignKey = @ForeignKey(name = "DESIGNATION_ID"), name = "DESIGNATION_ID")
+    private Designation designation;
 
     @Column(name = "REPORTING_MANAGER", nullable = false)
     String reportingManager;
@@ -70,29 +80,29 @@ public class Employee {
     @Column(name = "JOINING_DATE", nullable = false)
     Date joiningDate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "billableStatusId")
-    private Collection<BillableStatus> billableStatus;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(foreignKey = @ForeignKey(name = "BILLABLE_STATUS_ID"), name = "BILLABLE_STATUS_ID")
+    private BillableStatus billableStatus;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceLineId")
-    private Collection<ServiceLine> serviceLine;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(foreignKey = @ForeignKey(name = "SERVICE_LINE_ID"), name = "SERVICE_LINE_ID")
+    private ServiceLine serviceLine;
 
     @Column(name = "ACTIVITY_NAME", nullable = false)
     String activityName;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "skillId")
-    private Collection<Skill> primarySkill;
+//
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "skillId")
+//    private Collection<Skill> primarySkill;
 
     @Column(name = "EXPERIENCE_GAPS", nullable = false)
     Long experienceGaps;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
-    private Collection<Role> role;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
+//    private Collection<Role> role;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "academicsId")
-    private Collection<Academics> academics;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectTaggingId")
-    private Collection<ProjectTagging> ProjectTagging;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(foreignKey = @ForeignKey(name = "ACADEMICS_ID"), name = "ACADEMICS_ID")
+    private Academics academics;
 
     @Column(name = "INS_USER", nullable = false)
     Long insUser;
@@ -108,55 +118,114 @@ public class Employee {
     @Column(name = "LAST_UPDATE_DATE", nullable = false)
     Date lastUpdateDate;
 
-//    @JsonIgnore
-    @Column(name="DESIGNATION_ID",nullable = false)
-    Long designationId;
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeSqId=" + employeeSqId +
+                ", employeeId=" + employeeId +
+                ", department=" + department +
+                ", account=" + account +
+                ", region=" + region +
+                ", location=" + location +
+                ", employeeName='" + employeeName + '\'' +
+                ", mobileNum=" + mobileNum +
+                ", emailId='" + emailId + '\'' +
+                ", grade=" + grade +
+                ", designation=" + designation +
+                ", reportingManager='" + reportingManager + '\'' +
+                ", previousExp=" + previousExp +
+                ", joiningDate=" + joiningDate +
+                ", billableStatus=" + billableStatus +
+                ", serviceLine=" + serviceLine +
+                ", activityName='" + activityName + '\'' +
+                ", experienceGaps=" + experienceGaps +
+                ", academics=" + academics +
+                ", insUser=" + insUser +
+                ", insDate=" + insDate +
+                ", lastUpdateUser=" + lastUpdateUser +
+                ", lastUpdateDate=" + lastUpdateDate +
+                '}';
+    }
 
+    //
 //    @JsonIgnore
-    @Column(name = "DEPARTMENT_ID", nullable = false)
-    private Long departmentId;
-
+//    @Column(name="DESIGNATION_ID",nullable = false)
+//    Long designationId;
+//
 //    @JsonIgnore
-    @Column(name = "REGION_Id", nullable = false)
-    private Long regionId;
-
+//    @Column(name = "DEPARTMENT_ID", nullable = false)
+//    private Long departmentId;
+//
 //    @JsonIgnore
-    @Column(name="ACCOUNT_ID",nullable = false)
-    Long accountId;
-
+//    @Column(name = "REGION_Id", nullable = false)
+//    private Long regionId;
+//
 //    @JsonIgnore
-    @Column(name="SERVICE_LINE_ID",nullable = false)
-    Long serviceLineId;
-
+//    @Column(name="ACCOUNT_ID",nullable = false)
+//    Long accountId;
+//
 //    @JsonIgnore
-    @Column(name="BILLABLE_STATUS_ID",nullable = false)
-    Long billableStatusId;
-
-    /*@Column(name="PROJECT_ID",nullable = false,insertable = false, updatable = false)
-    Long projectId;*/
-
+//    @Column(name="SERVICE_LINE_ID",nullable = false)
+//    Long serviceLineId;
+//
 //    @JsonIgnore
-    @Column(name="LOCATION_ID",nullable = false)
-    Long locationId;
-
+//    @Column(name="BILLABLE_STATUS_ID",nullable = false)
+//    Long billableStatusId;
+//
 //    @JsonIgnore
-    @Column(name="GRADE_ID",nullable = false)
-    Long gradeId;
-
+//    @Column(name="LOCATION_ID",nullable = false)
+//    Long locationId;
+//
 //    @JsonIgnore
-    @Column(name="ACADEMICS_ID",nullable = false)
-    Long academicId;
-
+//    @Column(name="GRADE_ID",nullable = false)
+//    Long gradeId;
+//
 //    @JsonIgnore
-    @Column(name="PROJECT_TAGGING_ID",nullable = false)
-    Long projectTaggingId;
+//    @Column(name="ACADEMICS_ID",nullable = false)
+//    Long academicId;
 
+//    @Override
+//    public String toString() {
+//        return "Employee{" +
+//                "employeeSqId=" + employeeSqId +
+//                ", employeeId=" + employeeId +
+//                ", department=" + department +
+//                ", account=" + account +
+//                ", region=" + region +
+//                ", location=" + location +
+//                ", employeeName='" + employeeName + '\'' +
+//                ", mobileNum=" + mobileNum +
+//                ", emailId='" + emailId + '\'' +
+//                ", grade=" + grade +
+//                ", designation=" + designation +
+//                ", reportingManager='" + reportingManager + '\'' +
+//                ", previousExp=" + previousExp +
+//                ", joiningDate=" + joiningDate +
+//                ", billableStatus=" + billableStatus +
+//                ", serviceLine=" + serviceLine +
+//                ", activityName='" + activityName + '\'' +
+//                ", primarySkill=" + primarySkill +
+//                ", experienceGaps=" + experienceGaps +
+//                ", academics=" + academics +
+//                ", insUser=" + insUser +
+//                ", insDate=" + insDate +
+//                ", lastUpdateUser=" + lastUpdateUser +
+//                ", lastUpdateDate=" + lastUpdateDate +
+//                ", designationId=" + designationId +
+//                ", departmentId=" + departmentId +
+//                ", regionId=" + regionId +
+//                ", accountId=" + accountId +
+//                ", serviceLineId=" + serviceLineId +
+//                ", billableStatusId=" + billableStatusId +
+//                ", locationId=" + locationId +
+//                ", gradeId=" + gradeId +
+//                ", academicId=" + academicId +
+//                ", primarySkillId=" + primarySkillId +
+//                '}';
+//    }
+//
 //    @JsonIgnore
-    @Column(name="ROLE_ID",nullable = false)
-    Long roleId;
-
-//    @JsonIgnore
-    @Column(name="PRIMARY_SKILL",nullable = false)
-    Long primarySkillId;
+//    @Column(name="PRIMARY_SKILL",nullable = false)
+//    Long primarySkillId;
 
 }

@@ -35,6 +35,9 @@ public class Project {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
     private Collection<Account> account;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
+    private Collection<Region> region;
+
     @JsonIgnore
     @Column(name="INS_USER",nullable = false)
     Long insUser;

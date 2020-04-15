@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,5 +39,9 @@ public class Region {
     @Temporal(TemporalType.DATE)
     @Column(name="LAST_UPDATE_DATE",nullable = false)
     Date lastUpdateDate;
+
+    @OneToMany(mappedBy = "region", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Employee> employees;
 
 }

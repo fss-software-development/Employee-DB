@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,8 +23,12 @@ public class Account {
     @Column(name="ACCOUNT_NAME",nullable = false)
     String accountName;
 
+    @JsonIgnore
     @Column(name="INS_USER",nullable = false)
     Long insUser;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
+    private Collection<Region> region;
 
     @JsonIgnore
     @Temporal(TemporalType.DATE)
@@ -37,5 +43,9 @@ public class Account {
     @Temporal(TemporalType.DATE)
     @Column(name="LAST_UPDATE_DATE",nullable = false)
     Date lastUpdateDate;
+
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Employee> employees;
 
 }

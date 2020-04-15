@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,5 +39,23 @@ public class Designation {
     @Temporal(TemporalType.DATE)
     @Column(name="LAST_UPDATE_DATE",nullable = false)
     Date lastUpdateDate;
+
+
+    @OneToMany(mappedBy = "designation", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Employee> employees;
+
+    @Override
+    public String toString() {
+        return "Designation{" +
+                "designationId=" + designationId +
+                ", designationName='" + designationName + '\'' +
+                ", insUser=" + insUser +
+                ", insDate=" + insDate +
+                ", lastUpdateUser=" + lastUpdateUser +
+                ", lastUpdateDate=" + lastUpdateDate +
+                '}';
+    }
+
 
 }
