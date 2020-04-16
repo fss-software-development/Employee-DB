@@ -13,6 +13,7 @@ import java.util.List;
 @Table(name = "billable_status")
 public class BillableStatus {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "BILLABLE_STATUS_ID")
     Long billableStatusId;
 
@@ -23,7 +24,7 @@ public class BillableStatus {
     @Column(name = "BILLABLE_STATUS", nullable = false)
     String billableStatus;
 
-    @OneToMany(mappedBy = "billableStatus", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "billableStatus", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Employee> employees;
 

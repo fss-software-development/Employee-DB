@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 public class Region {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="REGION_ID")
     Long regionId;
 
@@ -41,11 +42,11 @@ public class Region {
     @Column(name="LAST_UPDATE_DATE",nullable = false)
     Date lastUpdateDate;
 
-    @OneToMany(mappedBy = "region", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "region",  cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Employee> employees;
 
-    @OneToMany(mappedBy = "region", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "region",  cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Account> accounts;
 }

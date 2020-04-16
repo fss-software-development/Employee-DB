@@ -20,10 +20,11 @@ import java.util.Set;
 @Entity
 @Table(name = "department")
 @XmlRootElement
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "departmentId")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "departmentId")
 public class Department implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "DEPARTMENT_ID")
     Long departmentId;
 
@@ -54,7 +55,7 @@ public class Department implements Serializable {
     @Column(name = "LAST_UPDATE_DATE", nullable = false)
     Date lastUpdateDate;
 
-    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Employee> employees;
 //    @XmlTransient

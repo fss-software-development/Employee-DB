@@ -26,7 +26,7 @@ import java.util.Date;
 public class Employee implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "EMPLOYEE_SQID")
     Long employeeSqId;
 
@@ -40,23 +40,23 @@ public class Employee implements Serializable {
 
     //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "DEPARTMENT_ID"), name = "DEPARTMENT_ID")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "DEPARTMENT_ID")
     private Department department;
 
     //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(foreignKey = @ForeignKey(name = "ACCOUNT_ID"), name = "ACCOUNT_ID")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
 
     //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(foreignKey = @ForeignKey(name = "REGION_ID"), name = "REGION_ID")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "REGION_ID")
     private Region region;
 
     //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(foreignKey = @ForeignKey(name = "LOCATION_ID"), name = "LOCATION_ID")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "LOCATION_ID")
     private Location location;
 
     @Column(name = "EMPLOYEE_NAME", nullable = false)
@@ -69,13 +69,13 @@ public class Employee implements Serializable {
     String emailId;
 
     //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(foreignKey = @ForeignKey(name = "GRADE_ID"), name = "GRADE_ID")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "GRADE_ID")
     private Grade grade;
 
     //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(foreignKey = @ForeignKey(name = "DESIGNATION_ID"), name = "DESIGNATION_ID")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "DESIGNATION_ID")
     private Designation designation;
 
     @Column(name = "REPORTING_MANAGER", nullable = false)
@@ -89,13 +89,13 @@ public class Employee implements Serializable {
     Date joiningDate;
 
     //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(foreignKey = @ForeignKey(name = "BILLABLE_STATUS_ID"), name = "BILLABLE_STATUS_ID")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "BILLABLE_STATUS_ID")
     private BillableStatus billableStatus;
 
     //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(foreignKey = @ForeignKey(name = "SERVICE_LINE_ID"), name = "SERVICE_LINE_ID")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "SERVICE_LINE_ID")
     private ServiceLine serviceLine;
 
     @Column(name = "ACTIVITY_NAME", nullable = false)
@@ -111,26 +111,26 @@ public class Employee implements Serializable {
 //    private Collection<Role> role;
 
     //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(foreignKey = @ForeignKey(name = "ACADEMICS_ID"), name = "ACADEMICS_ID")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "ACADEMICS_ID")
     private Academics academics;
 
-    @Column(name = "INS_USER", nullable = false)
-    Long insUser;
+    @Column(name = "INS_USER",nullable = true)
+    private Long insUser;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "INS_DATE", nullable = false)
-    Date insDate;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "INS_DATE",nullable = true)
+    private Date insDate;
 
-    @Column(name = "LAST_UPDATE_USER", nullable = false)
-    Long lastUpdateUser;
+    @Column(name = "LAST_UPDATE_USER",nullable = true)
+    private Long lastUpdateUser;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "LAST_UPDATE_DATE", nullable = false)
-    Date lastUpdateDate;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "LAST_UPDATE_DATE",nullable = true)
+    private Date lastUpdateDate;
 
     @JsonIgnore
-    @Column(name="PRIMARY_SKILL",nullable = false)
+    @Column(name="PRIMARY_SKILL")
     Long primarySkillId;
 
     @Override

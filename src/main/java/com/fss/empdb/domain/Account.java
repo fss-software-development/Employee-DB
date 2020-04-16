@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 public class Account {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ACCOUNT_ID")
     Long accountId;
 
@@ -23,32 +24,32 @@ public class Account {
     @Column(name="ACCOUNT_NAME",nullable = false)
     String accountName;
 
-    @JsonIgnore
-    @Column(name="INS_USER",nullable = false)
+//    @JsonIgnore
+    @Column(name="INS_USER")
     Long insUser;
 
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
 //    private Collection<Region> region;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(foreignKey = @ForeignKey(name = "REGION_ID"), name = "REGION_ID")
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "REGION_ID")
     private Region region;
 
-    @JsonIgnore
+//    @JsonIgnore
     @Temporal(TemporalType.DATE)
-    @Column(name="INS_DATE",nullable = false)
+    @Column(name="INS_DATE")
     Date insDate;
 
-    @JsonIgnore
-    @Column(name="LAST_UPDATE_USER",nullable = false)
+//    @JsonIgnore
+    @Column(name="LAST_UPDATE_USER")
     Long lastUpdateUser;
 
-    @JsonIgnore
+//    @JsonIgnore
     @Temporal(TemporalType.DATE)
-    @Column(name="LAST_UPDATE_DATE",nullable = false)
+    @Column(name="LAST_UPDATE_DATE")
     Date lastUpdateDate;
 
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Employee> employees;
 

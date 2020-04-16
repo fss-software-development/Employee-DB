@@ -50,7 +50,7 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     //Get All Employee
-    @PostMapping("/get-all-employee")
+    @GetMapping("/get-all-employee")
     public ResponseEntity<List<Employee>> getAllEmployee() {
         return ResponseEntity.ok().body(employeeService.getAllEmployees());
     }

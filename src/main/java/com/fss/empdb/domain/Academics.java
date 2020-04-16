@@ -14,6 +14,7 @@ import java.util.Set;
 @Entity
 public class Academics {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ACADEMICS_ID")
     Long academicsId;
 
@@ -25,8 +26,16 @@ public class Academics {
     String academicsName;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "academics", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "academics", cascade = CascadeType.ALL)
     private List<Employee> employees;
 
+    @Override
+    public String toString() {
+        return "Academics{" +
+                "academicsId=" + academicsId +
+                ", academicsName='" + academicsName + '\'' +
+                ", employees=" + employees +
+                '}';
+    }
 }
 

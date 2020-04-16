@@ -4,7 +4,7 @@ import com.fss.empdb.constants.ErrorConstants;
 import com.fss.empdb.controller.EmployeeController;
 import com.fss.empdb.domain.*;
 import com.fss.empdb.exception.ResourceNotFoundException;
-import com.fss.empdb.repository.EmployeeRepository;
+import com.fss.empdb.repository.*;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -36,6 +36,36 @@ public class EmployeeService {
 
     @Autowired
     EmployeeRepository employeeRepository;
+
+    @Autowired
+    AccountRepository accountRepository;
+
+    @Autowired
+    RegionRepository regionRepository;
+
+    @Autowired
+    DepartmentRepository departmentRepository;
+
+
+    @Autowired
+    DesignationRepository designationRepository;
+
+
+    @Autowired
+    LocationRepository locationRepository;
+
+
+    @Autowired
+    ServiceLineRepository serviceLineRepository;
+
+    @Autowired
+    BillableStatusRepository billableStatusRepository;
+
+    @Autowired
+    GradeRepository gradeRepository;
+
+    @Autowired
+    AcademicsRepository academicsRepository;
 
     public List<Employee> getAllEmployees() {
 
@@ -113,39 +143,70 @@ public class EmployeeService {
                 log.info("----------------------- Update -----------------------");
                 Optional<Employee> emp = employeeRepository.findById(employee.getEmployeeSqId());
                 Employee empEntity = emp.get();
+
+                Optional<Account> account = accountRepository.findById(employee.getAccount().getAccountId());
+                Account accountEntity =account.get();
+
+                Optional<Region> region = regionRepository.findById(employee.getRegion().getRegionId());
+                Region regionEntity =region.get();
+
+                Optional<Location> location = locationRepository.findById(employee.getLocation().getLocationId());
+                Location locationEntity =location.get();
+
+                Optional<Grade> grade = gradeRepository.findById(employee.getGrade().getGradeId());
+                Grade gradeEntity =grade.get();
+
+                Optional<Designation> designation = designationRepository.findById(employee.getDesignation().getDesignationId());
+                Designation designationEntity =designation.get();
+
+                Optional<BillableStatus> billablestatus = billableStatusRepository.findById(employee.getBillableStatus().getBillableStatusId());
+                BillableStatus billablestatusEntity =billablestatus.get();
+
+                Optional<ServiceLine> serviceline = serviceLineRepository.findById(employee.getServiceLine().getServiceLineId());
+                ServiceLine servicelineEntity =serviceline.get();
+
+                Optional<Academics> academics = academicsRepository.findById(employee.getAcademics().getAcademicsId());
+                Academics academicsEntity =academics.get();
+
+                Optional<Department> department = departmentRepository.findById(employee.getDepartment().getDepartmentId());
+                Department departmentEntity =department.get();
+
                 empEntity.setEmployeeSqId(employee.getEmployeeSqId());
                 empEntity.setEmployeeId(employee.getEmployeeId());
-                empEntity.setDepartment(employee.getDepartment());
-                empEntity.setAccount(employee.getAccount());
-                empEntity.setRegion(employee.getRegion());
-                empEntity.setLocation(employee.getLocation());
+                empEntity.setDepartment(departmentEntity);
+                empEntity.setAccount(accountEntity);
+                empEntity.setRegion(regionEntity);
+                empEntity.setLocation(locationEntity);
                 empEntity.setEmployeeName(employee.getEmployeeName());
                 empEntity.setMobileNum(employee.getMobileNum());
                 empEntity.setEmailId(employee.getEmailId());
-                empEntity.setGrade(employee.getGrade());
-                empEntity.setDesignation(employee.getDesignation());
+                empEntity.setGrade(gradeEntity);
+                empEntity.setDesignation(designationEntity);
                 empEntity.setReportingManager(employee.getReportingManager());
                 empEntity.setPreviousExp(employee.getPreviousExp());
                 empEntity.setJoiningDate(employee.getJoiningDate());
-                empEntity.setBillableStatus(employee.getBillableStatus());
-                empEntity.setServiceLine(employee.getServiceLine());
+                empEntity.setBillableStatus(billablestatusEntity);
+                empEntity.setServiceLine(servicelineEntity);
                 empEntity.setActivityName(employee.getActivityName());
                 empEntity.setPrimarySkillId(employee.getPrimarySkillId());
                 empEntity.setExperienceGaps(employee.getExperienceGaps());
-                empEntity.setAcademics(employee.getAcademics());
+                empEntity.setAcademics(academicsEntity);
                 empEntity.setInsUser(Long.valueOf(1));  //  Change is required
-                empEntity.setInsDate(new Date(119,6,38));
+                empEntity.setInsDate( new Date());
                 empEntity.setLastUpdateUser(Long.valueOf(1));  //  Change is required
-                empEntity.setLastUpdateDate(new Timestamp(new Date().getTime()));
+                empEntity.setLastUpdateDate(new Date());
                 empEntity = employeeRepository.save(empEntity);
 
                 return empEntity;
             } else {
                 log.info("----------------------- Save -----------------------");
+                employee.setInsUser(Long.valueOf(1));
+                employee.setLastUpdateUser(Long.valueOf(1));
+                employee.setInsDate(new Date());
+                employee.setLastUpdateDate(new Date());
                 employee = employeeRepository.save(employee);
                 return employee;
             }
-
         } catch (Exception e) {
             log.info(e);
         }

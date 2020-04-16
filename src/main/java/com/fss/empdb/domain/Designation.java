@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 public class Designation {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="DESIGNATION_ID")
     Long designationId;
 
@@ -42,7 +43,7 @@ public class Designation {
     Date lastUpdateDate;
 
 
-    @OneToMany(mappedBy = "designation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "designation", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Employee> employees;
 

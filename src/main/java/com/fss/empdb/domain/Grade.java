@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 public class Grade {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "GRADE_ID")
     Long gradeId;
 
@@ -22,7 +23,7 @@ public class Grade {
     @Column(name = "GRADE_NAME", nullable = false)
     String gradeName;
 
-    @OneToMany(mappedBy = "grade", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "grade", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Employee> employees;
 

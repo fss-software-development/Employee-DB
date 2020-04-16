@@ -13,6 +13,7 @@ import java.util.List;
 @Table(name = "service_line")
 public class ServiceLine {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "SERVICE_LINE_ID")
     Long serviceLineId;
 
@@ -23,7 +24,7 @@ public class ServiceLine {
     @Column(name = "SERVICE_LINE_NAME", nullable = false)
     String serviceLineName;
 
-    @OneToMany(mappedBy = "serviceLine", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "serviceLine", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Employee> employees;
 }
