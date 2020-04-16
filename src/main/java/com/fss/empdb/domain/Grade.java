@@ -22,7 +22,7 @@ public class Grade {
     @Column(name = "GRADE_NAME", nullable = false)
     String gradeName;
 
-    @OneToMany(mappedBy = "grade", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "grade", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Employee> employees;
 

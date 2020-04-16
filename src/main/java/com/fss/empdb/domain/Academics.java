@@ -3,8 +3,11 @@ package com.fss.empdb.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,8 +24,8 @@ public class Academics {
     @Column(name = "ACADEMICS_NAME", nullable = false)
     String academicsName;
 
-    @OneToMany(mappedBy = "academics", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
+    @OneToMany(mappedBy = "academics", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Employee> employees;
 
 }

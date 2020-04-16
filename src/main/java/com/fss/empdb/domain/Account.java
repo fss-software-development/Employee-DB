@@ -27,8 +27,12 @@ public class Account {
     @Column(name="INS_USER",nullable = false)
     Long insUser;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
-    private Collection<Region> region;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
+//    private Collection<Region> region;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(foreignKey = @ForeignKey(name = "REGION_ID"), name = "REGION_ID")
+    private Region region;
 
     @JsonIgnore
     @Temporal(TemporalType.DATE)
@@ -44,8 +48,10 @@ public class Account {
     @Column(name="LAST_UPDATE_DATE",nullable = false)
     Date lastUpdateDate;
 
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Employee> employees;
+
+
 
 }

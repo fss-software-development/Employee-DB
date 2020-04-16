@@ -1,26 +1,27 @@
 package com.fss.empdb.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
+import org.hibernate.annotations.CollectionType;
+
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
+
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "employee")
+@XmlRootElement
+@EqualsAndHashCode
 
 public class Employee implements Serializable {
 
@@ -37,19 +38,24 @@ public class Employee implements Serializable {
 //    @JoinColumn(name = "DEPARTMENT_ID")
 //    private Collection<Department> department;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "DEPARTMENT_ID"), name = "DEPARTMENT_ID")
     private Department department;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(foreignKey = @ForeignKey(name = "ACCOUNT_ID"), name = "ACCOUNT_ID")
     private Account account;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(foreignKey = @ForeignKey(name = "REGION_ID"), name = "REGION_ID")
     private Region region;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(foreignKey = @ForeignKey(name = "LOCATION_ID"), name = "LOCATION_ID")
     private Location location;
 
@@ -62,11 +68,13 @@ public class Employee implements Serializable {
     @Column(name = "EMAIL_ID", nullable = false)
     String emailId;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(foreignKey = @ForeignKey(name = "GRADE_ID"), name = "GRADE_ID")
     private Grade grade;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(foreignKey = @ForeignKey(name = "DESIGNATION_ID"), name = "DESIGNATION_ID")
     private Designation designation;
 
@@ -80,11 +88,13 @@ public class Employee implements Serializable {
     @Column(name = "JOINING_DATE", nullable = false)
     Date joiningDate;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(foreignKey = @ForeignKey(name = "BILLABLE_STATUS_ID"), name = "BILLABLE_STATUS_ID")
     private BillableStatus billableStatus;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(foreignKey = @ForeignKey(name = "SERVICE_LINE_ID"), name = "SERVICE_LINE_ID")
     private ServiceLine serviceLine;
 
@@ -100,23 +110,28 @@ public class Employee implements Serializable {
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
 //    private Collection<Role> role;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(foreignKey = @ForeignKey(name = "ACADEMICS_ID"), name = "ACADEMICS_ID")
     private Academics academics;
 
     @Column(name = "INS_USER", nullable = false)
     Long insUser;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "INS_DATE", nullable = false)
     Date insDate;
 
     @Column(name = "LAST_UPDATE_USER", nullable = false)
     Long lastUpdateUser;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LAST_UPDATE_DATE", nullable = false)
     Date lastUpdateDate;
+
+    @JsonIgnore
+    @Column(name="PRIMARY_SKILL",nullable = false)
+    Long primarySkillId;
 
     @Override
     public String toString() {

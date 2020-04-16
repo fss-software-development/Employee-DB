@@ -2,8 +2,27 @@ package com.fss.empdb.controller;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TreeTraversingParser;
 import com.fss.empdb.domain.Employee;
+import com.fss.empdb.domain.SearchCriteria;
 import com.fss.empdb.service.EmployeeService;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import jdk.nashorn.api.scripting.ScriptUtils;
+import org.apache.tomcat.util.json.JSONParser;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONString;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +31,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.io.DataInput;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/services")
@@ -27,7 +52,6 @@ public class EmployeeController {
     //Get All Employee
     @PostMapping("/get-all-employee")
     public ResponseEntity<List<Employee>> getAllEmployee() {
-        logger.info(" Started get-all-employee :");
         return ResponseEntity.ok().body(employeeService.getAllEmployees());
     }
 
@@ -38,19 +62,19 @@ public class EmployeeController {
     }
 
     //Get Employees By Search Criteria
-
-    @RequestMapping(value = "/emp-search-criteria", method = RequestMethod.POST)
-    public ResponseEntity<List<Employee>> getEmployeeBySearchCriteria1(@RequestBody Employee empSearch) {
-        LOGGER.info("Employee Controller" + empSearch.toString());
+    @PostMapping(value = "/emp-search-criteria", produces = "application/json")
+    public ResponseEntity<List<Employee>> getEmployeeBySearchCriteria1(@RequestBody SearchCriteria empSearch)  {
+        LOGGER.info("-------Controller---------" + empSearch);
         return ResponseEntity.ok().body(employeeService.findByEmp(empSearch));
     }
 
-//
-//    //Add & Update Employee
-//    @PostMapping(value = "/emp-add-update")
-//    public ResponseEntity<Employee> createOrUpdateEmployee(@RequestBody Employee employee)  {
-//        Employee emp = employeeService.createOrUpdateEmployee(employee);
-//        return new ResponseEntity<Employee>(emp, new HttpHeaders(), HttpStatus.OK);
-//    }
+    //Add & Update Employee
+    @PostMapping(value = "/emp-add-update")
+    public ResponseEntity<Employee> createOrUpdateEmployee(@RequestBody Employee employee)  {
+        LOGGER.info("-------Employee---------" + employee);
+
+        Employee emp = employeeService.createOrUpdateEmployee(employee);
+        return new ResponseEntity<Employee>(emp, new HttpHeaders(), HttpStatus.OK);
+    }
 
 }

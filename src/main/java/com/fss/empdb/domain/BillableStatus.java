@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -22,7 +23,7 @@ public class BillableStatus {
     @Column(name = "BILLABLE_STATUS", nullable = false)
     String billableStatus;
 
-    @OneToMany(mappedBy = "billableStatus", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "billableStatus", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Employee> employees;
 
