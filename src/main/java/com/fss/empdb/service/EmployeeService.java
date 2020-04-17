@@ -79,49 +79,56 @@ public class EmployeeService {
 
 
     public List<Employee> findByEmp(SearchCriteria emp) {
+
+
+//        Collection<Department> dep = (Collection<Department>) emp.getDepartment();
+//        log.info("Collection<Department> ----------------------" + dep);
+
         return employeeRepository.findAll(new Specification<Employee>() {
             @Override
             public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                log.info("Predicate class----------------------");
                 List<Predicate> predicates = new ArrayList<>();
+
                 if (emp.getEmployeeId() != null) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("employeeId"), emp.getEmployeeId())));
                 }
                 if (emp.getEmployeeName() != null) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("employeeName"), "%" + emp.getEmployeeName() + "%")));
                 }
-                if (emp.getDesignation().length > 0) {
+                if (emp.getDesignation() != null) {
                     Join<Employee, Designation> phoneJoin = root.join("designation");
                     predicates.add(phoneJoin.in(emp.getDesignation()));
                 }
-                if (emp.getDepartment().length > 0) {
+                if (emp.getDepartment() != null) {
                     Join<Employee, Department> phoneJoin = root.join("department");
                     predicates.add(phoneJoin.in(emp.getDepartment()));
                 }
-                if (emp.getRegion().length > 0) {
+                if (emp.getRegion() != null) {
                     Join<Employee, Region> phoneJoin = root.join("region");
                     predicates.add(phoneJoin.in(emp.getRegion()));
                 }
-                if (emp.getAccount().length > 0l) {
+                if (emp.getAccount() != null) {
                     Join<Employee, Account> phoneJoin = root.join("account");
                     predicates.add(phoneJoin.in(emp.getAccount()));
                 }
-                if (emp.getServiceLine().length > 0) {
+                if (emp.getServiceLine() != null) {
                     Join<Employee, ServiceLine> phoneJoin = root.join("serviceLine");
                     predicates.add(phoneJoin.in(emp.getServiceLine()));
                 }
-                if (emp.getBillableStatus().length > 0) {
+                if (emp.getBillableStatus() != null) {
                     Join<Employee, BillableStatus> phoneJoin = root.join("billableStatus");
                     predicates.add(phoneJoin.in(emp.getBillableStatus()));
                 }
-                if (emp.getLocation().length > 0) {
+                if (emp.getLocation() != null) {
                     Join<Employee, Location> phoneJoin = root.join("location");
                     predicates.add(phoneJoin.in(emp.getLocation()));
                 }
-                if (emp.getGrade().length > 0) {
+                if (emp.getGrade() != null) {
                     Join<Employee, Grade> phoneJoin = root.join("grade");
                     predicates.add(phoneJoin.in(emp.getGrade()));
                 }
-                if (emp.getAcademics().length > 0) {
+                if (emp.getAcademics() != null) {
                     Join<Employee, Academics> phoneJoin = root.join("academics");
                     predicates.add(phoneJoin.in(emp.getAcademics()));
                 }
@@ -130,9 +137,6 @@ public class EmployeeService {
             }
         });
     }
-
-
-
 
     public Employee createOrUpdateEmployee(Employee employee) {
            try {
@@ -221,16 +225,10 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-
-
     public void deleteEmployee(Long employeeId) {
-
-        Employee employee = new Employee();
-        employee.setEmployeeSqId(employeeId);
+        Employee employee = employeeRepository.findById(employeeId).
+                orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.EMPLOYEE_NOT_FOUND + employeeId));
         employeeRepository.delete(employee);
-
-       // session.delete(product);
     }
-
 
 }
