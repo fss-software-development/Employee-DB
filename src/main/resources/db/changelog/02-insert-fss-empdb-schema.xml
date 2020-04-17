@@ -3,34 +3,23 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <!-- This change set defines the initial table definition for the consent service
-    based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Spike+PAYBA-1428+-+Consent+Service+DB -->
+<!-- This change set defines the initial table definition for the consent service
+based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Spike+PAYBA-1428+-+Consent+Service+DB -->
 
-    <changeSet id="19" author="Rakesh">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="19" author="Rakesh">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			     INSERT INTO department (DEPARTMENT_ID, DEPARTMENT_NAME, DEPARTMENT_HEAD,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (1, "Solution-OFSD", "Vinod B",1,now() ,1,now());
                  INSERT INTO department (DEPARTMENT_ID, DEPARTMENT_NAME, DEPARTMENT_HEAD,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (2, "Solution-AMS", "Vinod B",1,now(),1,now());
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="20" author="Rakesh">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
-			     INSERT INTO account (ACCOUNT_ID,ACCOUNT_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
-			      VALUES (1, "HDFC",1,now(),1,now());
-                 INSERT INTO account (ACCOUNT_ID,ACCOUNT_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
-			      VALUES (2, "IDFC",1,now(),1,now());
-            ]]>
-        </sql>
-    </changeSet>
-
-    <changeSet id="21" author="Rakesh">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="20" author="Rakesh">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			     INSERT INTO region (REGION_ID,REGION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (1, "US",1,now(),1,now());
 			     INSERT INTO region (REGION_ID,REGION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
@@ -48,34 +37,47 @@
 			     INSERT INTO region (REGION_ID,REGION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (8, "ANZ",1,now(),1,now());
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="22" author="Rakesh">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="21" author="Rakesh">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
+			     INSERT INTO account (ACCOUNT_ID,ACCOUNT_NAME,REGION_ID,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (1, "HDFC",1,1,now(),1,now());
+                 INSERT INTO account (ACCOUNT_ID,ACCOUNT_NAME,REGION_ID,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (2, "IDFC",1,1,now(),1,now());
+            ]]>
+    </sql>
+</changeSet>
+
+
+
+<changeSet id="22" author="Rakesh">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (1, "Mumbai",1,now(),1,now());
 			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (2, "Chennai",1,now(),1,now());
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="23" author="Rakesh">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="23" author="Rakesh">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			     INSERT INTO skill (SKILL_ID,SKILL_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (1, "Java",1,now(),1,now());
 			     INSERT INTO skill (SKILL_ID,SKILL_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (2, ".Net",1,now(),1,now());
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="24" author="Rakesh">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="24" author="Rakesh">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			     INSERT INTO designation (DESIGNATION_ID,DESIGNATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (1, "PROJECT LEADER",1,now(),1,now());
 			     INSERT INTO designation (DESIGNATION_ID,DESIGNATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
@@ -114,22 +116,22 @@
 			      VALUES (18, "TEST MANAGER",1,now(),1,now());
 
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="25" author="Rakesh">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="25" author="Rakesh">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			     INSERT INTO user (USER_SQID,USER_ID,USER_NAME,EMAIL,PASSWORD,INS_DATE,LAST_UPDATE_DATE)
 	           	  VALUES (1, 1,"rakeshm","rakeshm@fss.co.in","pass@123",'2020-04-08 10:10:10','2020-04-08 10:10:10');
 
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="26" author="Rakesh">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="26" author="Rakesh">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			     INSERT INTO service_line (SERVICE_LINE_ID,SERVICE_LINE_NAME)
 			      VALUES (1, "Engineering");
 			     INSERT INTO service_line (SERVICE_LINE_ID,SERVICE_LINE_NAME)
@@ -139,12 +141,12 @@
 			     INSERT INTO service_line (SERVICE_LINE_ID,SERVICE_LINE_NAME)
 			      VALUES (4, "Portfolia Management Services");
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="27" author="Rakesh">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="27" author="Rakesh">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			     INSERT INTO billable_status (BILLABLE_STATUS_ID,BILLABLE_STATUS)
 			      VALUES (1, "EARMARKED");
 			     INSERT INTO billable_status (BILLABLE_STATUS_ID,BILLABLE_STATUS)
@@ -160,12 +162,12 @@
 			     INSERT INTO billable_status (BILLABLE_STATUS_ID,BILLABLE_STATUS)
 			      VALUES (7, "BILLABLE");
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="28" author="Rakesh">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="28" author="Rakesh">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			     INSERT INTO grade (GRADE_ID,GRADE_NAME)
 			      VALUES (1, "M1");
 			     INSERT INTO grade (GRADE_ID,GRADE_NAME)
@@ -181,12 +183,12 @@
 			     INSERT INTO grade (GRADE_ID,GRADE_NAME)
 			      VALUES (7, "M7");
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="29" author="Rakesh">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="29" author="Rakesh">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			     INSERT INTO academics (ACADEMICS_ID,ACADEMICS_NAME)
 			      VALUES (1, "BSC");
 			     INSERT INTO academics (ACADEMICS_ID,ACADEMICS_NAME)
@@ -206,12 +208,12 @@
 			     INSERT INTO academics (ACADEMICS_ID,ACADEMICS_NAME)
 			      VALUES (9, "MBA");
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="30" author="Rakesh">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="30" author="Rakesh">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			     INSERT INTO project_tagging (PROJECT_TAGGING_ID,PROJECT_TAGGING)
 			      VALUES (1, "Reserved");
 			     INSERT INTO project_tagging (PROJECT_TAGGING_ID,PROJECT_TAGGING)
@@ -219,12 +221,12 @@
 			     INSERT INTO project_tagging (PROJECT_TAGGING_ID,PROJECT_TAGGING)
 			      VALUES (3, "Execution");
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="31" author="Rakesh">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="31" author="Rakesh">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			     INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (1, "Project Manager");
 			     INSERT INTO role (ROLE_ID,ROLE_NAME)
@@ -268,16 +270,16 @@
 			    INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (21, "Non Functional Tester");
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="32" author="Rakesh">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
-			     INSERT INTO project (PROJECT_ID,DEPARTMENT_ID,PROJECT_NAME,PROJECT_MANAGER,PROJECT_STATUS,ACCOUNT_ID,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
-			      VALUES (1,1,"Employee-DB","XYZ","In-Progress",1,1,now(),1,now());
+<changeSet id="32" author="Rakesh">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
+			     INSERT INTO project (PROJECT_ID,DEPARTMENT_ID,PROJECT_NAME,PROJECT_MANAGER,PROJECT_STATUS,ACCOUNT_ID,REGION_ID,PROJECT_TAGGING_ID,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (1,1,"Employee-DB","XYZ","In-Progress",1,1,1,1,now(),1,now());
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
 </databaseChangeLog>
