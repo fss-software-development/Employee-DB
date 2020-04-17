@@ -1,8 +1,8 @@
 package com.fss.empdb.service;
 
 import com.fss.empdb.constants.ErrorConstants;
-import com.fss.empdb.controller.EmployeeController;
-import com.fss.empdb.domain.*;
+import com.fss.empdb.controller.ProjectController;
+import com.fss.empdb.domain.Project;
 import com.fss.empdb.exception.ResourceNotFoundException;
 import com.fss.empdb.repository.*;
 import org.jboss.logging.Logger;
@@ -23,45 +23,20 @@ import java.util.stream.IntStream;
 @Service
 public class ProjectService {
 
-    private static Logger log = Logger.getLogger(EmployeeController.class);
+    private static Logger log = Logger.getLogger(ProjectController.class);
 
 
     @Autowired
-    EmployeeRepository projectRepository;
-
-    @Autowired
-    AccountRepository accountRepository;
-
-    @Autowired
-    RegionRepository regionRepository;
-
-    @Autowired
-    DepartmentRepository departmentRepository;
+    ProjectRepository projectRepository;
 
 
-    @Autowired
-    DesignationRepository designationRepository;
 
-
-    @Autowired
-    LocationRepository locationRepository;
-
-
-    @Autowired
-    ServiceLineRepository serviceLineRepository;
-
-    @Autowired
-    BillableStatusRepository billableStatusRepository;
-
-    @Autowired
-    GradeRepository gradeRepository;
-
-    @Autowired
-    AcademicsRepository academicsRepository;
-
-    public List<Employee> getAllProject() {
-
+    public List<Project> getAllProject() {
         return projectRepository.findAll();
     }
 
+    public Project getProjectById(Long projectId) {
+        return projectRepository.findById(projectId).
+                orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.DATA_NOT_FOUND + projectId));
+    }
 }
