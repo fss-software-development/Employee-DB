@@ -1,7 +1,6 @@
 package com.fss.empdb.controller;
 
 
-import com.fss.empdb.domain.Employee;
 import com.fss.empdb.domain.Project;
 import com.fss.empdb.domain.SearchCriteria;
 import com.fss.empdb.service.ProjectService;
@@ -26,8 +25,15 @@ public class ProjectController {
 
     //Get All Project
     @GetMapping("/get-all-project")
-    public ResponseEntity<List<Employee>> getAllProject() {
+    public ResponseEntity<List<Project>> getAllProject() {
         return ResponseEntity.ok().body(projectService.getAllProject());
+        //return ResponseEntity.ok().body(projectService.getAllProject());
+    }
+
+    //Get Project Details By Id - View Case
+    @GetMapping("/get-all-project/{id}")
+    public ResponseEntity<Project> getProjectById(@PathVariable(value = "id") Long employeeId) {
+        return ResponseEntity.ok().body(projectService.getProjectById(employeeId));
     }
 
 }
