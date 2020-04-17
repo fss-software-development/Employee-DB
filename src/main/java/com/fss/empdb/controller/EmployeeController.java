@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/services")
+@RequestMapping("/empservice/v1")
 public class EmployeeController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
