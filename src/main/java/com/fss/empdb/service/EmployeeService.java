@@ -224,4 +224,16 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
+
+
+    public void deleteEmployee(Long employeeId) {
+
+        Employee employee = new Employee();
+        employee.setEmployeeSqId(employeeId);
+        employeeRepository.delete(employee);
+
+       // session.delete(product);
+    }
+
+
 }
