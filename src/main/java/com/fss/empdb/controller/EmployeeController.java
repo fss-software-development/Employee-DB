@@ -72,15 +72,14 @@ public class EmployeeController {
     @PostMapping(value = "/emp-add-update")
     public ResponseEntity<Employee> createOrUpdateEmployee(@RequestBody Employee employee)  {
         LOGGER.info("-------Employee---------" + employee);
-
         Employee emp = employeeService.createOrUpdateEmployee(employee);
         return new ResponseEntity<Employee>(emp, new HttpHeaders(), HttpStatus.OK);
     }
 
+    //Delete Employee
     @DeleteMapping(value = "/emp-delete/{id}")
-    public ResponseEntity<?> deleteEmployee(@PathVariable(value = "id") Long employeeId){
+    public ResponseEntity<Employee> deleteEmployee(@PathVariable(value = "id") Long employeeId){
         LOGGER.info("-------Employee---------" + employeeId);
-
         employeeService.deleteEmployee(employeeId);
         return new ResponseEntity<Employee>(new HttpHeaders(), HttpStatus.OK);
     }
