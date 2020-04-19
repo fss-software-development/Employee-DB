@@ -58,6 +58,11 @@ public class Department implements Serializable {
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Employee> employees;
+
+    /*@OneToMany(mappedBy = "projects", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Project> projects;*/
+
 //    @XmlTransient
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "department")
