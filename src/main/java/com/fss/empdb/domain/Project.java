@@ -20,8 +20,14 @@ public class Project {
 
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departmentId")
-    private Collection<Department> department;
+    /*@OneToMany(cascade = CascadeType.MERGE, mappedBy = "departmentId")
+    private Collection<Department> department;*/
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "DEPARTMENT_ID")
+    private Department department;
+
+
 
     @Column(name="PROJECT_NAME",nullable = false)
     String projectName;
@@ -32,11 +38,21 @@ public class Project {
     @Column(name="PROJECT_STATUS",nullable = false)
     String projectStatus;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
-    private Collection<Account> account;
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "REGION_ID")
+    private Region region;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
-    private Collection<Region> region;
+
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "ACCOUNT_ID")
+    private Account account;
+
+    //@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "projectTaggingId")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "PROJECT_TAGGING_ID")
+    private ProjectTagging projectTagging;
 
     @JsonIgnore
     @Column(name="INS_USER",nullable = false)
