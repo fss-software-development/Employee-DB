@@ -25,9 +25,9 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
-    //Get All Customer
+    //Get All Account
     @GetMapping("/get-all-customer")
-    public ResponseEntity<List<Account>> getAllEmployee() {
+    public ResponseEntity<List<Account>> getAllAccount() {
         return ResponseEntity.ok().body(accountService.allAccount());
     }
 
@@ -44,7 +44,7 @@ public class AccountController {
         return ResponseEntity.ok().body(accountService.allAccountBySearch(accountName, regionId));
     }
 
-    //Add & Update Employee
+    //Add & Update Account
     @PostMapping(value = "/customer-add-update")
     public ResponseEntity<Account> createOrUpdateEmployee( @RequestParam(required = false) Long accountId,
                                                           @RequestParam(required = false) String accountName,
