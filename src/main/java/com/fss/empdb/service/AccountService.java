@@ -75,6 +75,10 @@ public class AccountService {
     }
 
     public Account updateAccount(Account account){
+        account.setInsUser(Long.valueOf(1));
+        account.setLastUpdateUser(Long.valueOf(1));
+        account.setInsDate(new Date());
+        account.setLastUpdateDate(new Date());
         accountRepository.findById(account.getAccountId())
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.CUSTOMER_NOT_FOUND
                         + account.getAccountId()));

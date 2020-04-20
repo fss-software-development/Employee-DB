@@ -29,7 +29,7 @@ public class AccountController {
         return ResponseEntity.ok().body(accountService.allAccountById(accountId));
     }
 
-    @PostMapping(value = "/customer-search")
+    @PostMapping(value = "/search")
     public ResponseEntity<List<Account>> getAccountBySearch(@RequestParam(required = false) String accountName,
                                                             @RequestParam(required = false) Long[] regionId) {
         log.info("account name" +accountName);
@@ -37,12 +37,12 @@ public class AccountController {
         return ResponseEntity.ok().body(accountService.allAccountBySearch(accountName, regionId));
     }
 
-    @PostMapping(value = "/customer-create")
+    @PostMapping(value = "/create")
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
         return ResponseEntity.ok().body(accountService.createAccount(account));
     }
 
-    @PutMapping
+    @PutMapping(value = "/update")
     public ResponseEntity<Account> updateAccount(@RequestBody Account account){
         return ResponseEntity.ok().body(accountService.updateAccount(account));
     }

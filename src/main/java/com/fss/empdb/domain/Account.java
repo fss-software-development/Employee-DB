@@ -16,7 +16,7 @@ import java.util.List;
 @ToString
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ACCOUNT_ID")
     Long accountId;
 
