@@ -2,11 +2,13 @@ package com.fss.empdb.controller;
 
 import com.fss.empdb.domain.*;
 import com.fss.empdb.service.MasterService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Log4j2
 @RequestMapping("/master")
 public class MasterController {
 

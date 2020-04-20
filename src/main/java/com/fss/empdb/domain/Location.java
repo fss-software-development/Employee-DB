@@ -20,10 +20,6 @@ public class Location {
     @Column(name="LOCATION_ID")
     Long locationId;
 
-    public Location(){
-
-    }
-
     @Column(name="LOCATION_NAME",nullable = false)
     String locationName;
 
