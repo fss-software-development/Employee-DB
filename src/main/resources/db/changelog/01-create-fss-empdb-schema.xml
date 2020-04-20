@@ -52,7 +52,7 @@
 				LAST_UPDATE_USER INT(11) NULL,
 				LAST_UPDATE_DATE TIMESTAMP,
 				PRIMARY KEY (ACCOUNT_ID),
-				INDEX fk_account_region1_idx (REGION_ID ASC) ,
+				INDEX fk_account_region1_idx (REGION_ID ASC) VISIBLE,
 					CONSTRAINT fk_account_region1
 					FOREIGN KEY (REGION_ID)
 					REFERENCES employee_db.region (REGION_ID)
@@ -122,8 +122,8 @@
 				PASSWORD VARCHAR(32) NOT NULL,
 				INS_DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				LAST_UPDATE_DATE TIMESTAMP,
-				UNIQUE INDEX EMAIL_UNIQUE (EMAIL ASC) ,
-				UNIQUE INDEX USER_ID_UNIQUE (USER_ID ASC) ,
+				UNIQUE INDEX EMAIL_UNIQUE (EMAIL ASC) VISIBLE,
+				UNIQUE INDEX USER_ID_UNIQUE (USER_ID ASC) VISIBLE,
 				PRIMARY KEY (USER_SQID)
 			 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
@@ -137,7 +137,7 @@
 				SERVICE_LINE_ID INT(11) NOT NULL,
 				SERVICE_LINE_NAME VARCHAR(45) NOT NULL,
 				PRIMARY KEY (SERVICE_LINE_ID),
-				UNIQUE INDEX SERVICE_LINE_NAME_UNIQUE (SERVICE_LINE_NAME ASC)
+				UNIQUE INDEX SERVICE_LINE_NAME_UNIQUE (SERVICE_LINE_NAME ASC) VISIBLE
 			 )  ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
         </sql>
@@ -232,20 +232,20 @@
 				LAST_UPDATE_USER INT(11) NULL DEFAULT NULL,
 				LAST_UPDATE_DATE TIMESTAMP,
 				PRIMARY KEY (EMPLOYEE_SQID),
-				UNIQUE INDEX EMPLOYEE_ID_UNIQUE (EMPLOYEE_ID ASC) ,
-				INDEX fk_employee_department_idx (DEPARTMENT_ID ASC) ,
-				INDEX fk_employee_account1_idx (ACCOUNT_ID ASC) ,
-				INDEX fk_employee_region1_idx (REGION_ID ASC) ,
-				INDEX fk_employee_location1_idx (LOCATION_ID ASC) ,
-				UNIQUE INDEX EMAIL_ID_UNIQUE (EMAIL_ID ASC) ,
-				INDEX fk_employee_skill_idx (PRIMARY_SKILL ASC) ,
-				INDEX fk_employee_designation_idx (DESIGNATION_ID ASC) ,
-				INDEX fk_employee_user_idx (INS_USER ASC) ,
-				INDEX fk_employee_user2_idx (LAST_UPDATE_USER ASC) ,
-				INDEX fk_employee_serviceline_idx (SERVICE_LINE_ID ASC) ,
-				INDEX fk_employee_billable_status1_idx (BILLABLE_STATUS_ID ASC) ,
-				INDEX fk_employee_grade1_idx (GRADE_ID ASC) ,
-				INDEX fk_employee_academics1_idx (ACADEMICS_ID ASC) ,
+				UNIQUE INDEX EMPLOYEE_ID_UNIQUE (EMPLOYEE_ID ASC) VISIBLE,
+				INDEX fk_employee_department_idx (DEPARTMENT_ID ASC) VISIBLE,
+				INDEX fk_employee_account1_idx (ACCOUNT_ID ASC) VISIBLE,
+				INDEX fk_employee_region1_idx (REGION_ID ASC) VISIBLE,
+				INDEX fk_employee_location1_idx (LOCATION_ID ASC) VISIBLE,
+				UNIQUE INDEX EMAIL_ID_UNIQUE (EMAIL_ID ASC) VISIBLE,
+				INDEX fk_employee_skill_idx (PRIMARY_SKILL ASC) VISIBLE,
+				INDEX fk_employee_designation_idx (DESIGNATION_ID ASC) VISIBLE,
+				INDEX fk_employee_user_idx (INS_USER ASC) VISIBLE,
+				INDEX fk_employee_user2_idx (LAST_UPDATE_USER ASC) VISIBLE,
+				INDEX fk_employee_serviceline_idx (SERVICE_LINE_ID ASC) VISIBLE,
+				INDEX fk_employee_billable_status1_idx (BILLABLE_STATUS_ID ASC) VISIBLE,
+				INDEX fk_employee_grade1_idx (GRADE_ID ASC) VISIBLE,
+				INDEX fk_employee_academics1_idx (ACADEMICS_ID ASC) VISIBLE,
 				CONSTRAINT fk_employee_department
 					FOREIGN KEY (DEPARTMENT_ID)
 					REFERENCES employee_db.department (DEPARTMENT_ID)
@@ -330,12 +330,12 @@
 				LAST_UPDATE_USER INT(11) NULL DEFAULT NULL,
 				LAST_UPDATE_DATE TIMESTAMP,
 				PRIMARY KEY (PROJECT_ID),
-				INDEX fk_project_department_idx (DEPARTMENT_ID ASC) ,
-				INDEX fk_project_user_idx (INS_USER ASC) ,
-				INDEX fk_project_user2_idx (LAST_UPDATE_USER ASC) ,
-				INDEX fk_project_account_idx (ACCOUNT_ID ASC) ,
-				INDEX fk_project_region1_idx (REGION_ID ASC) ,
-				INDEX fk_project_project_tagging1_idx (PROJECT_TAGGING_ID ASC) ,
+				INDEX fk_project_department_idx (DEPARTMENT_ID ASC) VISIBLE,
+				INDEX fk_project_user_idx (INS_USER ASC) VISIBLE,
+				INDEX fk_project_user2_idx (LAST_UPDATE_USER ASC) VISIBLE,
+				INDEX fk_project_account_idx (ACCOUNT_ID ASC) VISIBLE,
+				INDEX fk_project_region1_idx (REGION_ID ASC) VISIBLE,
+				INDEX fk_project_project_tagging1_idx (PROJECT_TAGGING_ID ASC) VISIBLE,
 				CONSTRAINT fk_project_department
 					FOREIGN KEY (DEPARTMENT_ID)
 					REFERENCES employee_db.department (DEPARTMENT_ID)
@@ -409,10 +409,10 @@
 				USED_IN_PROJECT TINYINT NULL,
 				INS_USER INT(11) NOT NULL,
 				INS_DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				INDEX fk_employee_has_employee_skill_employee_skill1_idx (SKILL_ID ASC) ,
-				INDEX fk_employee_has_employee_skill_employee1_idx (EMPLOYEE_SQID ASC) ,
+				INDEX fk_employee_has_employee_skill_employee_skill1_idx (SKILL_ID ASC) VISIBLE,
+				INDEX fk_employee_has_employee_skill_employee1_idx (EMPLOYEE_SQID ASC) VISIBLE,
 				PRIMARY KEY (EMPLOYEE_SKILL_SQID),
-				UNIQUE INDEX uk_employee_skill (SKILL_ID ASC, EMPLOYEE_SQID ASC) ,
+				UNIQUE INDEX uk_employee_skill (SKILL_ID ASC, EMPLOYEE_SQID ASC) VISIBLE,
 				CONSTRAINT fk_employee_has_employee_skill_employee1
 					FOREIGN KEY (EMPLOYEE_SQID)
 					REFERENCES employee_db.employee (EMPLOYEE_SQID)
@@ -436,8 +436,8 @@
                ROLE_ID INT NOT NULL,
                ROLE_TYPE VARCHAR(45) NOT NULL,
                PRIMARY KEY (EMPLOYEE_SQID),
-               INDEX fk_employee_role_role1_idx (ROLE_ID ASC) ,
-               INDEX fk_employee_role_employee1_idx (EMPLOYEE_SQID ASC) ,
+               INDEX fk_employee_role_role1_idx (ROLE_ID ASC) VISIBLE,
+               INDEX fk_employee_role_employee1_idx (EMPLOYEE_SQID ASC) VISIBLE,
                 CONSTRAINT fk_employee_role_employee1
                     FOREIGN KEY (EMPLOYEE_SQID)
                     REFERENCES employee_db.employee (EMPLOYEE_SQID)
@@ -472,8 +472,8 @@
                 EMPLOYEE_SQID INT(11) NOT NULL,
                 TOOL_ID INT NOT NULL,
                 PRIMARY KEY (EMPLOYEE_TOOL_SQID),
-                INDEX fk_employee_tools_tools1_idx (TOOL_ID ASC) ,
-                INDEX fk_employee_tools_employee1_idx (EMPLOYEE_SQID ASC) ,
+                INDEX fk_employee_tools_tools1_idx (TOOL_ID ASC) VISIBLE,
+                INDEX fk_employee_tools_employee1_idx (EMPLOYEE_SQID ASC) VISIBLE,
              CONSTRAINT fk_employee_tools_employee1
                      FOREIGN KEY (EMPLOYEE_SQID)
                      REFERENCES employee_db_test.employee (EMPLOYEE_SQID)
