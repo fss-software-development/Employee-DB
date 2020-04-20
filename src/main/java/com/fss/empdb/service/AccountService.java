@@ -66,39 +66,21 @@ public class AccountService {
         return accounts;
     }
 
-    public Account createOrUpdateAccount(Long accountId, String accountName, Long regionId) {
+    public Account createAccount(Account account) {
+        account.setInsUser(Long.valueOf(1));
+        account.setLastUpdateUser(Long.valueOf(1));
+        account.setInsDate(new Date());
+        account.setLastUpdateDate(new Date());
+        return accountRepository.save(account);
+    }
 
-        Account accEntity = new Account();
-        Optional<Region> region = regionRepository.findById(regionId);
-        Region regionEntity = region.get();
+    public Account updateAccount(Account account){
+        accountRepository.findById(account.getAccountId())
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.CUSTOMER_NOT_FOUND
+                        + account.getAccountId()));
 
-        try {
-            if (accountId != null) {
-                log.info("----------------------- Update -----------------------");
-                Optional<Account> acc = accountRepository.findById(accountId);
-                accEntity = acc.get();
-                accEntity.setAccountName(accountName);
-                accEntity.setRegion(regionEntity);
-                accEntity.setInsDate(new Date());
-                accEntity.setLastUpdateUser(Long.valueOf(1));  //  Change is required
-                accEntity.setLastUpdateDate(new Date());
-                accEntity = accountRepository.save(accEntity);
-                return accEntity;
-            } else {
-                log.info("----------------------- Save -----------------------");
-                accEntity.setAccountName(accountName);
-                accEntity.setRegion(regionEntity);
-                accEntity.setInsUser(Long.valueOf(1));
-                accEntity.setLastUpdateUser(Long.valueOf(1));
-                accEntity.setInsDate(new Date());
-                accEntity.setLastUpdateDate(new Date());
-                accEntity = accountRepository.save(accEntity);
-                return accEntity;
-            }
-        } catch (Exception e) {
-            log.info(e);
-        }
-        return null;
+
+        return accountRepository.save(account);
     }
 
     public void deleteAccount(Long accountId) {

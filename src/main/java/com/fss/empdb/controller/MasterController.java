@@ -15,57 +15,57 @@ public class MasterController {
     @Autowired
     MasterService masterService;
 
-    @GetMapping("/get-all-department")
+    @GetMapping("/department")
     public List<Department> getAllDepartment() {
         return masterService.getAllDepartment();
     }
 
-    @GetMapping("/get-all-designation")
+    @GetMapping("/designation")
     public List<Designation> getAllDesignation() {
         return masterService.getAllDesignation();
     }
 
-    @GetMapping("/get-all-account")
+    @GetMapping("/account")
     public List<Account> getAllAccount() {
         return masterService.getAllAccount();
     }
 
-    @GetMapping("/get-all-region")
+    @GetMapping("/region")
     public List<Region> getAllRegion() {
         return masterService.getAllRegion();
     }
 
-    @GetMapping("/get-all-location")
+    @GetMapping("/location")
     public List<Location> getAllLocation() {
         return masterService.getAllLocation();
     }
 
-    @GetMapping("/get-all-skill")
+    @GetMapping("/skill")
     public List<Skill> getAllSkill() {
         return masterService.getAllSkill();
     }
 
-    @GetMapping("/get-all-service-line")
+    @GetMapping("/service-line")
     public List<ServiceLine> getAllServiceLine() {
         return masterService.getAllServiceLine();
     }
 
-    @GetMapping("/get-all-billable-status")
+    @GetMapping("/billable-status")
     public List<BillableStatus> getAllBillableStatus() {
         return masterService.getAllBillableStatus();
     }
 
-    @GetMapping("/get-all-grade")
+    @GetMapping("/grade")
     public List<Grade> getAllGrade() {
         return masterService.getAllGrade();
     }
 
-    @GetMapping("/get-all-academics")
+    @GetMapping("/academics")
     public List<Academics> getAllAcademics() {
         return masterService.getAllAcademics();
     }
 
-    @GetMapping("/get-all-project-tagging")
+    @GetMapping("/project-tagging")
     public List<ProjectTagging> getAllProjectTagging() {
         return masterService.getAllProjectTagging();
     }
