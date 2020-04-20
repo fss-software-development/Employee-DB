@@ -16,6 +16,7 @@ import java.util.Set;
 @ToString
 public class Project {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="PROJECT_ID")
     Long projectId;
 

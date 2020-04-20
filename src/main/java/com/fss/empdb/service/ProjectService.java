@@ -61,53 +61,78 @@ public class ProjectService {
         projectRepository.delete(project);
     }
 
-    public Project createOrUpdateProject(Project project) {
-        try {
-            if (project.getProjectId() != null) {
-                log.info("----------------------- Update -----------------------");
-                Optional<Project> proj = projectRepository.findById(project.getProjectId());
-                Project projEntity = proj.get();
+   public Project createProject(Project project) {
+       project.setInsUser(Long.valueOf(1));
+       project.setLastUpdateUser(Long.valueOf(1));
+       project.setInsDate(new Date());
+       project.setLastUpdateDate(new Date());
+        return projectRepository.save(project);
+    }
 
-                Optional<Account> account = accountRepository.findById(project.getAccount().getAccountId());
-                Account accountEntity =account.get();
+    public Project updateProject(Project project){
+        Optional<Department> department = departmentRepository.findById(project.getDepartment().getDepartmentId());
+        Department departmentEntity =department.get();
 
-                Optional<ProjectTagging> projectTagging = projectTaggingRepository.findById(project.getProjectTagging().getProjectTaggingId());
-                ProjectTagging projectTaggingEntity =projectTagging.get();
+        Optional<Account> account = accountRepository.findById(project.getAccount().getAccountId());
+        Account accountEntity =account.get();
 
-                Optional<Region> region = regionRepository.findById(project.getRegion().getRegionId());
-                Region regionEntity =region.get();
+        Optional<ProjectTagging> projectTagging = projectTaggingRepository.findById(project.getProjectTagging().getProjectTaggingId());
+        ProjectTagging projectTaggingEntity =projectTagging.get();
 
-                Optional<Department> department = departmentRepository.findById(project.getDepartment().getDepartmentId());
-                Department departmentEntity =department.get();
+        Optional<Region> region = regionRepository.findById(project.getRegion().getRegionId());
+        Region regionEntity =region.get();
 
-                projEntity.setProjectId(project.getProjectId());
-                projEntity.setProjectName(project.getProjectName());
-                projEntity.setProjectManager(project.getProjectManager());
-                projEntity.setProjectStatus(project.getProjectStatus());
-                projEntity.setDepartment(departmentEntity);
-                projEntity.setAccount(accountEntity);
-                projEntity.setRegion(regionEntity);
-                projEntity.setProjectTagging(projectTaggingEntity);
+        project.setDepartment(departmentEntity);
+        project.setAccount(accountEntity);
+        project.setProjectTagging(projectTaggingEntity);
+        project.setRegion(regionEntity);
+        project.setInsUser(Long.valueOf(1));
+        project.setLastUpdateUser(Long.valueOf(1));
+        project.setInsDate(new Date());
+        project.setLastUpdateDate(new Date());
+        accountRepository.findById(project.getProjectId())
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.CUSTOMER_NOT_FOUND
+                        + project.getProjectId()));
+        return projectRepository.save(project);
+    }
 
-                projEntity.setInsUser(Long.valueOf(1));  //  Change is required
-                projEntity.setInsDate( new Date());
-                projEntity.setLastUpdateUser(Long.valueOf(1));  //  Change is required
-                projEntity.setLastUpdateDate(new Date());
-                projEntity = projectRepository.save(projEntity);
+    public List<Project> findByProject(ProjectCriteria proj) {
+        return projectRepository.findAll(new Specification<Project>() {
+            @Override
+            public Predicate toPredicate(Root<Project> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> predicates = new ArrayList<>();
+                if (proj.getProjectId() != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("projectId"), proj.getProjectId())));
+                }
+                if (proj.getProjectName() != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectName"), "%" + proj.getProjectName() + "%")));
+                }
+                if (proj.getProjectManager() != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectManager"), "%" + proj.getProjectManager() + "%")));
+                }
+                if (proj.getProjectStatus() != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectStatus"), "%" + proj.getProjectStatus() + "%")));
+                }
 
-                return projEntity;
-            } else {
-                log.info("----------------------- Save -----------------------");
-                project.setInsUser(Long.valueOf(1));
-                project.setLastUpdateUser(Long.valueOf(1));
-                project.setInsDate(new Date());
-                project.setLastUpdateDate(new Date());
-                project = projectRepository.save(project);
-                return project;
+                if (proj.getDepartment().length > 0) {
+                    Join<Employee, Department> phoneJoin = root.join("department");
+                    predicates.add(phoneJoin.in(proj.getDepartment()));
+                }
+                if (proj.getRegion().length > 0) {
+                    Join<Employee, Designation> phoneJoin = root.join("region");
+                    predicates.add(phoneJoin.in(proj.getRegion()));
+                }
+                if (proj.getAccount().length > 0) {
+                    Join<Employee, Region> phoneJoin = root.join("account");
+                    predicates.add(phoneJoin.in(proj.getAccount()));
+                }
+                if (proj.getProjectTagging().length > 0l) {
+                    Join<Employee, Account> phoneJoin = root.join("projectTagging");
+                    predicates.add(phoneJoin.in(proj.getProjectTagging()));
+                }
+                log.info("Search filter Size :" + predicates.size());
+                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }
-        } catch (Exception e) {
-            log.info(e);
-        }
-        return null;
+        });
     }
 }
