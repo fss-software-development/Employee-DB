@@ -3,8 +3,7 @@ package com.fss.empdb.domain;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -18,6 +17,9 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Table(name = "department")
 @XmlRootElement
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -27,10 +29,6 @@ public class Department implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "DEPARTMENT_ID")
     Long departmentId;
-
-    public Department() {
-
-    }
 
     @Column(name = "DEPARTMENT_NAME", nullable = false)
     String departmentName;
@@ -59,39 +57,4 @@ public class Department implements Serializable {
     @JsonIgnore
     private List<Employee> employees;
 
-    /*@OneToMany(mappedBy = "projects", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Project> projects;*/
-
-//    @XmlTransient
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "department")
-//    private Collection<Employee> employeeCollection;
-
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeSqId")
-//    private Collection<Employee> employees;
-
-//    @OneToMany(cascade={CascadeType.ALL},mappedBy="department")
-//    private Set<Employee> employees;
-
-//    @JoinColumn(name = "department_d", referencedColumnName = "EMPLOYEE_SQID")
-//    @ManyToOne(optional = false)
-//    private Employee emp;
-
-//    @OneToMany
-//    @JoinColumn(name = "EMPLOYEE_SQID")
-//    private Employee emp;
-
-    @Override
-    public String toString() {
-        return "Department{" +
-                "departmentId=" + departmentId +
-                ", departmentName='" + departmentName + '\'' +
-                ", departmentHead='" + departmentHead + '\'' +
-                ", insUser=" + insUser +
-                ", insDate=" + insDate +
-                ", lastUpdateUser=" + lastUpdateUser +
-                ", lastUpdateDate=" + lastUpdateDate +
-                '}';
-    }
 }

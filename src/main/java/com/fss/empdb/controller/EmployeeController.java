@@ -17,6 +17,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import jdk.nashorn.api.scripting.ScriptUtils;
+import lombok.extern.log4j.Log4j2;
 import org.apache.tomcat.util.json.JSONParser;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,10 +42,11 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Log4j2
 @RequestMapping("/empservice/v1")
 public class EmployeeController {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
+    //private static Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
     @Autowired
     EmployeeService employeeService;
@@ -64,14 +66,15 @@ public class EmployeeController {
     //Get Employees By Search Criteria
     @PostMapping(value = "/emp-search-criteria", produces = "application/json")
     public ResponseEntity<List<Employee>> getEmployeeBySearchCriteria1(@RequestBody SearchCriteria empSearch)  {
-        LOGGER.info("-------Controller---------" + empSearch);
+        log.info("-------getEmployeeBySearchCriteria1---------" + empSearch);
+        //LOGGER.info("-------Controller---------" + empSearch);
         return ResponseEntity.ok().body(employeeService.findByEmp(empSearch));
     }
 
     //Add & Update Employee
     @PostMapping(value = "/emp-add-update")
     public ResponseEntity<Employee> createOrUpdateEmployee(@RequestBody Employee employee)  {
-        LOGGER.info("-------Employee---------" + employee);
+        log.info("-------createOrUpdateEmployee---------" + employee);
         Employee emp = employeeService.createOrUpdateEmployee(employee);
         return new ResponseEntity<Employee>(emp, new HttpHeaders(), HttpStatus.OK);
     }
@@ -79,7 +82,7 @@ public class EmployeeController {
     //Delete Employee
     @DeleteMapping(value = "/emp-delete/{id}")
     public ResponseEntity<Employee> deleteEmployee(@PathVariable(value = "id") Long employeeId){
-        LOGGER.info("-------Employee---------" + employeeId);
+        log.info("-------deleteEmployee---------" + employeeId);
         employeeService.deleteEmployee(employeeId);
         return new ResponseEntity<Employee>(new HttpHeaders(), HttpStatus.OK);
     }

@@ -4,6 +4,7 @@ import com.fss.empdb.domain.Account;
 import com.fss.empdb.domain.Employee;
 import com.fss.empdb.service.AccountService;
 import com.fss.empdb.service.CustomerService;
+import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,11 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
+@Log4j2
 @RequestMapping("/accountservice/v1")
 public class AccountController {
 
-    private static Logger log = LoggerFactory.getLogger(AccountController.class);
+    //private static Logger log = LoggerFactory.getLogger(AccountController.class);
 
     @Autowired
     AccountService accountService;

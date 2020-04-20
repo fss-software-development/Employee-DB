@@ -1,22 +1,21 @@
 package com.fss.empdb.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Skill {
     @Id
     @Column(name = "SKILL_ID")
     Long skillId;
-
-    public Skill() {
-
-    }
 
     @Column(name = "SKILL_NAME", nullable = false)
     String skillName;
