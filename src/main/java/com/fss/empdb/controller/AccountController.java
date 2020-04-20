@@ -28,21 +28,19 @@ public class AccountController {
     AccountService accountService;
 
     //Get All Account
-    @GetMapping("/get-all-customer")
+    @GetMapping("/customer")
     public ResponseEntity<List<Account>> getAllAccount() {
         return ResponseEntity.ok().body(accountService.allAccount());
     }
 
-    @GetMapping("/get-all-customer/{id}")
+    @GetMapping("/customer/{id}")
     public ResponseEntity<Account> getAccountById(@PathVariable(value = "id") Long accountId) {
         return ResponseEntity.ok().body(accountService.allAccountById(accountId));
     }
 
-    @GetMapping(value = "/customer-search-criteria")
+    @GetMapping(value = "/customer-search")
     public ResponseEntity<List<Account>> getAccountBySearch(@RequestParam(required = false) String accountName,
                                                             @RequestParam(required = false) Long[] regionId) {
-        log.info("-------accountName---------" + accountName);
-        log.info("-------regionId---------" + Arrays.toString(regionId));
         return ResponseEntity.ok().body(accountService.allAccountBySearch(accountName, regionId));
     }
 
@@ -51,14 +49,11 @@ public class AccountController {
     public ResponseEntity<Account> createOrUpdateEmployee( @RequestParam(required = false) Long accountId,
                                                           @RequestParam(required = false) String accountName,
                                                           @RequestParam(required = false) Long regionId)  {
-        log.info("-------accountId---------" + accountId);
-        log.info("-------Account Name---------" + accountName);
-        log.info("-------regionId---------" + regionId);
         Account acc = accountService.createOrUpdateAccount(accountId,accountName,regionId);
         return new ResponseEntity<Account>(acc, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/customer-delete/{id}")
+    @DeleteMapping(value = "/customer/{id}")
     public ResponseEntity<Account> deleteEmployee(@PathVariable(value = "id") Long accountId){
         accountService.deleteAccount(accountId);
         return new ResponseEntity<Account>(new HttpHeaders(), HttpStatus.OK);

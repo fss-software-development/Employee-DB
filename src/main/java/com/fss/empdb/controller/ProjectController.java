@@ -25,15 +25,12 @@ public class ProjectController {
     ProjectService projectService;
 
     //Get All Project
-    @GetMapping("/get-all-project")
+    @GetMapping("/project")
     public ResponseEntity<List<Project>> getAllProject() {
-        log.info("-------getAllProject---------" );
-        return ResponseEntity.ok().body(projectService.getAllProject());
-        //return ResponseEntity.ok().body(projectService.getAllProject());
+            return ResponseEntity.ok().body(projectService.getAllProject());
     }
 
-    //Get Project Details By Id - View Case
-    @GetMapping("/get-projectById/{id}")
+    @GetMapping("/projectById/{id}")
     public ResponseEntity<Project> getProjectById(@PathVariable(value = "id") Long projectId) {
         log.info("-------getAllProject---------" + projectId);
         return ResponseEntity.ok().body(projectService.getProjectById(projectId));
@@ -41,7 +38,7 @@ public class ProjectController {
 
 
     //Get Project Details By Id - View Case
-    @GetMapping("/get-projectByName/{name}")
+    @GetMapping("/projectByName/{name}")
     public ResponseEntity<Project> getProjectByName(@PathVariable(value = "name") String projectName) {
         //LOGGER.info("-------projectName---------" + projectName);
         return ResponseEntity.ok().body(projectService.getProjectByName(projectName));
@@ -50,16 +47,12 @@ public class ProjectController {
     //Add & Update Project
     @PostMapping(value = "/project-add-update")
     public ResponseEntity<Project> createOrUpdateProject(@RequestBody Project project)  {
-       // LOGGER.info("-------Project---------" + project);
-
         Project proj = projectService.createOrUpdateProject(project);
         return new ResponseEntity<Project>(proj, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/project-delete/{id}")
+    @DeleteMapping(value = "/project/{id}")
     public ResponseEntity<?> deleteProject(@PathVariable(value = "id") Long projectId){
-        //LOGGER.info("-------Project---------" + projectId);
-
         projectService.deleteProject(projectId);
         return new ResponseEntity<Project>(new HttpHeaders(), HttpStatus.OK);
     }
