@@ -25,7 +25,6 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
-    //Get All Account
     @GetMapping("/customer")
     public ResponseEntity<List<Account>> getAllAccount() {
         return ResponseEntity.ok().body(accountService.allAccount());
@@ -44,7 +43,7 @@ public class AccountController {
 
     //Add & Update Account
     @PostMapping(value = "/customer-add-update")
-    public ResponseEntity<Account> createOrUpdateEmployee( @RequestParam(required = false) Long accountId,
+    public ResponseEntity<Account> createOrUpdateAccount( @RequestParam(required = false) Long accountId,
                                                           @RequestParam(required = false) String accountName,
                                                           @RequestParam(required = false) Long regionId)  {
         Account acc = accountService.createOrUpdateAccount(accountId,accountName,regionId);
@@ -52,7 +51,7 @@ public class AccountController {
     }
 
     @DeleteMapping(value = "/customer/{id}")
-    public ResponseEntity<Account> deleteEmployee(@PathVariable(value = "id") Long accountId){
+    public ResponseEntity<Account> deleteAccount(@PathVariable(value = "id") Long accountId){
         accountService.deleteAccount(accountId);
         return new ResponseEntity<Account>(new HttpHeaders(), HttpStatus.OK);
     }
