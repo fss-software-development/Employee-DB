@@ -22,8 +22,6 @@ import java.util.List;
 @RequestMapping("/accountservice/v1")
 public class AccountController {
 
-    //private static Logger log = LoggerFactory.getLogger(AccountController.class);
-
     @Autowired
     AccountService accountService;
 
@@ -33,11 +31,13 @@ public class AccountController {
         return ResponseEntity.ok().body(accountService.allAccount());
     }
 
+    //Get Account Details By Id - View Case
     @GetMapping("/get-all-customer/{id}")
     public ResponseEntity<Account> getAccountById(@PathVariable(value = "id") Long accountId) {
         return ResponseEntity.ok().body(accountService.allAccountById(accountId));
     }
 
+    //Get Account By Search Criteria
     @GetMapping(value = "/customer-search-criteria")
     public ResponseEntity<List<Account>> getAccountBySearch(@RequestParam(required = false) String accountName,
                                                             @RequestParam(required = false) Long[] regionId) {
@@ -57,7 +57,7 @@ public class AccountController {
         Account acc = accountService.createOrUpdateAccount(accountId,accountName,regionId);
         return new ResponseEntity<Account>(acc, new HttpHeaders(), HttpStatus.OK);
     }
-
+    //Delete Account
     @DeleteMapping(value = "/customer-delete/{id}")
     public ResponseEntity<Account> deleteEmployee(@PathVariable(value = "id") Long accountId){
         accountService.deleteAccount(accountId);

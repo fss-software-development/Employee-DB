@@ -8,6 +8,7 @@ import com.fss.empdb.repository.*;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import lombok.extern.log4j.Log4j2;
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,11 +28,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
+@Log4j2
 @Service
 public class EmployeeService {
-
-    private static Logger log = Logger.getLogger(EmployeeController.class);
 
 
     @Autowired
@@ -76,7 +75,6 @@ public class EmployeeService {
         return employeeRepository.findById(employeeId).
                 orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.EMPLOYEE_NOT_FOUND + employeeId));
     }
-
 
     public List<Employee> findByEmp(SearchCriteria emp) {
         return employeeRepository.findAll(new Specification<Employee>() {
@@ -130,7 +128,6 @@ public class EmployeeService {
             }
         });
     }
-
 
     public Employee createOrUpdateEmployee(Employee employee) {
            try {

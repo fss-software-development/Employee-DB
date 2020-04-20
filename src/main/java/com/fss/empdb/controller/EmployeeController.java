@@ -46,7 +46,6 @@ import java.util.Map;
 @RequestMapping("/empservice/v1")
 public class EmployeeController {
 
-    //private static Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
     @Autowired
     EmployeeService employeeService;

@@ -5,6 +5,7 @@ import com.fss.empdb.domain.*;
 import com.fss.empdb.exception.ResourceNotFoundException;
 import com.fss.empdb.repository.AccountRepository;
 import com.fss.empdb.repository.RegionRepository;
+import lombok.extern.log4j.Log4j2;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,10 +17,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@Log4j2
 @Service
 public class AccountService {
-
-    private static Logger log = Logger.getLogger(CustomerService.class);
 
     @Autowired
     AccountRepository accountRepository;

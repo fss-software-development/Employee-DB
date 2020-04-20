@@ -20,7 +20,6 @@ import java.util.List;
 @RequestMapping("/customer")
 public class CustomerController {
 
-    //private static Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
     @Autowired
     CustomerService customerService;
