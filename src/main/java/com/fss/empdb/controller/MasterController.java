@@ -15,32 +15,32 @@ public class MasterController {
     @Autowired
     MasterService masterService;
 
-    @GetMapping("/department")
+    @GetMapping("/departments")
     public List<Department> getAllDepartment() {
         return masterService.getAllDepartment();
     }
 
-    @GetMapping("/designation")
+    @GetMapping("/designations")
     public List<Designation> getAllDesignation() {
         return masterService.getAllDesignation();
     }
 
-    @GetMapping("/account")
+    @GetMapping("/accounts")
     public List<Account> getAllAccount() {
         return masterService.getAllAccount();
     }
 
-    @GetMapping("/region")
+    @GetMapping("/regions")
     public List<Region> getAllRegion() {
         return masterService.getAllRegion();
     }
 
-    @GetMapping("/location")
+    @GetMapping("/locations")
     public List<Location> getAllLocation() {
         return masterService.getAllLocation();
     }
 
-    @GetMapping("/skill")
+    @GetMapping("/skills")
     public List<Skill> getAllSkill() {
         return masterService.getAllSkill();
     }
@@ -55,7 +55,7 @@ public class MasterController {
         return masterService.getAllBillableStatus();
     }
 
-    @GetMapping("/grade")
+    @GetMapping("/grades")
     public List<Grade> getAllGrade() {
         return masterService.getAllGrade();
     }
