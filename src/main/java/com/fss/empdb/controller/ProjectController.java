@@ -24,7 +24,6 @@ public class ProjectController {
     @Autowired
     ProjectService projectService;
 
-    //Get All Project
     @GetMapping("/project")
     public ResponseEntity<List<Project>> getAllProject() {
             return ResponseEntity.ok().body(projectService.getAllProject());
@@ -36,8 +35,6 @@ public class ProjectController {
         return ResponseEntity.ok().body(projectService.getProjectById(projectId));
     }
 
-
-    //Get Project Details By Id - View Case
     @GetMapping("/projectByName/{name}")
     public ResponseEntity<Project> getProjectByName(@PathVariable(value = "name") String projectName) {
         //LOGGER.info("-------projectName---------" + projectName);

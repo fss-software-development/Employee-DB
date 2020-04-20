@@ -61,8 +61,8 @@ public class EmployeeController {
     }
 
     @PostMapping(value = "/employee-search", produces = "application/json")
-    public ResponseEntity<List<Employee>> getEmployeeBySearchCriteria1(@RequestBody SearchCriteria empSearch)  {
-        log.info("-------getEmployeeBySearchCriteria1---------" + empSearch);
+    public ResponseEntity<List<Employee>> getEmployeeBySearchCriteria(@RequestBody SearchCriteria empSearch)  {
+        log.info("-------getEmployeeBySearchCriteria---------" + empSearch);
         //LOGGER.info("-------Controller---------" + empSearch);
         return ResponseEntity.ok().body(employeeService.findByEmp(empSearch));
     }
