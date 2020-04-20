@@ -24,18 +24,17 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
-    //Get All Employee
-    @GetMapping("/get-all-customer")
+    @GetMapping("/customer")
     public ResponseEntity<List<Account>> getAllEmployee() {
         return ResponseEntity.ok().body(customerService.getAllAccount());
     }
 
-    @GetMapping("/get-all-customer/{id}")
+    @GetMapping("/customer/{id}")
     public ResponseEntity<Account> getAccountById(@PathVariable(value = "id") Long employeeId) {
         return ResponseEntity.ok().body(customerService.getAccountById(employeeId));
     }
 
-    @PostMapping(value = "/customer-search-criteria", produces = "application/json")
+    @PostMapping(value = "/customer-search", produces = "application/json")
     public ResponseEntity<List<Account>> getAccountBySearch(String empSearch)  {
         log.info("-------Controller---------" + empSearch);
 

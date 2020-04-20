@@ -50,20 +50,17 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-    //Get All Employee
-    @GetMapping("/get-all-employee")
+    @GetMapping("/employee")
     public ResponseEntity<List<Employee>> getAllEmployee() {
         return ResponseEntity.ok().body(employeeService.getAllEmployees());
     }
 
-    //Get Employee Details By Id - View Case
-    @GetMapping("/get-all-employee/{id}")
+    @GetMapping("/employee/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId) {
         return ResponseEntity.ok().body(employeeService.getEmployeeById(employeeId));
     }
 
-    //Get Employees By Search Criteria
-    @PostMapping(value = "/emp-search-criteria", produces = "application/json")
+    @PostMapping(value = "/employee-search", produces = "application/json")
     public ResponseEntity<List<Employee>> getEmployeeBySearchCriteria1(@RequestBody SearchCriteria empSearch)  {
         log.info("-------getEmployeeBySearchCriteria1---------" + empSearch);
         //LOGGER.info("-------Controller---------" + empSearch);
@@ -78,8 +75,7 @@ public class EmployeeController {
         return new ResponseEntity<Employee>(emp, new HttpHeaders(), HttpStatus.OK);
     }
 
-    //Delete Employee
-    @DeleteMapping(value = "/emp-delete/{id}")
+    @DeleteMapping(value = "/employee/{id}")
     public ResponseEntity<Employee> deleteEmployee(@PathVariable(value = "id") Long employeeId){
         log.info("-------deleteEmployee---------" + employeeId);
         employeeService.deleteEmployee(employeeId);

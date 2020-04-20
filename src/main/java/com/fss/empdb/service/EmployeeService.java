@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 @Log4j2
 @Service
+@Log4j2
 public class EmployeeService {
 
 
