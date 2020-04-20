@@ -5,6 +5,7 @@ import com.fss.empdb.controller.ProjectController;
 import com.fss.empdb.domain.*;
 import com.fss.empdb.exception.ResourceNotFoundException;
 import com.fss.empdb.repository.*;
+import lombok.extern.log4j.Log4j2;
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,11 +20,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
+@Log4j2
 @Service
 public class ProjectService {
 
-    private static Logger log = Logger.getLogger(ProjectController.class);
 
 
     @Autowired

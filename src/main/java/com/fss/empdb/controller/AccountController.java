@@ -22,8 +22,6 @@ import java.util.List;
 @RequestMapping("/accountservice/v1")
 public class AccountController {
 
-    //private static Logger log = LoggerFactory.getLogger(AccountController.class);
-
     @Autowired
     AccountService accountService;
 

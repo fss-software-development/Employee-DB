@@ -28,12 +28,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
+@Log4j2
 @Service
 @Log4j2
 public class EmployeeService {
-
-    //private static Logger log = Logger.getLogger(EmployeeController.class);
 
 
     @Autowired
@@ -78,7 +76,6 @@ public class EmployeeService {
         return employeeRepository.findById(employeeId).
                 orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.EMPLOYEE_NOT_FOUND + employeeId));
     }
-
 
     public List<Employee> findByEmp(SearchCriteria emp) {
         return employeeRepository.findAll(new Specification<Employee>() {
@@ -132,7 +129,6 @@ public class EmployeeService {
             }
         });
     }
-
 
     public Employee createOrUpdateEmployee(Employee employee) {
            try {
