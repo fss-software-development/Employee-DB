@@ -1,4 +1,4 @@
 spring:
   mvc:
     servlet:
-      path: /empdb/services
+      path: /empdb/services/v1

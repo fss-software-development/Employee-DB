@@ -20,12 +20,11 @@ public class Account {
     @Column(name="ACCOUNT_ID")
     Long accountId;
 
-
     @Column(name="ACCOUNT_NAME",nullable = false)
     String accountName;
 
     @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "REGION_ID")
+    @JoinColumn(name = "REGION_ID",nullable = false)
     private Region region;
 
     @JsonIgnore
@@ -33,7 +32,7 @@ public class Account {
     Long insUser;
 
     @JsonIgnore
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name="INS_DATE")
     Date insDate;
 
@@ -42,13 +41,13 @@ public class Account {
     Long lastUpdateUser;
 
     @JsonIgnore
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name="LAST_UPDATE_DATE")
     Date lastUpdateDate;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private List<Employee> employees;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+//    private List<Employee> employees;
 
 
 

@@ -15,5 +15,4 @@ public interface RegionRepository extends JpaRepository<Region,Long>, JpaSpecifi
 
     @Query(value = "SELECT u FROM Region u WHERE u.regionId IN :regionId")
     List<Region> findAllAccountByRegion(@Param("regionId") Long[] regionId);
-
 }

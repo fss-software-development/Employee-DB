@@ -66,8 +66,8 @@ public class AccountService {
     public Account createAccount(Account account) {
         account.setInsUser(Long.valueOf(1));
         account.setLastUpdateUser(Long.valueOf(1));
-        account.setInsDate(new Date());
-        account.setLastUpdateDate(new Date());
+//        account.setInsDate(new Date());
+//        account.setLastUpdateDate(new Date());
         return accountRepository.save(account);
     }
 
