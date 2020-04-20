@@ -1,7 +1,6 @@
 package com.fss.empdb.controller;
 
 
-import com.fss.empdb.domain.Employee;
 import com.fss.empdb.domain.Project;
 import com.fss.empdb.domain.SearchCriteria;
 import com.fss.empdb.service.ProjectService;
@@ -45,7 +44,7 @@ public class ProjectController {
         return ResponseEntity.ok().body(projectService.getProjectByName(projectName));
     }
 
-    //Add & Update Employee
+    //Add & Update Project
     @PostMapping(value = "/project-add-update")
     public ResponseEntity<Project> createOrUpdateProject(@RequestBody Project project)  {
         LOGGER.info("-------Project---------" + project);

@@ -1,8 +1,8 @@
 package com.fss.empdb.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
@@ -11,15 +11,14 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Designation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="DESIGNATION_ID")
     Long designationId;
-
-    public Designation(){
-
-    }
 
     @Column(name="DESIGNATION_NAME",nullable = false)
     String designationName;
@@ -47,17 +46,7 @@ public class Designation {
     @JsonIgnore
     private List<Employee> employees;
 
-    @Override
-    public String toString() {
-        return "Designation{" +
-                "designationId=" + designationId +
-                ", designationName='" + designationName + '\'' +
-                ", insUser=" + insUser +
-                ", insDate=" + insDate +
-                ", lastUpdateUser=" + lastUpdateUser +
-                ", lastUpdateDate=" + lastUpdateDate +
-                '}';
-    }
+
 
 
 }

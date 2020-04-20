@@ -22,7 +22,7 @@ import java.util.Date;
 @Table(name = "employee")
 @XmlRootElement
 @EqualsAndHashCode
-
+@ToString
 public class Employee implements Serializable {
 
     @Id
@@ -133,114 +133,5 @@ public class Employee implements Serializable {
     @Column(name="PRIMARY_SKILL")
     Long primarySkillId;
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "employeeSqId=" + employeeSqId +
-                ", employeeId=" + employeeId +
-                ", department=" + department +
-                ", account=" + account +
-                ", region=" + region +
-                ", location=" + location +
-                ", employeeName='" + employeeName + '\'' +
-                ", mobileNum=" + mobileNum +
-                ", emailId='" + emailId + '\'' +
-                ", grade=" + grade +
-                ", designation=" + designation +
-                ", reportingManager='" + reportingManager + '\'' +
-                ", previousExp=" + previousExp +
-                ", joiningDate=" + joiningDate +
-                ", billableStatus=" + billableStatus +
-                ", serviceLine=" + serviceLine +
-                ", activityName='" + activityName + '\'' +
-                ", experienceGaps=" + experienceGaps +
-                ", academics=" + academics +
-                ", insUser=" + insUser +
-                ", insDate=" + insDate +
-                ", lastUpdateUser=" + lastUpdateUser +
-                ", lastUpdateDate=" + lastUpdateDate +
-                '}';
-    }
-
-    //
-//    @JsonIgnore
-//    @Column(name="DESIGNATION_ID",nullable = false)
-//    Long designationId;
-//
-//    @JsonIgnore
-//    @Column(name = "DEPARTMENT_ID", nullable = false)
-//    private Long departmentId;
-//
-//    @JsonIgnore
-//    @Column(name = "REGION_Id", nullable = false)
-//    private Long regionId;
-//
-//    @JsonIgnore
-//    @Column(name="ACCOUNT_ID",nullable = false)
-//    Long accountId;
-//
-//    @JsonIgnore
-//    @Column(name="SERVICE_LINE_ID",nullable = false)
-//    Long serviceLineId;
-//
-//    @JsonIgnore
-//    @Column(name="BILLABLE_STATUS_ID",nullable = false)
-//    Long billableStatusId;
-//
-//    @JsonIgnore
-//    @Column(name="LOCATION_ID",nullable = false)
-//    Long locationId;
-//
-//    @JsonIgnore
-//    @Column(name="GRADE_ID",nullable = false)
-//    Long gradeId;
-//
-//    @JsonIgnore
-//    @Column(name="ACADEMICS_ID",nullable = false)
-//    Long academicId;
-
-//    @Override
-//    public String toString() {
-//        return "Employee{" +
-//                "employeeSqId=" + employeeSqId +
-//                ", employeeId=" + employeeId +
-//                ", department=" + department +
-//                ", account=" + account +
-//                ", region=" + region +
-//                ", location=" + location +
-//                ", employeeName='" + employeeName + '\'' +
-//                ", mobileNum=" + mobileNum +
-//                ", emailId='" + emailId + '\'' +
-//                ", grade=" + grade +
-//                ", designation=" + designation +
-//                ", reportingManager='" + reportingManager + '\'' +
-//                ", previousExp=" + previousExp +
-//                ", joiningDate=" + joiningDate +
-//                ", billableStatus=" + billableStatus +
-//                ", serviceLine=" + serviceLine +
-//                ", activityName='" + activityName + '\'' +
-//                ", primarySkill=" + primarySkill +
-//                ", experienceGaps=" + experienceGaps +
-//                ", academics=" + academics +
-//                ", insUser=" + insUser +
-//                ", insDate=" + insDate +
-//                ", lastUpdateUser=" + lastUpdateUser +
-//                ", lastUpdateDate=" + lastUpdateDate +
-//                ", designationId=" + designationId +
-//                ", departmentId=" + departmentId +
-//                ", regionId=" + regionId +
-//                ", accountId=" + accountId +
-//                ", serviceLineId=" + serviceLineId +
-//                ", billableStatusId=" + billableStatusId +
-//                ", locationId=" + locationId +
-//                ", gradeId=" + gradeId +
-//                ", academicId=" + academicId +
-//                ", primarySkillId=" + primarySkillId +
-//                '}';
-//    }
-//
-//    @JsonIgnore
-//    @Column(name="PRIMARY_SKILL",nullable = false)
-//    Long primarySkillId;
 
 }

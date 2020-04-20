@@ -1,9 +1,6 @@
 package com.fss.empdb.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,6 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+@ToString
 public class SearchCriteria {
 
     Long employeeSqId;
@@ -137,23 +135,6 @@ public class SearchCriteria {
         this.academics = academics;
     }
 
-    @Override
-    public String toString() {
-        return "SearchCriteria{" +
-                "employeeSqId=" + employeeSqId +
-                ", employeeId=" + employeeId +
-                ", employeeName='" + employeeName + '\'' +
-                ", department=" + Arrays.toString(department) +
-                ", account=" + Arrays.toString(account) +
-                ", region=" + Arrays.toString(region) +
-                ", location=" + Arrays.toString(location) +
-                ", grade=" + Arrays.toString(grade) +
-                ", designation=" + Arrays.toString(designation) +
-                ", billableStatus=" + Arrays.toString(billableStatus) +
-                ", serviceLine=" + Arrays.toString(serviceLine) +
-                ", academics=" + Arrays.toString(academics) +
-                '}';
-    }
 }
 
 

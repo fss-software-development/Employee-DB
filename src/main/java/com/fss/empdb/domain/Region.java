@@ -1,9 +1,7 @@
 package com.fss.empdb.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -13,16 +11,14 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class Region {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="REGION_ID")
     Long regionId;
-
-    public Region(){
-
-    }
 
     @Column(name="REGION_NAME",nullable = false)
     String regionName;

@@ -1,8 +1,8 @@
 package com.fss.empdb.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
@@ -11,14 +11,13 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Project {
     @Id
     @Column(name="PROJECT_ID")
     Long projectId;
-
-    public Project(){
-
-    }
 
     /*@OneToMany(cascade = CascadeType.MERGE, mappedBy = "departmentId")
     private Collection<Department> department;*/

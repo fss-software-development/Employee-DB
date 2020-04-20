@@ -1,9 +1,7 @@
 package com.fss.empdb.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -13,6 +11,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class Account {
     @Id
@@ -20,9 +20,6 @@ public class Account {
     @Column(name="ACCOUNT_ID")
     Long accountId;
 
-    public Account(){
-
-    }
 
     @Column(name="ACCOUNT_NAME",nullable = false)
     String accountName;

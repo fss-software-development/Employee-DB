@@ -1,8 +1,8 @@
 package com.fss.empdb.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
@@ -10,15 +10,14 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Grade {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "GRADE_ID")
     Long gradeId;
-
-    public Grade() {
-
-    }
 
     @Column(name = "GRADE_NAME", nullable = false)
     String gradeName;
