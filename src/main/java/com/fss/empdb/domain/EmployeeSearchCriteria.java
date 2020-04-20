@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @ToString
-public class SearchCriteria {
+public class EmployeeSearchCriteria {
 
     Long employeeSqId;
 

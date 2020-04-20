@@ -68,7 +68,7 @@ public class EmployeeService {
                 orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.EMPLOYEE_NOT_FOUND + employeeId));
     }
 
-    public List<Employee> findByEmp(SearchCriteria emp) {
+    public List<Employee> findByEmp(EmployeeSearchCriteria emp) {
         return employeeRepository.findAll(new Specification<Employee>() {
             @Override
             public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {

@@ -13,41 +13,39 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@RequestMapping("/account/v1")
+@RequestMapping("/accounts")
 public class AccountController {
 
     @Autowired
     AccountService accountService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Account>> getAllAccount() {
+    public ResponseEntity<List<Account>> allAccount() {
         return ResponseEntity.ok().body(accountService.allAccount());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Account> getAccountById(@PathVariable(value = "id") Long accountId) {
+    public ResponseEntity<Account> allAccountById(@PathVariable(value = "id") Long accountId) {
         return ResponseEntity.ok().body(accountService.allAccountById(accountId));
     }
 
-    @PostMapping(value = "/search")
-    public ResponseEntity<List<Account>> getAccountBySearch(@RequestParam(required = false) String accountName,
+    @GetMapping
+    public ResponseEntity<List<Account>> getAllAccountBySearch(@RequestParam(required = false) String accountName,
                                                             @RequestParam(required = false) Long[] regionId) {
-        log.info("account name" +accountName);
-        log.info("regionId" +regionId.toString());
-        return ResponseEntity.ok().body(accountService.allAccountBySearch(accountName, regionId));
+           return ResponseEntity.ok().body(accountService.allAccountBySearch(accountName, regionId));
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
         return ResponseEntity.ok().body(accountService.createAccount(account));
     }
 
-    @PutMapping(value = "/update")
+    @PutMapping
     public ResponseEntity<Account> updateAccount(@RequestBody Account account){
         return ResponseEntity.ok().body(accountService.updateAccount(account));
     }
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Account> deleteAccount(@PathVariable(value = "id") Long accountId){
         accountService.deleteAccount(accountId);
         return new ResponseEntity<Account>(new HttpHeaders(), HttpStatus.OK);
