@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 @Getter
 @ToString
-public class ProjectCriteria {
+public class ProjectSearchCriteria {
 
     Long projectId;
     String projectName;

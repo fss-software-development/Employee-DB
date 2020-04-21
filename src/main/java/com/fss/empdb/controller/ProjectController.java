@@ -1,13 +1,10 @@
 package com.fss.empdb.controller;
 
 
-import com.fss.empdb.domain.Employee;
 import com.fss.empdb.domain.Project;
-import com.fss.empdb.domain.ProjectCriteria;
+import com.fss.empdb.domain.ProjectSearchCriteria;
 import com.fss.empdb.service.ProjectService;
 import lombok.extern.log4j.Log4j2;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -36,7 +33,7 @@ public class ProjectController {
     }
 
     @PostMapping(value = "/search", produces = "application/json")
-    public ResponseEntity<List<Project>> projectsBySearch(@RequestBody ProjectCriteria projSearch)  {
+    public ResponseEntity<List<Project>> projectsBySearch(@RequestBody ProjectSearchCriteria projSearch)  {
         return ResponseEntity.ok().body(projectService.projectsBySearch(projSearch));
     }
 
