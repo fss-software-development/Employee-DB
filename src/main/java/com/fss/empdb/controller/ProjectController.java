@@ -26,26 +26,23 @@ public class ProjectController {
     ProjectService projectService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Project>> getAllProject() {
-            return ResponseEntity.ok().body(projectService.getAllProject());
+    public ResponseEntity<List<Project>> allProject() {
+            return ResponseEntity.ok().body(projectService.allProject());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Project> getProjectById(@PathVariable(value = "id") Long projectId) {
-        log.info("-------getAllProject---------" + projectId);
-        return ResponseEntity.ok().body(projectService.getProjectById(projectId));
+    public ResponseEntity<Project> projectsById(@PathVariable(value = "id") Long projectId) {
+        return ResponseEntity.ok().body(projectService.projectsById(projectId));
     }
 
     @PostMapping(value = "/search", produces = "application/json")
-    public ResponseEntity<List<Project>> getProjectBySearchCriteria(@RequestBody ProjectCriteria projSearch)  {
-        log.info("-------getProjectBySearchCriteria---------" + projSearch);
-        return ResponseEntity.ok().body(projectService.findByProject(projSearch));
+    public ResponseEntity<List<Project>> projectsBySearch(@RequestBody ProjectCriteria projSearch)  {
+        return ResponseEntity.ok().body(projectService.projectsBySearch(projSearch));
     }
 
     @PostMapping
     public ResponseEntity<Project> createProject(@RequestBody Project project)  {
-        Project proj = projectService.createProject(project);
-        return new ResponseEntity<Project>(proj, new HttpHeaders(), HttpStatus.OK);
+        return ResponseEntity.ok().body(projectService.createProject(project));
     }
 
     @PutMapping
@@ -54,7 +51,7 @@ public class ProjectController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> deleteProject(@PathVariable(value = "id") Long projectId){
+    public ResponseEntity<Project> deleteProject(@PathVariable(value = "id") Long projectId){
         projectService.deleteProject(projectId);
         return new ResponseEntity<Project>(new HttpHeaders(), HttpStatus.OK);
     }

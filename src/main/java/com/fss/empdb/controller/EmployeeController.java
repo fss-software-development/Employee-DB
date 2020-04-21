@@ -30,24 +30,19 @@ public class EmployeeController {
         return ResponseEntity.ok().body(employeeService.getEmployeeById(employeeId));
     }
 
-    @PostMapping(value = "/employee-search", produces = "application/json")
-    public ResponseEntity<List<Employee>> getEmployeeBySearchCriteria(@RequestBody EmployeeSearchCriteria empSearch)  {
-        log.info("-------getEmployeeBySearchCriteria---------" + empSearch);
-        //LOGGER.info("-------Controller---------" + empSearch);
+    @PostMapping(value = "/search", produces = "application/json")
+    public ResponseEntity<List<Employee>> getEmployeesBySearch(@RequestBody EmployeeSearchCriteria empSearch)  {
         return ResponseEntity.ok().body(employeeService.findByEmp(empSearch));
     }
 
     //Add & Update Employee
     @PostMapping(value = "/emp-add-update")
     public ResponseEntity<Employee> createOrUpdateEmployee(@RequestBody Employee employee)  {
-        log.info("-------createOrUpdateEmployee---------" + employee);
-        Employee emp = employeeService.createOrUpdateEmployee(employee);
-        return new ResponseEntity<Employee>(emp, new HttpHeaders(), HttpStatus.OK);
+        return ResponseEntity.ok().body(employeeService.createOrUpdateEmployee(employee));
     }
 
     @DeleteMapping(value = "/employee/{id}")
     public ResponseEntity<Employee> deleteEmployee(@PathVariable(value = "id") Long employeeId){
-        log.info("-------deleteEmployee---------" + employeeId);
         employeeService.deleteEmployee(employeeId);
         return new ResponseEntity<Employee>(new HttpHeaders(), HttpStatus.OK);
     }

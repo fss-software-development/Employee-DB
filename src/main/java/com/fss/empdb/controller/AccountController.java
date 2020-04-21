@@ -32,7 +32,7 @@ public class AccountController {
     }
 
     @PostMapping(value = "/search", produces = "application/json")
-    public ResponseEntity<List<Account>> getAllAccountBySearch(@RequestBody AccountSearchCriteria accountSearchCriteria) {
+    public ResponseEntity<List<Account>> getAccountsBySearch(@RequestBody AccountSearchCriteria accountSearchCriteria) {
         return ResponseEntity.ok().body(accountService.allAccountBySearch(accountSearchCriteria));
     }
 
