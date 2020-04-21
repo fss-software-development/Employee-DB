@@ -42,11 +42,11 @@ public class ProjectService {
     ProjectTaggingRepository projectTaggingRepository;
 
 
-    public List<Project> getAllProject() {
+    public List<Project> allProject() {
         return projectRepository.findAll();
     }
 
-    public Project getProjectById(Long projectId) {
+    public Project projectsById(Long projectId) {
         return projectRepository.findById(projectId).
                 orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.DATA_NOT_FOUND + projectId));
     }
@@ -81,7 +81,7 @@ public class ProjectService {
         return projectRepository.save(project);
     }
 
-    public List<Project> findByProject(ProjectCriteria proj) {
+    public List<Project> projectsBySearch(ProjectCriteria proj) {
         return projectRepository.findAll(new Specification<Project>() {
             @Override
             public Predicate toPredicate(Root<Project> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
