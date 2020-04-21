@@ -1,6 +1,8 @@
 package com.fss.empdb.controller;
 
 import com.fss.empdb.domain.Account;
+import com.fss.empdb.domain.AccountSearchCriteria;
+import com.fss.empdb.domain.ProjectCriteria;
 import com.fss.empdb.service.AccountService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +31,9 @@ public class AccountController {
         return ResponseEntity.ok().body(accountService.allAccountById(accountId));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Account>> getAllAccountBySearch(@RequestParam(required = false) String accountName,
-                                                            @RequestParam(required = false) Long[] regionId) {
-           return ResponseEntity.ok().body(accountService.allAccountBySearch(accountName, regionId));
+    @PostMapping(value = "/search", produces = "application/json")
+    public ResponseEntity<List<Account>> getAllAccountBySearch(@RequestBody AccountSearchCriteria accountSearchCriteria) {
+           return ResponseEntity.ok().body(accountService.allAccountBySearch(accountSearchCriteria));
     }
 
     @PostMapping
