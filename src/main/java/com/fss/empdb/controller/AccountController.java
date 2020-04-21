@@ -47,9 +47,9 @@ public class AccountController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Account> deleteAccount(@PathVariable(value = "id") Long accountId) {
+    public HttpStatus deleteAccount(@PathVariable(value = "id") Long accountId) {
         accountService.deleteAccount(accountId);
-        return new ResponseEntity<Account>(new HttpHeaders(), HttpStatus.OK);
+        return HttpStatus.OK;
     }
 
 }

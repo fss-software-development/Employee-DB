@@ -8,6 +8,7 @@ import com.fss.empdb.repository.RegionRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.*;
@@ -73,6 +74,6 @@ public class AccountService {
     public void deleteAccount(Long accountId) {
         Account account = accountRepository.findById(accountId).
                 orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.CUSTOMER_NOT_FOUND + accountRepository));
-        accountRepository.delete(account);
+         accountRepository.delete(account);
     }
 }
