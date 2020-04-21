@@ -23,7 +23,7 @@ public class Project {
     /*@OneToMany(cascade = CascadeType.MERGE, mappedBy = "departmentId")
     private Collection<Department> department;*/
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "DEPARTMENT_ID")
     private Department department;
 
@@ -39,37 +39,37 @@ public class Project {
     String projectStatus;
 
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "REGION_ID")
     private Region region;
 
 
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
 
     //@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "projectTaggingId")
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "PROJECT_TAGGING_ID")
     private ProjectTagging projectTagging;
 
     @JsonIgnore
-    @Column(name="INS_USER",nullable = false)
+    @Column(name="INS_USER")
     Long insUser;
 
     @JsonIgnore
     @Temporal(TemporalType.DATE)
-    @Column(name="INS_DATE",nullable = false)
+    @Column(name="INS_DATE")
     Date insDate;
 
     @JsonIgnore
-    @Column(name="LAST_UPDATE_USER",nullable = false)
+    @Column(name="LAST_UPDATE_USER")
     Long lastUpdateUser;
 
     @JsonIgnore
     @Temporal(TemporalType.DATE)
-    @Column(name="LAST_UPDATE_DATE",nullable = false)
+    @Column(name="LAST_UPDATE_DATE")
     Date lastUpdateDate;
 
 }

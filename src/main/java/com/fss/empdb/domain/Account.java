@@ -22,7 +22,7 @@ public class Account {
     @Column(name="ACCOUNT_NAME",nullable = false)
     String accountName;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "REGION_ID",nullable = false)
     private Region region;
 

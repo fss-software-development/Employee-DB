@@ -70,29 +70,14 @@ public class ProjectService {
     }
 
     public Project updateProject(Project project){
-        Optional<Department> department = departmentRepository.findById(project.getDepartment().getDepartmentId());
-        Department departmentEntity =department.get();
 
-        Optional<Account> account = accountRepository.findById(project.getAccount().getAccountId());
-        Account accountEntity =account.get();
-
-        Optional<ProjectTagging> projectTagging = projectTaggingRepository.findById(project.getProjectTagging().getProjectTaggingId());
-        ProjectTagging projectTaggingEntity =projectTagging.get();
-
-        Optional<Region> region = regionRepository.findById(project.getRegion().getRegionId());
-        Region regionEntity =region.get();
-
-        project.setDepartment(departmentEntity);
-        project.setAccount(accountEntity);
-        project.setProjectTagging(projectTaggingEntity);
-        project.setRegion(regionEntity);
         project.setInsUser(Long.valueOf(1));
         project.setLastUpdateUser(Long.valueOf(1));
         project.setInsDate(new Date());
         project.setLastUpdateDate(new Date());
-        accountRepository.findById(project.getProjectId())
+        /*projectRepository.findById(project.getProjectId())
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.CUSTOMER_NOT_FOUND
-                        + project.getProjectId()));
+                        + project.getProjectId()));*/
         return projectRepository.save(project);
     }
 
