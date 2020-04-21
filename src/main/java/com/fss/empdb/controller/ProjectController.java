@@ -32,13 +32,11 @@ public class ProjectController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Project> getProjectById(@PathVariable(value = "id") Long projectId) {
-        log.info("-------getAllProject---------" + projectId);
         return ResponseEntity.ok().body(projectService.getProjectById(projectId));
     }
 
     @PostMapping(value = "/search", produces = "application/json")
-    public ResponseEntity<List<Project>> getProjectBySearchCriteria(@RequestBody ProjectCriteria projSearch)  {
-        log.info("-------getProjectBySearchCriteria---------" + projSearch);
+    public ResponseEntity<List<Project>> getProjectsBySearch(@RequestBody ProjectCriteria projSearch)  {
         return ResponseEntity.ok().body(projectService.findByProject(projSearch));
     }
 
