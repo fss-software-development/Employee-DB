@@ -31,12 +31,12 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
-    public Account allAccountById(Long accountId) {
+    public Account accountById(Long accountId) {
         return accountRepository.findById(accountId).
                 orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.CUSTOMER_NOT_FOUND + accountId));
     }
 
-    public List<Account> allAccountBySearch(AccountSearchCriteria accountSearchCriteria) {
+    public List<Account> accountBySearch(AccountSearchCriteria accountSearchCriteria) {
         return accountRepository.findAll(new Specification<Account>() {
             @Override
             public Predicate toPredicate(Root<Account> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {

@@ -27,12 +27,12 @@ public class AccountController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Account> accountById(@PathVariable(value = "id") Long accountId) {
-        return ResponseEntity.ok().body(accountService.allAccountById(accountId));
+        return ResponseEntity.ok().body(accountService.accountById(accountId));
     }
 
     @PostMapping(value = "/search", produces = "application/json")
     public ResponseEntity<List<Account>> accountsBySearch(@RequestBody AccountSearchCriteria accountSearchCriteria) {
-        return ResponseEntity.ok().body(accountService.allAccountBySearch(accountSearchCriteria));
+        return ResponseEntity.ok().body(accountService.accountBySearch(accountSearchCriteria));
     }
 
     @PostMapping
