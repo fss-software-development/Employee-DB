@@ -40,11 +40,11 @@ public class Project {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "PROJECT_START_DATE", nullable = false)
-    Date ProjectStartDate;
+    Date projectStartDate;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "PROJECT_END_DATE", nullable = false)
-    Date ProjectEndDate;
+    Date projectEndDate;
 
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
     @ManyToOne(cascade = CascadeType.REMOVE)
@@ -79,5 +79,4 @@ public class Project {
     @Temporal(TemporalType.DATE)
     @Column(name="LAST_UPDATE_DATE")
     Date lastUpdateDate;
-
 }

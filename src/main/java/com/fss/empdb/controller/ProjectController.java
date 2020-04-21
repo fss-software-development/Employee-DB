@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@RequestMapping("/project")
+@RequestMapping("/projects")
 public class ProjectController {
 
 
