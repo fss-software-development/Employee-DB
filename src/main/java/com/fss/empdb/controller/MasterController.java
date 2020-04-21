@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@RequestMapping("/master")
+@RequestMapping("/masters")
 public class MasterController {
 
     @Autowired
