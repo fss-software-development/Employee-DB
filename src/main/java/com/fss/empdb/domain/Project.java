@@ -38,6 +38,14 @@ public class Project {
     @Column(name="PROJECT_STATUS",nullable = false)
     String projectStatus;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "PROJECT_START_DATE", nullable = false)
+    Date ProjectStartDate;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "PROJECT_END_DATE", nullable = false)
+    Date ProjectEndDate;
+
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "REGION_ID")
