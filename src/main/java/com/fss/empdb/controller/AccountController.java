@@ -2,7 +2,6 @@ package com.fss.empdb.controller;
 
 import com.fss.empdb.domain.Account;
 import com.fss.empdb.domain.AccountSearchCriteria;
-import com.fss.empdb.domain.ProjectCriteria;
 import com.fss.empdb.service.AccountService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
