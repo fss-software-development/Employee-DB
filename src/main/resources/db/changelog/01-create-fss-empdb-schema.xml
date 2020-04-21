@@ -52,6 +52,7 @@
 				LAST_UPDATE_USER INT(11) NULL,
 				LAST_UPDATE_DATE TIMESTAMP,
 				PRIMARY KEY (ACCOUNT_ID),
+				UNIQUE INDEX ACCOUNT_NAME_UNIQUE (ACCOUNT_NAME ASC) VISIBLE,
 				INDEX fk_account_region1_idx (REGION_ID ASC) VISIBLE,
 					CONSTRAINT fk_account_region1
 					FOREIGN KEY (REGION_ID)
@@ -330,6 +331,7 @@
 				LAST_UPDATE_USER INT(11) NULL DEFAULT NULL,
 				LAST_UPDATE_DATE TIMESTAMP,
 				PRIMARY KEY (PROJECT_ID),
+				UNIQUE INDEX PROJECT_NAME_UNIQUE (PROJECT_NAME ASC) VISIBLE,
 				INDEX fk_project_department_idx (DEPARTMENT_ID ASC) VISIBLE,
 				INDEX fk_project_user_idx (INS_USER ASC) VISIBLE,
 				INDEX fk_project_user2_idx (LAST_UPDATE_USER ASC) VISIBLE,
@@ -476,12 +478,12 @@
                 INDEX fk_employee_tools_employee1_idx (EMPLOYEE_SQID ASC) VISIBLE,
              CONSTRAINT fk_employee_tools_employee1
                      FOREIGN KEY (EMPLOYEE_SQID)
-                     REFERENCES employee_db_test.employee (EMPLOYEE_SQID)
+                     REFERENCES employee_db.employee (EMPLOYEE_SQID)
                      ON DELETE NO ACTION
                      ON UPDATE NO ACTION,
             CONSTRAINT fk_employee_has_tools_tools1
                      FOREIGN KEY (TOOL_ID)
-                     REFERENCES employee_db_test.tools (TOOL_ID)
+                     REFERENCES employee_db.tools (TOOL_ID)
                      ON DELETE NO ACTION
                      ON UPDATE NO ACTION
                      ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
