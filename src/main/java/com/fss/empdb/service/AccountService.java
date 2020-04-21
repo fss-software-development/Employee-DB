@@ -63,18 +63,11 @@ public class AccountService {
     }
 
     public Account updateAccount(Account account) {
-
-        Account acc = accountRepository.findById(account.getAccountId())
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.CUSTOMER_NOT_FOUND
-                        + account.getAccountId()));
-
-
-        acc.setInsUser(Long.valueOf(1));
-        acc.setLastUpdateUser(Long.valueOf(1));
-        acc.setInsDate(new Date());
-        acc.setLastUpdateDate(new Date());
-
-        return accountRepository.save(acc);
+        account.setInsUser(Long.valueOf(1));
+        account.setLastUpdateUser(Long.valueOf(1));
+        account.setInsDate(new Date());
+        account.setLastUpdateDate(new Date());
+        return accountRepository.save(account);
     }
 
     public void deleteAccount(Long accountId) {
