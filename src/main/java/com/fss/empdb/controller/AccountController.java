@@ -33,7 +33,7 @@ public class AccountController {
 
     @PostMapping(value = "/search", produces = "application/json")
     public ResponseEntity<List<Account>> getAllAccountBySearch(@RequestBody AccountSearchCriteria accountSearchCriteria) {
-           return ResponseEntity.ok().body(accountService.allAccountBySearch(accountSearchCriteria));
+        return ResponseEntity.ok().body(accountService.allAccountBySearch(accountSearchCriteria));
     }
 
     @PostMapping
@@ -42,12 +42,12 @@ public class AccountController {
     }
 
     @PutMapping
-    public ResponseEntity<Account> updateAccount(@RequestBody Account account){
+    public ResponseEntity<Account> updateAccount(@RequestBody Account account) {
         return ResponseEntity.ok().body(accountService.updateAccount(account));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Account> deleteAccount(@PathVariable(value = "id") Long accountId){
+    public ResponseEntity<Account> deleteAccount(@PathVariable(value = "id") Long accountId) {
         accountService.deleteAccount(accountId);
         return new ResponseEntity<Account>(new HttpHeaders(), HttpStatus.OK);
     }
