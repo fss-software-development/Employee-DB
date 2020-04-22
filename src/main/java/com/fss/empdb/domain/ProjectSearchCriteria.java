@@ -17,6 +17,8 @@ public class ProjectSearchCriteria {
     String projectName;
     String projectManager;
     String projectStatus;
+    Date projectStartDate;
+    Date projectEndDate;
     private Department[] department;
     private Region[] region;
     private Account[] account;

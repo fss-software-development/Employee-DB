@@ -36,6 +36,7 @@ public class Department implements Serializable {
     @Column(name = "DEPARTMENT_HEAD", nullable = false)
     String departmentHead;
 
+    @JsonIgnore
     @Column(name = "INS_USER", nullable = false)
     Long insUser;
 
