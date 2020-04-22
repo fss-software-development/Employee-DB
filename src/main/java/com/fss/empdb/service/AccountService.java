@@ -36,7 +36,7 @@ public class AccountService {
                 orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.CUSTOMER_NOT_FOUND + accountId));
     }
 
-    public List<Account> accountBySearch(AccountSearchCriteria accountSearchCriteria) {
+    public List<Account> accountBySearch(AccountSearchCriteria accountSearchCriteria){
         return accountRepository.findAll(new Specification<Account>() {
             @Override
             public Predicate toPredicate(Root<Account> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
@@ -45,6 +45,7 @@ public class AccountService {
                 if (accountSearchCriteria.getAccountName() != null) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("accountName"), "%" + accountSearchCriteria.getAccountName() + "%")));
                 }
+
                 if (accountSearchCriteria.getRegion().length > 0) {
                     Join<Account, Region> phoneJoin = root.join("region");
                     predicates.add(phoneJoin.in(accountSearchCriteria.getRegion()));
@@ -74,6 +75,6 @@ public class AccountService {
     public void deleteAccount(Long accountId) {
         Account account = accountRepository.findById(accountId).
                 orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.CUSTOMER_NOT_FOUND + accountRepository));
-         accountRepository.delete(account);
+        accountRepository.delete(account);
     }
 }
