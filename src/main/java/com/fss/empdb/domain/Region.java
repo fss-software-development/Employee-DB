@@ -45,7 +45,7 @@ public class Region {
     @JsonIgnore
     private List<Employee> employees;
 
-    @OneToMany(mappedBy = "region",  cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Account> accounts;
+//    @OneToMany(mappedBy = "region",  cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private List<Account> accounts;
 }

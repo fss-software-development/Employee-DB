@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/employee_db_test
+    username: root
+    password: rakeshm
+  security:
+    user:
+      name: rama
+      password: pass123
+  liquibase:
+    change-log: classpath:db/liquibase-changelog.xml
+server:
+  port: 8081
+
+
