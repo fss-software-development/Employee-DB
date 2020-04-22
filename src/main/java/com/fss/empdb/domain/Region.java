@@ -16,7 +16,7 @@ import java.util.List;
 @ToString
 public class Region {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="REGION_ID")
     Long regionId;
 

@@ -26,7 +26,7 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 //@Sql(scripts = {"/testdb/tear-down-empdb-db.sql"}, config = @SqlConfig(transactionMode = ISOLATED), executionPhase = AFTER_TEST_METHOD)
 //@Sql(scripts = {"/testdb/tear-down-masters-db.sql"}, config = @SqlConfig(transactionMode = ISOLATED), executionPhase = AFTER_TEST_METHOD)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ActiveProfiles("TestCases")
+@ActiveProfiles("local")
 @SpringBootTest
 public class AccountServiceTest {
 
@@ -60,7 +60,7 @@ public class AccountServiceTest {
         Region reg = new Region();
         reg.setRegionId(1L);
         Region reg1 = new Region();
-        reg.setRegionId(6L);
+        reg1.setRegionId(5L);
         Region[] regArr = {reg, reg1};
 
         acc.setRegion(regArr);
