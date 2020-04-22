@@ -23,8 +23,8 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TES
 import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 
 @DirtiesContext
-//@Sql(scripts = {"/db/setup-empdb-db.sql"}, config = @SqlConfig(transactionMode = ISOLATED))
-//@Sql(scripts = {"/db/tear-down-empdb-db.sql"}, config = @SqlConfig(transactionMode = ISOLATED), executionPhase = AFTER_TEST_METHOD)
+//@Sql(scripts = {"/testdb/setup-empdb-db.sql"}, config = @SqlConfig(transactionMode = ISOLATED))
+//@Sql(scripts = {"/testdb/tear-down-empdb-db.sql"}, config = @SqlConfig(transactionMode = ISOLATED), executionPhase = AFTER_TEST_METHOD)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
 @Transactional
