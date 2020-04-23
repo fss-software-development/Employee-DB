@@ -23,18 +23,6 @@ public class ProjectService {
     @Autowired
     ProjectRepository projectRepository;
 
-    @Autowired
-    AccountRepository accountRepository;
-
-    @Autowired
-    RegionRepository regionRepository;
-
-    @Autowired
-    DepartmentRepository departmentRepository;
-
-    @Autowired
-    ProjectTaggingRepository projectTaggingRepository;
-
 
     public List<Project> allProject() {
         return projectRepository.findAll();

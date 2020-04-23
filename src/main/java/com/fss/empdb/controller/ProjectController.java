@@ -3,6 +3,7 @@ package com.fss.empdb.controller;
 
 import com.fss.empdb.domain.Project;
 import com.fss.empdb.domain.ProjectSearchCriteria;
+import com.fss.empdb.repository.ProjectRepository;
 import com.fss.empdb.service.ProjectService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class ProjectController {
 
     @Autowired
     ProjectService projectService;
+
+    @Autowired
+    ProjectRepository projectRepository;
 
     @GetMapping("/")
     public ResponseEntity<List<Project>> allProject() {
