@@ -87,7 +87,7 @@ public class ProjectService {
 
                 if (proj.getProjectStatus() != null) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectStatus"), "%" + proj.getProjectStatus() + "%")));
-                }*/
+                } */
 
                 /*if (proj.getDepartment().length > 0) {
                     Join<Employee, Department> phoneJoin = root.join("department");
