@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @Log4j2
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/masters")
 public class MasterController {
 
