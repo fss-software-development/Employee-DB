@@ -61,10 +61,10 @@ public class ProjectServiceITest {
         dept.setDepartmentId(1L);
         dept.setDepartmentName("Solution-OFSD");
         dept.setDepartmentHead("XYZkkk");
-        project.setDepartment(dept);
+        //project.setDepartment(dept);
         project.setProjectName("Employee-DB");
-        project.setProjectManager("XYZkkk");
-        project.setProjectStatus("In-Progress");
+        //project.setProjectManager("XYZkkk");
+        //project.setProjectStatus("In-Progress");
         project.setProjectStartDate(new Date(2020-04-02));
         project.setProjectEndDate(new Date(2021-04-02));
         Region reg = new Region();
@@ -75,10 +75,10 @@ public class ProjectServiceITest {
         account.setAccountId(1L);
         account.setAccountName("HDFC");
         project.setAccount(account);
-        ProjectTagging projectTagging = new ProjectTagging();
+        /*ProjectTagging projectTagging = new ProjectTagging();
         projectTagging.setProjectTaggingId(1L);
         projectTagging.setProjectTaggingName("Reserved");
-        project.setProjectTagging(projectTagging);
+        project.setProjectTagging(projectTagging);*/
         return project;
     }
 
@@ -90,7 +90,7 @@ public class ProjectServiceITest {
         assertNotNull(newProject);
         assertNotNull(newProject.getProjectId());
         assertEquals(project.getProjectName(), newProject.getProjectName());
-        assertEquals(project.getDepartment().getDepartmentId(), newProject.getDepartment().getDepartmentId());
+        assertEquals(project.getAccount().getAccountId(), newProject.getAccount().getAccountId());
     }
     private ProjectSearchCriteria newProjectSearchCriteria(){
         ProjectSearchCriteria project = new ProjectSearchCriteria();
@@ -141,14 +141,14 @@ public class ProjectServiceITest {
     private Project newProject(){
         Project project = new Project();
         project.setProjectName("Employee-DB");
-        Department dept = new Department();
+        /*Department dept = new Department();
         dept.setDepartmentId(1L);
         dept.setDepartmentName("Solution-OFSD");
         dept.setDepartmentHead("XYZkkk");
-        project.setDepartment(dept);
+        project.setDepartment(dept);*/
         project.setProjectName("Employee-DB");
-        project.setProjectManager("XYZkkk");
-        project.setProjectStatus("In-Progress");
+        /*project.setProjectManager("XYZkkk");
+        project.setProjectStatus("In-Progress");*/
         project.setProjectStartDate(new Date(2020-04-02));
         project.setProjectEndDate(new Date(2021-04-02));
         Region reg = new Region();
@@ -159,10 +159,10 @@ public class ProjectServiceITest {
         account.setAccountId(1L);
         account.setAccountName("HDFC");
         project.setAccount(account);
-        ProjectTagging projectTagging = new ProjectTagging();
+        /*ProjectTagging projectTagging = new ProjectTagging();
         projectTagging.setProjectTaggingId(1L);
         projectTagging.setProjectTaggingName("Reserved");
-        project.setProjectTagging(projectTagging);
+        project.setProjectTagging(projectTagging);*/
         return project;
     }
 
@@ -176,11 +176,11 @@ public class ProjectServiceITest {
         assertNotNull(newProject.getProjectId());
         assertEquals(newProject.getProjectId(),project.getProjectId());
         assertEquals(newProject.getProjectName(), project.getProjectName());
-        assertEquals(newProject.getDepartment().getDepartmentId(), project.getDepartment().getDepartmentId());
+       /* assertEquals(newProject.getDepartment().getDepartmentId(), project.getDepartment().getDepartmentId());*/
     }
 
     @Test
-    public void deleteAccount_success() {
+    public void deleteProject_success() {
         Project project=new Project();
         project.setProjectId(54L);
         projectService.deleteProject(54L);
