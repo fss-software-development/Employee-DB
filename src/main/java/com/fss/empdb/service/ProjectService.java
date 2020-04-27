@@ -68,18 +68,18 @@ public class ProjectService {
             @Override
             public Predicate toPredicate(Root<Project> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new ArrayList<>();
-                if (proj.getProjectId() != null) {
+                /*if (proj.getProjectId() != null) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("projectId"), proj.getProjectId())));
-                }
+                }*/
                 if (proj.getProjectName() != null) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectName"), "%" + proj.getProjectName() + "%")));
                 }
-                if (proj.getProjectManager() != null) {
+               /* if (proj.getProjectManager() != null) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectManager"), "%" + proj.getProjectManager() + "%")));
                 }
                 if (proj.getProjectStatus() != null) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectStatus"), "%" + proj.getProjectStatus() + "%")));
-                }
+                }*/
 
                 /*if (proj.getProjectStatus() != null) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectStatus"), "%" + proj.getProjectStatus() + "%")));
@@ -89,22 +89,22 @@ public class ProjectService {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectStatus"), "%" + proj.getProjectStatus() + "%")));
                 }*/
 
-                if (proj.getDepartment().length > 0) {
+                /*if (proj.getDepartment().length > 0) {
                     Join<Employee, Department> phoneJoin = root.join("department");
                     predicates.add(phoneJoin.in(proj.getDepartment()));
-                }
+                }*/
                 if (proj.getRegion().length > 0) {
-                    Join<Employee, Designation> phoneJoin = root.join("region");
+                    Join<Employee, Region> phoneJoin = root.join("region");
                     predicates.add(phoneJoin.in(proj.getRegion()));
                 }
                 if (proj.getAccount().length > 0) {
-                    Join<Employee, Region> phoneJoin = root.join("account");
+                    Join<Employee, Account> phoneJoin = root.join("account");
                     predicates.add(phoneJoin.in(proj.getAccount()));
                 }
-                if (proj.getProjectTagging().length > 0l) {
+                /*if (proj.getProjectTagging().length > 0l) {
                     Join<Employee, Account> phoneJoin = root.join("projectTagging");
                     predicates.add(phoneJoin.in(proj.getProjectTagging()));
-                }
+                }*/
                 log.info("Search filter Size :" + predicates.size());
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }

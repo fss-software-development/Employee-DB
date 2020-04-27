@@ -23,20 +23,20 @@ public class Project {
     /*@OneToMany(cascade = CascadeType.MERGE, mappedBy = "departmentId")
     private Collection<Department> department;*/
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    /*@ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "DEPARTMENT_ID")
-    private Department department;
+    private Department department;*/
 
 
 
     @Column(name="PROJECT_NAME",nullable = false)
     String projectName;
 
-    @Column(name="PROJECT_MANAGER",nullable = false)
+   /* @Column(name="PROJECT_MANAGER",nullable = false)
     String projectManager;
 
     @Column(name="PROJECT_STATUS",nullable = false)
-    String projectStatus;
+    String projectStatus;*/
 
     @Temporal(TemporalType.DATE)
     @Column(name = "PROJECT_START_DATE", nullable = false)
@@ -58,9 +58,9 @@ public class Project {
     private Account account;
 
     //@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "projectTaggingId")
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    /*@ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "PROJECT_TAGGING_ID")
-    private ProjectTagging projectTagging;
+    private ProjectTagging projectTagging;*/
 
     @JsonIgnore
     @Column(name="INS_USER")
