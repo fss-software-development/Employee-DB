@@ -71,6 +71,11 @@ public class MasterController {
         return masterService.getAllProjectTagging();
     }
 
+    @GetMapping("/tools")
+    public List<Tools> getAllTools() {
+        return masterService.getAllTools();
+    }
+
 //    @GetMapping("/master/get-all-project-tagging")
 //    public List<Role> getAllRole() {
 //        return masterService.getAllRole();

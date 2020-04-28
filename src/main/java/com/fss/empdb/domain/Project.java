@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -56,6 +54,10 @@ public class Project {
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
+
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "projects")
+//    List<Employee> employee;
 
     //@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "projectTaggingId")
     /*@ManyToOne(cascade = CascadeType.REMOVE)

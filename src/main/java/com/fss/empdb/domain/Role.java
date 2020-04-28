@@ -18,6 +18,7 @@ public class Role {
 
     @Column(name = "ROLE_NAME", nullable = false)
     String roleName;
+
 }
 
 

@@ -3,10 +3,10 @@ spring:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/employee_db
     username: root
     password: rakeshm
-  security:
-    user:
-      name: rama
-      password: pass123
+#  security:
+#    user:
+#      name: rama
+#      password: pass123
   liquibase:
     change-log: classpath:db/liquibase-changelog.xml
 server:
