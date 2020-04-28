@@ -36,6 +36,8 @@ public class EmployeeSearchCriteria {
 
     private Academics[] academics;
 
+    private Project[] projects;
+
 
 
 
@@ -135,6 +137,13 @@ public class EmployeeSearchCriteria {
         this.academics = academics;
     }
 
+    public Project[] getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Project[] projects) {
+        this.projects = projects;
+    }
 }
 
 

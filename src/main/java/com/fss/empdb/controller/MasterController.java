@@ -11,7 +11,6 @@ import java.util.List;
 @Log4j2
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/masters")
-@CrossOrigin(origins = "http://localhost:4200")
 public class MasterController {
 
     @Autowired
@@ -70,6 +69,11 @@ public class MasterController {
     @GetMapping("/project-tagging")
     public List<ProjectTagging> getAllProjectTagging() {
         return masterService.getAllProjectTagging();
+    }
+
+    @GetMapping("/tools")
+    public List<Tools> getAllTools() {
+        return masterService.getAllTools();
     }
 
 //    @GetMapping("/master/get-all-project-tagging")

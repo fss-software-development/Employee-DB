@@ -4,14 +4,21 @@ package com.fss.empdb.domain;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import javafx.beans.DefaultProperty;
 import lombok.*;
-import org.hibernate.annotations.CollectionType;
+import net.bytebuddy.implementation.bind.annotation.Default;
+import org.dom4j.QName;
+import org.hibernate.annotations.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.transaction.Transactional;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.*;
 
 
 @Getter
@@ -23,39 +30,33 @@ import java.util.Date;
 @XmlRootElement
 @EqualsAndHashCode
 @ToString
+@Transactional
 public class Employee implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EMPLOYEE_SQID")
     Long employeeSqId;
 
     @Column(name = "EMPLOYEE_ID")
     Long employeeId;
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departmentId")
-//    @ManyToOne
-//    @JoinColumn(name = "DEPARTMENT_ID")
-//    private Collection<Department> department;
-
-    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "DEPARTMENT_ID")
     private Department department;
 
     //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
 
     //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "REGION_ID")
     private Region region;
 
     //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "LOCATION_ID")
     private Location location;
 
@@ -68,13 +69,11 @@ public class Employee implements Serializable {
     @Column(name = "EMAIL_ID", nullable = false)
     String emailId;
 
-    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "GRADE_ID")
     private Grade grade;
 
-    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "DESIGNATION_ID")
     private Designation designation;
 
@@ -88,13 +87,11 @@ public class Employee implements Serializable {
     @Column(name = "JOINING_DATE", nullable = false)
     Date joiningDate;
 
-    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "BILLABLE_STATUS_ID")
     private BillableStatus billableStatus;
 
-    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "SERVICE_LINE_ID")
     private ServiceLine serviceLine;
 
@@ -110,28 +107,57 @@ public class Employee implements Serializable {
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
 //    private Collection<Role> role;
 
-    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.MERGE)
+
+    @ManyToOne
     @JoinColumn(name = "ACADEMICS_ID")
     private Academics academics;
 
-    @Column(name = "INS_USER",nullable = true)
+    @ManyToMany
+    @JoinTable(name = "employee_project",
+            joinColumns = {@JoinColumn(name = "EMPLOYEE_SQID")},
+            inverseJoinColumns = {@JoinColumn(name = "PROJECT_ID")})
+    private Collection<Project> projects;
+
+    @ManyToMany
+    @JoinTable(name = "employee_skill",
+            joinColumns = {@JoinColumn(name = "EMPLOYEE_SQID")},
+            inverseJoinColumns = {@JoinColumn(name = "SKILL_ID")})
+    private Collection<Skill> skills;
+
+    @ManyToMany
+    @JoinTable(name = "employee_tools",
+            joinColumns = {@JoinColumn(name = "EMPLOYEE_SQID")},
+            inverseJoinColumns = {@JoinColumn(name = "TOOL_ID")})
+    private Collection<Tools> tools;
+
+    @ManyToMany
+    @JoinTable(name = "employee_definite_role",
+            joinColumns = {@JoinColumn(name = "EMPLOYEE_SQID")},
+            inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
+    private Collection<Role> definiteRole;
+
+    @ManyToMany
+    @JoinTable(name = "employee_possible_role",
+            joinColumns = {@JoinColumn(name = "EMPLOYEE_SQID")},
+            inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
+   private Collection<Role> possibleRole;
+
+    @Column(name = "INS_USER", nullable = true)
     private Long insUser;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "INS_DATE",nullable = true)
+    @Column(name = "INS_DATE", nullable = true)
     private Date insDate;
 
-    @Column(name = "LAST_UPDATE_USER",nullable = true)
+    @Column(name = "LAST_UPDATE_USER", nullable = true)
     private Long lastUpdateUser;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "LAST_UPDATE_DATE",nullable = true)
+    @Column(name = "LAST_UPDATE_DATE", nullable = true)
     private Date lastUpdateDate;
 
     @JsonIgnore
-    @Column(name="PRIMARY_SKILL")
+    @Column(name = "PRIMARY_SKILL")
     Long primarySkillId;
-
 
 }

@@ -1,5 +1,6 @@
 package com.fss.empdb.controller;
 
+import com.fss.empdb.domain.Account;
 import com.fss.empdb.domain.Employee;
 import com.fss.empdb.domain.EmployeeSearchCriteria;
 import com.fss.empdb.service.EmployeeService;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -32,18 +34,22 @@ public class EmployeeController {
     }
 
     @PostMapping(value = "/search", produces = "application/json")
-    public ResponseEntity<List<Employee>> getEmployeesBySearch(@RequestBody EmployeeSearchCriteria empSearch)  {
+    public ResponseEntity<List<Employee>> getEmployeesBySearch(@RequestBody EmployeeSearchCriteria empSearch) {
         return ResponseEntity.ok().body(employeeService.findByEmp(empSearch));
     }
 
-    //Add & Update Employee
-    @PostMapping(value = "/emp-add-update")
-    public ResponseEntity<Employee> createOrUpdateEmployee(@RequestBody Employee employee)  {
-        return ResponseEntity.ok().body(employeeService.createOrUpdateEmployee(employee));
+    @PostMapping
+    public ResponseEntity<Employee> createAccount(@RequestBody Employee employee) {
+        return ResponseEntity.ok().body(employeeService.createEmployee(employee));
     }
 
-    @DeleteMapping(value = "/employee/{id}")
-    public ResponseEntity<Employee> deleteEmployee(@PathVariable(value = "id") Long employeeId){
+    @PutMapping
+    public ResponseEntity<Employee> updateAccount(@RequestBody Employee employee) {
+        return ResponseEntity.ok().body(employeeService.updateEmployee(employee));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Employee> deleteEmployee(@PathVariable(value = "id") Long employeeId) {
         employeeService.deleteEmployee(employeeId);
         return new ResponseEntity<Employee>(new HttpHeaders(), HttpStatus.OK);
     }

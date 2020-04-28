@@ -52,6 +52,8 @@ public class MasterService {
     @Autowired
     ProjectRepository projectRepository;
 
+    @Autowired
+    ToolsRepository toolsRepository;
 
     public List<Department> getAllDepartment() {
         return departmentRepository.findAll();
@@ -104,5 +106,10 @@ public class MasterService {
     public List<Project> getAllProject() {
         return projectRepository.findAll();
     }
+
+    public List<Tools> getAllTools() {
+        return toolsRepository.findAll();
+    }
+
 
 }
