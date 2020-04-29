@@ -13,6 +13,7 @@ import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 @Service
@@ -38,12 +39,26 @@ public class ProjectService {
     }
 
     public void deleteProject(Long projectId) {
+
         Project project=new Project();
         project.setProjectId(projectId);
         projectRepository.delete(project);
     }
 
-   public Project createProject(Project project) {
+ /*   public void deleteProject(Long projectId) throws RecordNotFoundException
+    {
+        Optional<Project> project = projectRepository.findById(projectId);
+
+        if(project.isPresent())
+        {
+            projectRepository.deleteById(projectId);
+        } else {
+            response = new BaseResponse(SUCCESS_STATUS, CODE_SUCCESS);
+            throw new RecordNotFoundException("No project record exist for given id");
+        }
+    }*/
+
+    public Project createProject(Project project) {
        project.setInsUser(Long.valueOf(1));
        project.setLastUpdateUser(Long.valueOf(1));
        project.setInsDate(new Date());

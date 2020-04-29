@@ -1,15 +1,9 @@
 package com.fss.empdb.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import javafx.beans.DefaultProperty;
 import lombok.*;
-import net.bytebuddy.implementation.bind.annotation.Default;
-import org.dom4j.QName;
 import org.hibernate.annotations.*;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 
 import javax.persistence.*;
