@@ -41,25 +41,6 @@ public class Employee implements Serializable {
     @Column(name = "EMPLOYEE_ID")
     Long employeeId;
 
-    @ManyToOne
-    @JoinColumn(name = "DEPARTMENT_ID")
-    private Department department;
-
-    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne
-    @JoinColumn(name = "ACCOUNT_ID")
-    private Account account;
-
-    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne
-    @JoinColumn(name = "REGION_ID")
-    private Region region;
-
-    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @ManyToOne
-    @JoinColumn(name = "LOCATION_ID")
-    private Location location;
-
     @Column(name = "EMPLOYEE_NAME", nullable = false)
     String employeeName;
 
@@ -69,6 +50,45 @@ public class Employee implements Serializable {
     @Column(name = "EMAIL_ID", nullable = false)
     String emailId;
 
+    @Column(name = "REPORTING_MANAGER", nullable = false)
+    String reportingManager;
+
+    @Column(name = "ACTIVITY_NAME", nullable = false)
+    String activityName;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "JOINING_DATE", nullable = false)
+    Date joiningDate;
+
+    @Column(name = "PREVIOUS_EXP", nullable = false)
+    Long previousExp;
+
+    @Column(name = "EXPERIENCE_GAPS", nullable = false)
+    Long experienceGaps;
+
+    @Column(name = "EXPERIENCE_CURRENT_ROLE", nullable = false)
+    Long  experienceCurrentRole;
+
+    @Column(name = "TOTAL_EXPERIENCE", nullable = false)
+    Long totalExperience;
+
+
+    @ManyToOne
+    @JoinColumn(name = "DEPARTMENT_ID")
+    private Department department;
+
+    @ManyToOne
+    @JoinColumn(name = "ACCOUNT_ID")
+    private Account account;
+
+    @ManyToOne
+    @JoinColumn(name = "REGION_ID")
+    private Region region;
+
+    @ManyToOne
+    @JoinColumn(name = "LOCATION_ID")
+    private Location location;
+
     @ManyToOne
     @JoinColumn(name = "GRADE_ID")
     private Grade grade;
@@ -77,16 +97,6 @@ public class Employee implements Serializable {
     @JoinColumn(name = "DESIGNATION_ID")
     private Designation designation;
 
-    @Column(name = "REPORTING_MANAGER", nullable = false)
-    String reportingManager;
-
-    @Column(name = "PREVIOUS_EXP", nullable = false)
-    Long previousExp;
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "JOINING_DATE", nullable = false)
-    Date joiningDate;
-
     @ManyToOne
     @JoinColumn(name = "BILLABLE_STATUS_ID")
     private BillableStatus billableStatus;
@@ -94,19 +104,6 @@ public class Employee implements Serializable {
     @ManyToOne
     @JoinColumn(name = "SERVICE_LINE_ID")
     private ServiceLine serviceLine;
-
-    @Column(name = "ACTIVITY_NAME", nullable = false)
-    String activityName;
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "skillId")
-//    private Collection<Skill> primarySkill;
-
-    @Column(name = "EXPERIENCE_GAPS", nullable = false)
-    Long experienceGaps;
-
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
-//    private Collection<Role> role;
-
 
     @ManyToOne
     @JoinColumn(name = "ACADEMICS_ID")
@@ -142,6 +139,11 @@ public class Employee implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
    private Collection<Role> possibleRole;
 
+    @ManyToOne
+    @JoinColumn(name = "PROJECT_TAGGING_ID")
+    private ProjectTagging projectTagging;
+
+
     @Column(name = "INS_USER", nullable = true)
     private Long insUser;
 
@@ -155,9 +157,5 @@ public class Employee implements Serializable {
     @Temporal(TemporalType.DATE)
     @Column(name = "LAST_UPDATE_DATE", nullable = true)
     private Date lastUpdateDate;
-
-    @JsonIgnore
-    @Column(name = "PRIMARY_SKILL")
-    Long primarySkillId;
 
 }
