@@ -2,6 +2,7 @@ package com.fss.empdb.service;
 
 import com.fss.empdb.constants.ErrorConstants;
 import com.fss.empdb.domain.*;
+import com.fss.empdb.exception.GlobalExceptionHandler;
 import com.fss.empdb.exception.ResourceNotFoundException;
 import com.fss.empdb.repository.AccountRepository;
 import com.fss.empdb.repository.RegionRepository;
@@ -28,6 +29,7 @@ public class AccountService {
     RegionRepository regionRepository;
 
     public List<Account> allAccount() {
+
         return accountRepository.findAll();
     }
 
@@ -36,24 +38,28 @@ public class AccountService {
                 orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.CUSTOMER_NOT_FOUND + accountId));
     }
 
-    public List<Account> accountBySearch(AccountSearchCriteria accountSearchCriteria){
-        return accountRepository.findAll(new Specification<Account>() {
-            @Override
-            public Predicate toPredicate(Root<Account> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                List<Predicate> predicates = new ArrayList<>();
-
-                if (accountSearchCriteria.getAccountName() != null) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("accountName"), "%" + accountSearchCriteria.getAccountName() + "%")));
+    public List<Account> accountBySearch(AccountSearchCriteria accountSearchCriteria)   {
+        List<Account> acc = null;
+        try {
+            acc = accountRepository.findAll(new Specification<Account>() {
+                @Override
+                public Predicate toPredicate(Root<Account> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                    List<Predicate> predicates = new ArrayList<>();
+                    if (accountSearchCriteria.getAccountName() != null) {
+                        predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("accountName"), "%" + accountSearchCriteria.getAccountName() + "%")));
+                    }
+                    if (accountSearchCriteria.getRegion().length > 0) {
+                        Join<Account, Region> phoneJoin = root.join("region");
+                        predicates.add(phoneJoin.in(accountSearchCriteria.getRegion()));
+                    }
+                    log.info("Search filter Size :" + predicates.size());
+                    return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
                 }
-
-                if (accountSearchCriteria.getRegion().length > 0) {
-                    Join<Account, Region> phoneJoin = root.join("region");
-                    predicates.add(phoneJoin.in(accountSearchCriteria.getRegion()));
-                }
-                log.info("Search filter Size :" + predicates.size());
-                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
-            }
-        });
+            });
+        } catch (Exception e) {
+            log.error("ERROR_LOG" + e);
+        }
+        return acc;
     }
 
     public Account createAccount(Account account) {
@@ -65,9 +71,13 @@ public class AccountService {
     }
 
     public Account updateAccount(Account account) {
-        account.setInsUser(Long.valueOf(1));
+
+        Optional<Account> acc =accountRepository.findById(account.getAccountId());
+        Account accEntity=acc.get();
+
+        account.setInsUser(accEntity.getInsUser());
         account.setLastUpdateUser(Long.valueOf(1));
-        account.setInsDate(new Date());
+        account.setInsDate(accEntity.getInsDate());
         account.setLastUpdateDate(new Date());
         return accountRepository.save(account);
     }

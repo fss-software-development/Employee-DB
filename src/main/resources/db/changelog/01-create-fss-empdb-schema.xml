@@ -3,13 +3,13 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <!-- This change set defines the initial table definition for the consent service
-    based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Spike+PAYBA-1428+-+Consent+Service+DB -->
+<!-- This change set defines the initial table definition for the consent service
+based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Spike+PAYBA-1428+-+Consent+Service+DB -->
 
 
-    <changeSet id="01" author="Rama Prabhu R">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="01" author="Rama Prabhu R">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 				CREATE TABLE employee_db.department (
 					  DEPARTMENT_ID INT(11) NOT NULL,
 					  DEPARTMENT_NAME VARCHAR(45) NOT NULL,
@@ -17,32 +17,34 @@
 					  INS_USER INT(11) NOT NULL,
 					  INS_DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 					  LAST_UPDATE_USER INT(11) NULL,
-					  LAST_UPDATE_DATE TIMESTAMP,
+					  LAST_UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                      ON UPDATE CURRENT_TIMESTAMP,
 					  PRIMARY KEY (DEPARTMENT_ID)
 				) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="02" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="02" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			 CREATE TABLE IF NOT EXISTS employee_db.region (
 				REGION_ID INT(11) NOT NULL,
 				REGION_NAME VARCHAR(45) NOT NULL,
 				INS_USER INT(11) NOT NULL,
 				INS_DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				LAST_UPDATE_USER INT(11) NULL,
-				LAST_UPDATE_DATE TIMESTAMP,
+				 LAST_UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                      ON UPDATE CURRENT_TIMESTAMP,
 				PRIMARY KEY (REGION_ID)
 			 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
            ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="03" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="03" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 		     CREATE TABLE IF NOT EXISTS employee_db.account (
                 ACCOUNT_ID INT(11) NOT NULL AUTO_INCREMENT,
                 ACCOUNT_NAME VARCHAR(45) NOT NULL,
@@ -50,7 +52,8 @@
 				INS_USER INT(11) NOT NULL,
 				INS_DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				LAST_UPDATE_USER INT(11) NULL,
-				LAST_UPDATE_DATE TIMESTAMP,
+				 LAST_UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                      ON UPDATE CURRENT_TIMESTAMP,
 				PRIMARY KEY (ACCOUNT_ID),
 				UNIQUE INDEX ACCOUNT_NAME_UNIQUE (ACCOUNT_NAME ASC) VISIBLE,
 				INDEX fk_account_region1_idx (REGION_ID ASC) VISIBLE,
@@ -61,60 +64,63 @@
 					ON UPDATE NO ACTION
 			 )  ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
           ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="04" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="04" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			  CREATE TABLE IF NOT EXISTS employee_db.location (
 				LOCATION_ID INT(11) NOT NULL,
 				LOCATION_NAME VARCHAR(45) NOT NULL,
 				INS_USER INT(11) NOT NULL,
 				INS_DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				LAST_UPDATE_USER INT(11) NULL,
-				LAST_UPDATE_DATE TIMESTAMP,
+				 LAST_UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                      ON UPDATE CURRENT_TIMESTAMP,
 				PRIMARY KEY (LOCATION_ID)
 			  ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="05" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="05" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			  CREATE TABLE IF NOT EXISTS employee_db.skill (
 				SKILL_ID INT(11) NOT NULL,
 				SKILL_NAME VARCHAR(45) NOT NULL,
 				INS_USER INT(11) NOT NULL,
 				INS_DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				LAST_UPDATE_USER INT(11) NULL,
-				LAST_UPDATE_DATE TIMESTAMP,
+				 LAST_UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                      ON UPDATE CURRENT_TIMESTAMP,
 				PRIMARY KEY (SKILL_ID)
 			  ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="06" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="06" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 	         CREATE TABLE IF NOT EXISTS employee_db.designation (
 				DESIGNATION_ID INT(11) NOT NULL,
 				DESIGNATION_NAME VARCHAR(255) NOT NULL,
 				INS_USER INT(11) NOT NULL,
 				INS_DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				LAST_UPDATE_USER INT(11) NULL,
-				LAST_UPDATE_DATE TIMESTAMP,
+				 LAST_UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                      ON UPDATE CURRENT_TIMESTAMP,
 				PRIMARY KEY (DESIGNATION_ID)
 			 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="07" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="07" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			CREATE TABLE IF NOT EXISTS employee_db.user (
 			    USER_SQID INT(11) NOT NULL,
 				USER_ID VARCHAR(45) NOT NULL,
@@ -122,18 +128,19 @@
 				EMAIL VARCHAR(255) NOT NULL,
 				PASSWORD VARCHAR(32) NOT NULL,
 				INS_DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				LAST_UPDATE_DATE TIMESTAMP,
+				 LAST_UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                      ON UPDATE CURRENT_TIMESTAMP,
 				UNIQUE INDEX EMAIL_UNIQUE (EMAIL ASC) VISIBLE,
 				UNIQUE INDEX USER_ID_UNIQUE (USER_ID ASC) VISIBLE,
 				PRIMARY KEY (USER_SQID)
 			 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="08" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="08" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			CREATE TABLE IF NOT EXISTS employee_db.service_line (
 				SERVICE_LINE_ID INT(11) NOT NULL,
 				SERVICE_LINE_NAME VARCHAR(45) NOT NULL,
@@ -141,72 +148,72 @@
 				UNIQUE INDEX SERVICE_LINE_NAME_UNIQUE (SERVICE_LINE_NAME ASC) VISIBLE
 			 )  ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="09" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="09" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 		    CREATE TABLE IF NOT EXISTS employee_db.billable_status (
                 BILLABLE_STATUS_ID INT NOT NULL,
                 BILLABLE_STATUS VARCHAR(255) NOT NULL,
             PRIMARY KEY (BILLABLE_STATUS_ID)
             ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="10" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="10" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 		        CREATE TABLE IF NOT EXISTS employee_db.grade (
                     GRADE_ID INT NOT NULL,
                     GRADE_NAME VARCHAR(45) NOT NULL,
                     PRIMARY KEY (GRADE_ID)
                  ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="11" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="11" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 	           	CREATE TABLE IF NOT EXISTS employee_db.academics (
                     ACADEMICS_ID INT NOT NULL,
                     ACADEMICS_NAME VARCHAR(45) NOT NULL,
                     PRIMARY KEY (ACADEMICS_ID)
                   ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="12" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="12" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 		        CREATE TABLE IF NOT EXISTS employee_db.project_tagging (
                      PROJECT_TAGGING_ID INT NOT NULL,
                      PROJECT_TAGGING VARCHAR(45) NOT NULL,
                      PRIMARY KEY (PROJECT_TAGGING_ID)
                  ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="13" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="13" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 		        CREATE TABLE IF NOT EXISTS employee_db.role (
                      ROLE_ID INT NOT NULL,
                      ROLE_NAME VARCHAR(45) NOT NULL,
                      PRIMARY KEY (ROLE_ID)
                     )  ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="14" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="14" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			  CREATE TABLE IF NOT EXISTS employee_db.employee (
 				EMPLOYEE_SQID INT(11) NOT NULL AUTO_INCREMENT,
 				EMPLOYEE_ID VARCHAR(10) NOT NULL,
@@ -233,7 +240,8 @@
 				INS_USER INT(11) NOT NULL,
 				INS_DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				LAST_UPDATE_USER INT(11) NULL DEFAULT NULL,
-				LAST_UPDATE_DATE TIMESTAMP,
+				LAST_UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                      ON UPDATE CURRENT_TIMESTAMP,
 				PRIMARY KEY (EMPLOYEE_SQID),
 				UNIQUE INDEX MOBILE_NUM_UNIQUE (MOBILE_NUM ASC) VISIBLE,
 				UNIQUE INDEX EMPLOYEE_ID_UNIQUE (EMPLOYEE_ID ASC) VISIBLE,
@@ -312,12 +320,12 @@
                      ON UPDATE NO ACTION
 				) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="15" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="15" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			  CREATE TABLE IF NOT EXISTS employee_db.project (
 				PROJECT_ID INT(11) NOT NULL AUTO_INCREMENT,
 				DEPARTMENT_ID INT(11) DEFAULT NULL,
@@ -332,7 +340,8 @@
 				INS_USER INT(11) NOT NULL,
 				INS_DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				LAST_UPDATE_USER INT(11) DEFAULT NULL,
-				LAST_UPDATE_DATE TIMESTAMP,
+				 LAST_UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                      ON UPDATE CURRENT_TIMESTAMP,
 				PRIMARY KEY (PROJECT_ID),
 				UNIQUE INDEX PROJECT_NAME_UNIQUE (PROJECT_NAME ASC) VISIBLE,
 				INDEX fk_project_department_idx (DEPARTMENT_ID ASC) VISIBLE,
@@ -373,12 +382,12 @@
 					ON UPDATE NO ACTION
 				) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="16" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="16" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			  CREATE TABLE IF NOT EXISTS employee_db.employee_project (
 				EMPLOYEE_PROJECT_SQID INT(11) NOT NULL AUTO_INCREMENT,
 				EMPLOYEE_SQID INT(11) NOT NULL,
@@ -400,12 +409,12 @@
 					ON UPDATE NO ACTION
 				) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="17" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="17" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			  CREATE TABLE IF NOT EXISTS employee_db.employee_skill (
 				EMPLOYEE_SKILL_SQID INT(11) NOT NULL AUTO_INCREMENT,
 				EMPLOYEE_SQID INT(11) NOT NULL,
@@ -430,11 +439,11 @@
 					ON UPDATE NO ACTION
 				) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
-    <changeSet id="18" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+    </sql>
+</changeSet>
+<changeSet id="18" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			 CREATE TABLE IF NOT EXISTS employee_db.employee_possible_role (
                EMPLOYEE_POSSIBLE_ROLE_SQID INT NOT NULL AUTO_INCREMENT,
                EMPLOYEE_SQID INT(11) NOT NULL,
@@ -454,23 +463,23 @@
                     ON UPDATE NO ACTION
 				) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="19" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="19" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 			CREATE TABLE IF NOT EXISTS employee_db.tools (
                  TOOL_ID INT NOT NULL,
                  TOOL_NAME VARCHAR(45) NOT NULL,
                  PRIMARY KEY (TOOL_ID)
 				) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
-    <changeSet id="20" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+    </sql>
+</changeSet>
+<changeSet id="20" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
 		    CREATE TABLE IF NOT EXISTS employee_db.employee_tools (
                 EMPLOYEE_TOOL_SQID INT NOT NULL AUTO_INCREMENT,
                 EMPLOYEE_SQID INT(11) NOT NULL,
@@ -490,12 +499,12 @@
                      ON UPDATE NO ACTION
                      ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 
-    <changeSet id="21" author="Rakesh Mhaske">
-        <sql dbms="mysql" splitStatements="true" stripComments="true">
-            <![CDATA[
+<changeSet id="21" author="Rakesh Mhaske">
+    <sql dbms="mysql" splitStatements="true" stripComments="true">
+        <![CDATA[
           CREATE TABLE IF NOT EXISTS employee_db.employee_definite_role (
           EMPLOYEE_DEFINITE_ROLE_SQID INT(11) NOT NULL AUTO_INCREMENT,
           EMPLOYEE_SQID INT(11) NOT NULL,
@@ -515,6 +524,6 @@
           ON UPDATE NO ACTION
           )ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
             ]]>
-        </sql>
-    </changeSet>
+    </sql>
+</changeSet>
 </databaseChangeLog>
