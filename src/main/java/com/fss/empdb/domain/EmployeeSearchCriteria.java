@@ -14,7 +14,7 @@ public class EmployeeSearchCriteria {
 
     Long employeeSqId;
 
-    Long employeeId;
+    String employeeId;
 
     String employeeName;
 
@@ -49,11 +49,11 @@ public class EmployeeSearchCriteria {
         this.employeeSqId = employeeSqId;
     }
 
-    public Long getEmployeeId() {
+    public String getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Long employeeId) {
+    public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
     }
 

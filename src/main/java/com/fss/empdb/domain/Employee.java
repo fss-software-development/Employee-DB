@@ -39,7 +39,7 @@ public class Employee implements Serializable {
     Long employeeSqId;
 
     @Column(name = "EMPLOYEE_ID")
-    Long employeeId;
+    String employeeId;
 
     @Column(name = "EMPLOYEE_NAME", nullable = false)
     String employeeName;
