@@ -69,7 +69,7 @@ public class UserController {
             User getUserDetails = usersService.userById(user.getUserId());
             String decryptedPwd = usersService.decrypt(getUserDetails.getUserPassword(), secretKey) ;
             isPasswordMatch = pwd.equals(decryptedPwd);
-            if (isPasswordMatch == true) {
+            if (isPasswordMatch == true){
 
             } else {
                 return "Failure";
