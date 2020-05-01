@@ -81,4 +81,10 @@ public class Project {
     @Temporal(TemporalType.DATE)
     @Column(name="LAST_UPDATE_DATE")
     Date lastUpdateDate;
+
+   /* @Column(name="status")
+    String responseStatus;*/
+
+   /* @Column(name="code")
+    Integer responseCode;*/
 }
