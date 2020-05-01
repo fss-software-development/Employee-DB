@@ -33,7 +33,7 @@ public class Employee implements Serializable {
     Long employeeSqId;
 
     @Column(name = "EMPLOYEE_ID")
-    Long employeeId;
+    String employeeId;
 
     @Column(name = "EMPLOYEE_NAME", nullable = false)
     String employeeName;
@@ -141,14 +141,14 @@ public class Employee implements Serializable {
     @Column(name = "INS_USER", nullable = true)
     private Long insUser;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "INS_DATE", nullable = true)
     private Date insDate;
 
     @Column(name = "LAST_UPDATE_USER", nullable = true)
     private Long lastUpdateUser;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LAST_UPDATE_DATE", nullable = true)
     private Date lastUpdateDate;
 

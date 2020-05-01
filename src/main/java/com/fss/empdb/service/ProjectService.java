@@ -68,9 +68,12 @@ public class ProjectService {
 
     public Project updateProject(Project project){
 
-        project.setInsUser(Long.valueOf(1));
+        Optional<Project> pro =projectRepository.findById(project.getProjectId());
+        Project proEntity=pro.get();
+
+        project.setInsUser(proEntity.getInsUser());
         project.setLastUpdateUser(Long.valueOf(1));
-        project.setInsDate(new Date());
+        project.setInsDate(proEntity.getInsDate());
         project.setLastUpdateDate(new Date());
         /*projectRepository.findById(project.getProjectId())
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.CUSTOMER_NOT_FOUND

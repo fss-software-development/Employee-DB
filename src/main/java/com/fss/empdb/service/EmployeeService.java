@@ -29,38 +29,6 @@ public class EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    @Autowired
-    AccountRepository accountRepository;
-
-    @Autowired
-    RegionRepository regionRepository;
-
-    @Autowired
-    DepartmentRepository departmentRepository;
-
-
-    @Autowired
-    DesignationRepository designationRepository;
-
-
-    @Autowired
-    LocationRepository locationRepository;
-
-
-    @Autowired
-    ServiceLineRepository serviceLineRepository;
-
-    @Autowired
-    BillableStatusRepository billableStatusRepository;
-
-    @Autowired
-    GradeRepository gradeRepository;
-
-    @Autowired
-    AcademicsRepository academicsRepository;
-
-    @Autowired
-    ProjectRepository projectRepository;
 
     public List<Employee> getAllEmployees() {
 
@@ -140,9 +108,12 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(Employee employee) {
-        employee.setInsUser(Long.valueOf(1));
+
+        Optional<Employee> emp =employeeRepository.findById(employee.getEmployeeSqId());
+        Employee empEntity=emp.get();
+        employee.setInsUser(empEntity.getInsUser());
         employee.setLastUpdateUser(Long.valueOf(1));
-        employee.setInsDate(new Date());
+        employee.setInsDate(empEntity.getInsDate());
         employee.setLastUpdateDate(new Date());
         return employeeRepository.save(employee);
     }
