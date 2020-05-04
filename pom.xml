@@ -6,7 +6,7 @@
     <groupId>com.fss.empdb</groupId>
     <artifactId>employee-db</artifactId>
     <version>1.0</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>employee-db</name>
     <description>employee db</description>
     <parent>

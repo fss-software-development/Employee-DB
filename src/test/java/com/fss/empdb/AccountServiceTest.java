@@ -1,3 +1,4 @@
+/*
 package com.fss.empdb;
 
 import com.fss.empdb.domain.Account;
@@ -10,20 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 
 @DirtiesContext
-//@Sql(scripts = {"/testdb/setup-empdb-db.sql"}, config = @SqlConfig(transactionMode = ISOLATED))
-//@Sql(scripts = {"/testdb/setup-masters-db.sql"}, config = @SqlConfig(transactionMode = ISOLATED))
-//@Sql(scripts = {"/testdb/tear-down-empdb-db.sql"}, config = @SqlConfig(transactionMode = ISOLATED), executionPhase = AFTER_TEST_METHOD)
-//@Sql(scripts = {"/testdb/tear-down-masters-db.sql"}, config = @SqlConfig(transactionMode = ISOLATED), executionPhase = AFTER_TEST_METHOD)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("local")
 @SpringBootTest
@@ -97,3 +90,4 @@ public class AccountServiceTest {
 
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.fss.empdb;
 
 import com.fss.empdb.controller.ProjectController;
@@ -75,10 +76,12 @@ public class ProjectServiceITest {
         account.setAccountId(1L);
         account.setAccountName("HDFC");
         project.setAccount(account);
-        /*ProjectTagging projectTagging = new ProjectTagging();
+        */
+/*ProjectTagging projectTagging = new ProjectTagging();
         projectTagging.setProjectTaggingId(1L);
         projectTagging.setProjectTaggingName("Reserved");
-        project.setProjectTagging(projectTagging);*/
+        project.setProjectTagging(projectTagging);*//*
+
         return project;
     }
 
@@ -132,23 +135,29 @@ public class ProjectServiceITest {
         List<Project> newProject = projectService.projectsBySearch(project);
         //Project result = newProject.get(1);
         assertNotNull(newProject);
-       /* assertNotNull(result.getProjectId());
+       */
+/* assertNotNull(result.getProjectId());
         assertEquals(result.getProjectId(),project.getProjectId());
-        assertEquals(result.getProjectName(), project.getProjectName());*/
+        assertEquals(result.getProjectName(), project.getProjectName());*//*
+
         //assertEquals(result.getDepartment(), project.getDepartment());
     }
 
     private Project newProject(){
         Project project = new Project();
         project.setProjectName("Employee-DB");
-        /*Department dept = new Department();
+        */
+/*Department dept = new Department();
         dept.setDepartmentId(1L);
         dept.setDepartmentName("Solution-OFSD");
         dept.setDepartmentHead("XYZkkk");
-        project.setDepartment(dept);*/
+        project.setDepartment(dept);*//*
+
         project.setProjectName("Employee-DB");
-        /*project.setProjectManager("XYZkkk");
-        project.setProjectStatus("In-Progress");*/
+        */
+/*project.setProjectManager("XYZkkk");
+        project.setProjectStatus("In-Progress");*//*
+
         project.setProjectStartDate(new Date(2020-04-02));
         project.setProjectEndDate(new Date(2021-04-02));
         Region reg = new Region();
@@ -159,10 +168,12 @@ public class ProjectServiceITest {
         account.setAccountId(1L);
         account.setAccountName("HDFC");
         project.setAccount(account);
-        /*ProjectTagging projectTagging = new ProjectTagging();
+        */
+/*ProjectTagging projectTagging = new ProjectTagging();
         projectTagging.setProjectTaggingId(1L);
         projectTagging.setProjectTaggingName("Reserved");
-        project.setProjectTagging(projectTagging);*/
+        project.setProjectTagging(projectTagging);*//*
+
         return project;
     }
 
@@ -176,7 +187,9 @@ public class ProjectServiceITest {
         assertNotNull(newProject.getProjectId());
         assertEquals(newProject.getProjectId(),project.getProjectId());
         assertEquals(newProject.getProjectName(), project.getProjectName());
-       /* assertEquals(newProject.getDepartment().getDepartmentId(), project.getDepartment().getDepartmentId());*/
+       */
+/* assertEquals(newProject.getDepartment().getDepartmentId(), project.getDepartment().getDepartmentId());*//*
+
     }
 
     @Test
@@ -189,23 +202,32 @@ public class ProjectServiceITest {
         //assertNotEquals(result.getProjectId(),project.getProjectId());
        // assertNull(result);
 
-       /* ResponseEntity<Project> result=projectController.deleteProject(2L);
-        System.out.println("result____"+result.getStatusCode());*/
-        /*Project project=new Project();
+       */
+/* ResponseEntity<Project> result=projectController.deleteProject(2L);
+        System.out.println("result____"+result.getStatusCode());*//*
+
+        */
+/*Project project=new Project();
         project.setProjectId(54L);
-        verify(projectRepository, times(1)).delete(project);*/
+        verify(projectRepository, times(1)).delete(project);*//*
+
     }
 
 
-    /*@After
+    */
+/*@After
     public void tearDown() throws Exception{
 
-    }*/
-    /*@AfterEach
+    }*//*
+
+    */
+/*@AfterEach
     void tearDown() {
     }
 
     @AfterAll
     static void tearDownAll() {
-    }*/
+    }*//*
+
 }
+*/
