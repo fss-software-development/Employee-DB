@@ -1,22 +1,13 @@
 package com.fss.empdb.controller;
 
-import com.fss.empdb.domain.Project;
 import com.fss.empdb.domain.User;
-import com.fss.empdb.repository.ProjectRepository;
 import com.fss.empdb.repository.UserRepository;
-import com.fss.empdb.service.MyUserDetailsService;
-import com.fss.empdb.service.ProjectService;
 import com.fss.empdb.service.UsersService;
-import com.fss.empdb.util.JwtUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @Log4j2
 @RestController
@@ -27,13 +18,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
-    private JwtUtil jwtTokenUtil;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private MyUserDetailsService userDetailsService;
 
     //private BCryptPasswordEncoder passwordEncoder;
 
