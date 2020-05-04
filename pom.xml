@@ -6,7 +6,7 @@
     <groupId>com.fss.empdb</groupId>
     <artifactId>employee-db</artifactId>
     <version>1.0</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>employee-db</name>
     <description>employee db</description>
     <parent>
@@ -28,10 +28,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>

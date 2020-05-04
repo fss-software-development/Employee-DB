@@ -3,6 +3,7 @@ package com.fss.empdb.controller;
 
 import com.fss.empdb.domain.Project;
 import com.fss.empdb.domain.ProjectSearchCriteria;
+import com.fss.empdb.exception.ErrorDetails;
 import com.fss.empdb.repository.ProjectRepository;
 import com.fss.empdb.service.ProjectService;
 import lombok.extern.log4j.Log4j2;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -34,7 +36,12 @@ public class ProjectController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Project> projectsById(@PathVariable(value = "id") Long projectId) {
-        return ResponseEntity.ok().body(projectService.projectsById(projectId));
+        try {
+            return ResponseEntity.ok().body(projectService.projectsById(projectId));
+        }catch(Exception ex){
+            ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage());
+             return new ResponseEntity(errorDetails, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping(value = "/search", produces = "application/json")

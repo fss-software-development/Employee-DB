@@ -32,8 +32,6 @@ public class User {
     @Column(name = "EMAIL")
     private String email;
 
-    @Column(name = "ROLE_ID")
-    private int role;
 
     /*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
