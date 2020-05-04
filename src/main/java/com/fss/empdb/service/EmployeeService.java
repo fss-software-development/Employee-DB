@@ -41,11 +41,12 @@ public class EmployeeService {
     }
 
     public List<Employee> findByEmp(EmployeeSearchCriteria emp) {
+        log.info("Employee Search Service" + emp);
         return employeeRepository.findAll(new Specification<Employee>() {
             @Override
             public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new ArrayList<>();
-                if (emp.getEmployeeId() != null) {
+                if (!(emp.getEmployeeId().isEmpty())) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("employeeId"), emp.getEmployeeId())));
                 }
                 if (emp.getEmployeeName() != null) {
@@ -64,6 +65,7 @@ public class EmployeeService {
                     predicates.add(phoneJoin.in(emp.getRegion()));
                 }
                 if (emp.getAccount().length > 0l) {
+                    log.info("Employee Search Account" + emp.getAccount());
                     Join<Employee, Account> phoneJoin = root.join("account");
                     predicates.add(phoneJoin.in(emp.getAccount()));
                 }
