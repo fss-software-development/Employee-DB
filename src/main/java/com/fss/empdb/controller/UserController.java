@@ -45,7 +45,7 @@ public class UserController {
             }
     }
 
-    @PostMapping("/login")
+    @PostMapping("/authenticate")
     public String loginByUser(@RequestBody User user) {
         try {
             log.info("Inside Login");
