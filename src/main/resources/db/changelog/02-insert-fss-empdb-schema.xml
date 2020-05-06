@@ -291,4 +291,65 @@ based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Sp
         </sql>
     </changeSet>
 
+
+    <changeSet id="40" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+			     INSERT INTO user_role (USER_ROLE_ID,USER_ROLE_NAME)
+			      VALUES (1, "ADMIN");
+			     INSERT INTO user_role (USER_ROLE_ID,USER_ROLE_NAME)
+			      VALUES (2, "MASTER");
+			     INSERT INTO user_role (USER_ROLE_ID,USER_ROLE_NAME)
+			      VALUES (3, "EMPLOYEE");
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="41" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+			     INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (1, "ADD_EMPLOYEE");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (2, "SEARCH_EMPLOYEE");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (3, "EDIT_EMPLOYEE");
+				 INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (4, "DELETE_EMPLOYEE");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (5, "VIEW_EMPLOYEE");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (6, "ADD_CUSTOMER");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (7, "SEARCH_CUSTOMER");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (8, "EDIT_CUSTOMER");
+				INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (9, "DELETE_CUSTOMER");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (10, "VIEW_CUSTOMER");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (11, "ADD_PROJECT");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (12, "SEARCH_PROJECT");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (13, "EDIT_PROJECT");
+				INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (14, "DELETE_PROJECT");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (15, "VIEW_PROJECT");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (16, "ADD_USER");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (17, "SEARCH_USER");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (18, "EDIT_USER");
+				INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (19, "DELETE_USER");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (20, "VIEW_USER");
+            ]]>
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

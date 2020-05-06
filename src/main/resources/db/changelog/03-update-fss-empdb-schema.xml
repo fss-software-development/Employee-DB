@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+<!-- This change set defines the initial table definition for the consent service
+based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Spike+PAYBA-1428+-+Consent+Service+DB -->
+
+    <changeSet id="101" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+			  ALTER TABLE employee_db.user
+              ADD COLUMN USER_ROLE_ID INT NOT NULL AFTER USER_ID,
+              ADD INDEX USER_ROLE_ID_idx (USER_ROLE_ID ASC) VISIBLE;
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="102" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+              ALTER TABLE employee_db.user
+              ADD CONSTRAINT USER_ROLE_ID
+                 FOREIGN KEY (USER_ROLE_ID)
+                 REFERENCES employee_db.user_role (USER_ROLE_ID)
+                 ON DELETE NO ACTION
+                 ON UPDATE NO ACTION;
+            ]]>
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
