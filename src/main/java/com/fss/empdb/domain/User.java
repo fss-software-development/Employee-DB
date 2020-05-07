@@ -1,8 +1,10 @@
 package com.fss.empdb.domain;
 
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 
 @Getter
@@ -13,6 +15,9 @@ import java.util.Set;
 @ToString
 public class User {
 
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
 
     @Id
     @Column(name = "USER_ID")
@@ -32,6 +37,7 @@ public class User {
     @Column(name = "EMAIL")
     private String email;
 
+    private String userJwt;
 
     /*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))

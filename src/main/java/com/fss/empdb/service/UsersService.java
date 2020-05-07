@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -28,6 +29,14 @@ public class UsersService {
     public User userById(Long userId) {
         return userRepository.findById(userId).
                 orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.DATA_NOT_FOUND + userId));
+    }
+
+    public static String sha256Hash(String originalPassword) throws Exception {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] encodedhash = digest.digest(
+                originalPassword.getBytes(StandardCharsets.UTF_8));
+        String hash = Base64.getEncoder().encodeToString(encodedhash);
+        return hash;
     }
 
     public static void setKey(String myKey)

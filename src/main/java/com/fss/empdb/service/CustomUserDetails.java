@@ -1,20 +1,13 @@
-/*
+
 package com.fss.empdb.service;
 
+import com.fss.empdb.domain.User;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import com.fss.empdb.domain.User;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Collectors;
-
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import lombok.Getter;
-import  lombok.Setter;
 
 @Getter
 @Setter
@@ -35,9 +28,10 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        */
+
 /*return user.getRole().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-                .collect(Collectors.toList());*//*
+                .collect(Collectors.toList());*/
+
 
         return null;
     }
@@ -73,4 +67,4 @@ public class CustomUserDetails implements UserDetails {
         return true;
     }
 }
-*/
+
