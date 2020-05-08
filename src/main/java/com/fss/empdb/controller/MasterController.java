@@ -97,4 +97,8 @@ public class MasterController {
         return masterService.getAllProduct(productTypeId);
     }
 
+    @GetMapping("/status")
+    public List<Status> getAllStatus() {
+        return masterService.getAllStatus();
+    }
 }
