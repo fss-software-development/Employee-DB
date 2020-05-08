@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <!-- This change set defines the initial table definition for the consent service
@@ -568,4 +568,94 @@
             ]]>
         </sql>
     </changeSet>
+
+
+    <changeSet id="42" author="Rakesh Mhaske">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+        CREATE TABLE IF NOT EXISTS employee_db.service_type (
+        SERVICE_TYPE_ID INT NOT NULL,
+        SERVICE_TYPE_NAME VARCHAR(45) NOT NULL,
+        PRIMARY KEY (SERVICE_TYPE_ID)) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="43" author="Rakesh Mhaske">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+        CREATE TABLE IF NOT EXISTS employee_db.product_type (
+        PRODUCT_TYPE_ID INT NOT NULL,
+        PRODUCT_TYPE_NAME VARCHAR(45) NOT NULL,
+        PRIMARY KEY (PRODUCT_TYPE_ID))ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="44" author="Rakesh Mhaske">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+         CREATE TABLE IF NOT EXISTS employee_db.product (
+         PRODUCT_ID INT NOT NULL,
+         PRODUCT_TYPE_ID INT NULL,
+         PRODUCT_NAME VARCHAR(45) NOT NULL,
+         PRIMARY KEY (PRODUCT_ID),
+         INDEX fk_product_product_type1_idx (PRODUCT_TYPE_ID ASC) VISIBLE,
+    CONSTRAINT fk_product_product_type1
+    FOREIGN KEY (PRODUCT_TYPE_ID)
+    REFERENCES employee_db.product_type (PRODUCT_TYPE_ID)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="45" author="Rakesh Mhaske">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+         CREATE TABLE IF NOT EXISTS employee_db.status (
+         STATUS_ID INT NOT NULL,
+         STATUS_NAME VARCHAR(45) NOT NULL,
+         PRIMARY KEY (STATUS_ID))ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
+            ]]>
+        </sql>
+    </changeSet>
+
+
+    <changeSet id="50" author="Rakesh Mhaske">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+         CREATE TABLE IF NOT EXISTS employee_db.project_service_type (
+         PROJECT_ID INT(11) NOT NULL,
+         SERVICE_TYPE_ID INT(11) NOT NULL,
+         PRIMARY KEY (SERVICE_TYPE_ID, PROJECT_ID),
+         INDEX fk_service_type_has_project_project1_idx (PROJECT_ID ASC) VISIBLE,
+         INDEX fk_service_type_has_project_service_type1_idx (SERVICE_TYPE_ID ASC) VISIBLE,
+         CONSTRAINT fk_service_type_has_project_service_type1
+         FOREIGN KEY (SERVICE_TYPE_ID)
+         REFERENCES employee_db.service_type (SERVICE_TYPE_ID)
+         ON DELETE NO ACTION
+         ON UPDATE NO ACTION,
+         CONSTRAINT fk_service_type_has_project_project1
+         FOREIGN KEY (PROJECT_ID)
+         REFERENCES employee_db.project (PROJECT_ID)
+         ON DELETE NO ACTION
+         ON UPDATE NO ACTION)ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
+            ]]>
+        </sql>
+    </changeSet>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </databaseChangeLog>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+<!-- This change set defines the initial table definition for the consent service
+based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Spike+PAYBA-1428+-+Consent+Service+DB -->
+
+    <changeSet id="201" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+		        ALTER TABLE employee_db.project
+                DROP FOREIGN KEY fk_project_project_tagging1,
+                DROP FOREIGN KEY fk_project_department;
+                ALTER TABLE employee_db.project
+                DROP COLUMN PROJECT_STATUS,
+                DROP COLUMN PROJECT_MANAGER,
+                DROP COLUMN PROJECT_TAGGING_ID,
+                DROP COLUMN DEPARTMENT_ID,
+                DROP INDEX fk_project_project_tagging1_idx ,
+                DROP INDEX fk_project_department_idx ;
+
+            ]]>
+        </sql>
+    </changeSet>
+
+
+
+
+</databaseChangeLog>

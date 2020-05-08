@@ -29,4 +29,82 @@ based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Sp
         </sql>
     </changeSet>
 
+    <changeSet id="103" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+            ALTER TABLE employee_db.employee
+            CHANGE COLUMN PREVIOUS_EXP PREVIOUS_EXP DECIMAL(19,1) NULL DEFAULT NULL ,
+            CHANGE COLUMN EXPERIENCE_GAPS EXPERIENCE_GAPS DECIMAL(19,1) NULL DEFAULT NULL ,
+            CHANGE COLUMN EXPERIENCE_CURRENT_ROLE EXPERIENCE_CURRENT_ROLE DECIMAL(19,1) NULL DEFAULT NULL ,
+            CHANGE COLUMN TOTAL_EXPERIENCE TOTAL_EXPERIENCE DECIMAL(19,1) NULL DEFAULT NULL ;
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="104" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+       ALTER TABLE employee_db.project
+       ADD COLUMN SERVICE_LINE_ID INT(11) NOT NULL AFTER REGION_ID,
+       ADD COLUMN PRODUCT_TYPE_ID INT(11) NOT NULL AFTER SERVICE_LINE_ID,
+       ADD COLUMN PRODUCT_ID INT(11) NOT NULL AFTER PRODUCT_TYPE_ID,
+       ADD COLUMN STATUS_ID INT(11) NOT NULL AFTER PROJECT_END_DATE,
+       ADD COLUMN REMARK VARCHAR(45) NULL AFTER STATUS_ID,
+       ADD INDEX fk_project_service_line_idx (SERVICE_LINE_ID ASC),
+       ADD INDEX fk_project_product_type_idx (PRODUCT_TYPE_ID ASC) VISIBLE,
+       ADD INDEX fk_project_product_idx (PRODUCT_ID ASC) VISIBLE,
+       ADD INDEX fk_project_status_idx (STATUS_ID ASC) VISIBLE;
+
+       ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="105" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+        ALTER TABLE employee_db.project
+        ADD CONSTRAINT fk_project_service_line
+        FOREIGN KEY (SERVICE_LINE_ID)
+        REFERENCES employee_db.service_line (SERVICE_LINE_ID)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION,
+        ADD CONSTRAINT fk_project_product_type
+            FOREIGN KEY (PRODUCT_TYPE_ID)
+            REFERENCES employee_db.product_type (PRODUCT_TYPE_ID)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+        ADD CONSTRAINT fk_project_product
+            FOREIGN KEY (PRODUCT_ID)
+            REFERENCES employee_db.product (PRODUCT_ID)
+             ON DELETE NO ACTION
+             ON UPDATE NO ACTION,
+        ADD CONSTRAINT fk_project_status
+            FOREIGN KEY (STATUS_ID)
+            REFERENCES employee_db.status (STATUS_ID)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION;
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="106" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+       ALTER TABLE employee_db.user
+       ADD COLUMN USER_JWT VARCHAR(100) NULL AFTER PASSWORD;
+
+       ALTER TABLE employee_db.user
+       CHANGE COLUMN PASSWORD PASSWORD VARCHAR(100) NOT NULL ;
+
+       ALTER TABLE employee_db.user
+       ADD COLUMN IS_RESET_REQUIRED VARCHAR(5) NULL DEFAULT 'N' AFTER USER_JWT;
+            ]]>
+        </sql>
+    </changeSet>
+
+
+
+
+
+
 </databaseChangeLog>

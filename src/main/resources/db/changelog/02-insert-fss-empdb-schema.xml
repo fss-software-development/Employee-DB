@@ -3,23 +3,23 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-<!-- This change set defines the initial table definition for the consent service
-based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Spike+PAYBA-1428+-+Consent+Service+DB -->
+    <!-- This change set defines the initial table definition for the consent service
+    based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Spike+PAYBA-1428+-+Consent+Service+DB -->
 
-<changeSet id="22" author="Rakesh">
-    <sql dbms="mysql" splitStatements="true" stripComments="true">
-        <![CDATA[
+    <changeSet id="22" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
 			     INSERT INTO department (DEPARTMENT_ID, DEPARTMENT_NAME, DEPARTMENT_HEAD,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (1, "Solution-OFSD", "Vinod B",1,now() ,1,now());
                  INSERT INTO department (DEPARTMENT_ID, DEPARTMENT_NAME, DEPARTMENT_HEAD,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (2, "Solution-AMS", "Vinod B",1,now(),1,now());
             ]]>
-    </sql>
-</changeSet>
+        </sql>
+    </changeSet>
 
-<changeSet id="23" author="Rakesh">
-    <sql dbms="mysql" splitStatements="true" stripComments="true">
-        <![CDATA[
+    <changeSet id="23" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
 			     INSERT INTO region (REGION_ID,REGION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (1, "US",1,now(),1,now());
 			     INSERT INTO region (REGION_ID,REGION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
@@ -37,47 +37,46 @@ based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Sp
 			     INSERT INTO region (REGION_ID,REGION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (8, "ANZ",1,now(),1,now());
             ]]>
-    </sql>
-</changeSet>
+        </sql>
+    </changeSet>
 
-<changeSet id="24" author="Rakesh">
-    <sql dbms="mysql" splitStatements="true" stripComments="true">
-        <![CDATA[
+    <changeSet id="24" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
 			     INSERT INTO account (ACCOUNT_ID,ACCOUNT_NAME,REGION_ID,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (1, "HDFC",1,1,now(),1,now());
                  INSERT INTO account (ACCOUNT_ID,ACCOUNT_NAME,REGION_ID,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (2, "IDFC",1,1,now(),1,now());
             ]]>
-    </sql>
-</changeSet>
+        </sql>
+    </changeSet>
 
 
-
-<changeSet id="25" author="Rakesh">
-    <sql dbms="mysql" splitStatements="true" stripComments="true">
-        <![CDATA[
+    <changeSet id="25" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
 			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (1, "Mumbai",1,now(),1,now());
 			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (2, "Chennai",1,now(),1,now());
             ]]>
-    </sql>
-</changeSet>
+        </sql>
+    </changeSet>
 
-<changeSet id="26" author="Rakesh">
-    <sql dbms="mysql" splitStatements="true" stripComments="true">
-        <![CDATA[
+    <changeSet id="26" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
 			     INSERT INTO skill (SKILL_ID,SKILL_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (1, "Java",1,now(),1,now());
 			     INSERT INTO skill (SKILL_ID,SKILL_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (2, ".Net",1,now(),1,now());
             ]]>
-    </sql>
-</changeSet>
+        </sql>
+    </changeSet>
 
-<changeSet id="27" author="Rakesh">
-    <sql dbms="mysql" splitStatements="true" stripComments="true">
-        <![CDATA[
+    <changeSet id="27" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
 			     INSERT INTO designation (DESIGNATION_ID,DESIGNATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
 			      VALUES (1, "PROJECT LEADER",1,now(),1,now());
 			     INSERT INTO designation (DESIGNATION_ID,DESIGNATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
@@ -116,37 +115,39 @@ based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Sp
 			      VALUES (18, "TEST MANAGER",1,now(),1,now());
 
             ]]>
-    </sql>
-</changeSet>
+        </sql>
+    </changeSet>
 
-<changeSet id="28" author="Rakesh">
-    <sql dbms="mysql" splitStatements="true" stripComments="true">
-        <![CDATA[
-			     INSERT INTO user (USER_SQID,USER_ID,USER_NAME,EMAIL,PASSWORD,INS_DATE,LAST_UPDATE_DATE)
-	           	  VALUES (1, 1,"rakeshm","rakeshm@fss.co.in","pass@123",'2020-04-08 10:10:10','2020-04-08 10:10:10');
+<!--    <changeSet id="28" author="Rakesh">-->
+<!--        <sql dbms="mysql" splitStatements="true" stripComments="true">-->
+<!--            <![CDATA[-->
+<!--			     INSERT INTO user (USER_SQID,USER_ID,USER_NAME,EMAIL,PASSWORD,INS_DATE,LAST_UPDATE_DATE)-->
+<!--	           	  VALUES (1, 1,"rakeshm","rakeshm@fss.co.in","pass@123",'2020-04-08 10:10:10','2020-04-08 10:10:10');-->
 
+<!--            ]]>-->
+<!--        </sql>-->
+<!--    </changeSet>-->
+
+    <changeSet id="29" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+			     INSERT INTO service_line (SERVICE_LINE_ID,SERVICE_LINE_NAME)
+			      VALUES (1, "ENGINEERING");
+			     INSERT INTO service_line (SERVICE_LINE_ID,SERVICE_LINE_NAME)
+			      VALUES (2, "SWITCHING");
+			     INSERT INTO service_line (SERVICE_LINE_ID,SERVICE_LINE_NAME)
+			      VALUES (3, "TESTING");
+			     INSERT INTO service_line (SERVICE_LINE_ID,SERVICE_LINE_NAME)
+			      VALUES (4, "MANAGE SERVICE");
+			     INSERT INTO service_line (SERVICE_LINE_ID,SERVICE_LINE_NAME)
+			      VALUES (5, "VAS");
             ]]>
-    </sql>
-</changeSet>
+        </sql>
+    </changeSet>
 
-<changeSet id="29" author="Rakesh">
-    <sql dbms="mysql" splitStatements="true" stripComments="true">
-        <![CDATA[
-			     INSERT INTO service_line (SERVICE_LINE_ID,SERVICE_LINE_NAME)
-			      VALUES (1, "Engineering");
-			     INSERT INTO service_line (SERVICE_LINE_ID,SERVICE_LINE_NAME)
-			      VALUES (2, "Testing");
-			     INSERT INTO service_line (SERVICE_LINE_ID,SERVICE_LINE_NAME)
-			      VALUES (3, "Switching");
-			     INSERT INTO service_line (SERVICE_LINE_ID,SERVICE_LINE_NAME)
-			      VALUES (4, "Portfolia Management Services");
-            ]]>
-    </sql>
-</changeSet>
-
-<changeSet id="30" author="Rakesh">
-    <sql dbms="mysql" splitStatements="true" stripComments="true">
-        <![CDATA[
+    <changeSet id="30" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
 			     INSERT INTO billable_status (BILLABLE_STATUS_ID,BILLABLE_STATUS)
 			      VALUES (1, "EARMARKED");
 			     INSERT INTO billable_status (BILLABLE_STATUS_ID,BILLABLE_STATUS)
@@ -162,12 +163,12 @@ based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Sp
 			     INSERT INTO billable_status (BILLABLE_STATUS_ID,BILLABLE_STATUS)
 			      VALUES (7, "BILLABLE");
             ]]>
-    </sql>
-</changeSet>
+        </sql>
+    </changeSet>
 
-<changeSet id="31" author="Rakesh">
-    <sql dbms="mysql" splitStatements="true" stripComments="true">
-        <![CDATA[
+    <changeSet id="31" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
 			     INSERT INTO grade (GRADE_ID,GRADE_NAME)
 			      VALUES (1, "M1");
 			     INSERT INTO grade (GRADE_ID,GRADE_NAME)
@@ -183,12 +184,12 @@ based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Sp
 			     INSERT INTO grade (GRADE_ID,GRADE_NAME)
 			      VALUES (7, "M7");
             ]]>
-    </sql>
-</changeSet>
+        </sql>
+    </changeSet>
 
-<changeSet id="32" author="Rakesh">
-    <sql dbms="mysql" splitStatements="true" stripComments="true">
-        <![CDATA[
+    <changeSet id="32" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
 			     INSERT INTO academics (ACADEMICS_ID,ACADEMICS_NAME)
 			      VALUES (1, "BSC");
 			     INSERT INTO academics (ACADEMICS_ID,ACADEMICS_NAME)
@@ -208,12 +209,12 @@ based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Sp
 			     INSERT INTO academics (ACADEMICS_ID,ACADEMICS_NAME)
 			      VALUES (9, "MBA");
             ]]>
-    </sql>
-</changeSet>
+        </sql>
+    </changeSet>
 
-<changeSet id="33" author="Rakesh">
-    <sql dbms="mysql" splitStatements="true" stripComments="true">
-        <![CDATA[
+    <changeSet id="33" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
 			     INSERT INTO project_tagging (PROJECT_TAGGING_ID,PROJECT_TAGGING)
 			      VALUES (1, "Reserved");
 			     INSERT INTO project_tagging (PROJECT_TAGGING_ID,PROJECT_TAGGING)
@@ -221,12 +222,12 @@ based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Sp
 			     INSERT INTO project_tagging (PROJECT_TAGGING_ID,PROJECT_TAGGING)
 			      VALUES (3, "Execution");
             ]]>
-    </sql>
-</changeSet>
+        </sql>
+    </changeSet>
 
-<changeSet id="34" author="Rakesh">
-    <sql dbms="mysql" splitStatements="true" stripComments="true">
-        <![CDATA[
+    <changeSet id="34" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
 			     INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (1, "Project Manager");
 			     INSERT INTO role (ROLE_ID,ROLE_NAME)
@@ -270,8 +271,8 @@ based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Sp
 			    INSERT INTO role (ROLE_ID,ROLE_NAME)
 			      VALUES (21, "Non Functional Tester");
             ]]>
-    </sql>
-</changeSet>
+        </sql>
+    </changeSet>
 
 
     <changeSet id="36" author="Rakesh">
@@ -352,4 +353,114 @@ based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Sp
         </sql>
     </changeSet>
 
+    <changeSet id="46" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+			     INSERT INTO service_type (SERVICE_TYPE_ID,SERVICE_TYPE_NAME)
+			      VALUES (1, "CERTIFICATION");
+			      INSERT INTO service_type (SERVICE_TYPE_ID,SERVICE_TYPE_NAME)
+			      VALUES (2, "POST GO LIVE SUPPORT");
+			       INSERT INTO service_type (SERVICE_TYPE_ID,SERVICE_TYPE_NAME)
+			      VALUES (3, "ADMIN SUPPORT");
+			        INSERT INTO service_type (SERVICE_TYPE_ID,SERVICE_TYPE_NAME)
+			      VALUES (4, "TEST AUTOMATION");
+			        INSERT INTO service_type (SERVICE_TYPE_ID,SERVICE_TYPE_NAME)
+			      VALUES (5, "L1");
+			          INSERT INTO service_type (SERVICE_TYPE_ID,SERVICE_TYPE_NAME)
+			      VALUES (6, "L2");
+			          INSERT INTO service_type (SERVICE_TYPE_ID,SERVICE_TYPE_NAME)
+			      VALUES (7, "DEVELOPMENT");
+			          INSERT INTO service_type (SERVICE_TYPE_ID,SERVICE_TYPE_NAME)
+			      VALUES (8, "IMPLEMENTATION");
+			          INSERT INTO service_type (SERVICE_TYPE_ID,SERVICE_TYPE_NAME)
+			      VALUES (9, "MANUAL TESTING");
+            ]]>
+        </sql>
+    </changeSet>
+    <changeSet id="47" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+			     INSERT INTO product_type (PRODUCT_TYPE_ID,PRODUCT_TYPE_NAME)
+			      VALUES (1, "FSS PRODUCT");
+			     INSERT INTO product_type (PRODUCT_TYPE_ID,PRODUCT_TYPE_NAME)
+			      VALUES (2, "PARTNER PRODUCT");
+			     INSERT INTO product_type (PRODUCT_TYPE_ID,PRODUCT_TYPE_NAME)
+			      VALUES (3, "THIRD PARTY PRODUCT");
+            ]]>
+        </sql>
+    </changeSet>
+    <changeSet id="48" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (1,1, "Posability");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (2, 1,"ACS");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (3,1,"MAPS");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (4,1,"Recon");
+		         INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (5,1,"Billing and Settlement");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (6,1,"CMS");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (7,1,"Toggle");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (8,1,"Green Pin");
+			      INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (9,1,"Payment Gateway");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (10,1,"PCS");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (11,1, "Bill Pay");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (12, 1,"Insta Remmit");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (13,1,"eCash");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (14,1,"ATM Monitor");
+		         INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (15,1,"POS Monitor");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (16,1,"Mobile Pay");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (17,1,"D Wallet");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (18,1,"Finclusive FI Gateway");
+			      INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (19,1,"AadharPay");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (20,1,"ADM");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (21,1,"Loyalty Manager");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (22,1,"FSS Connect");
+			   	INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (23,2,"TANGO");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (24,2,"PARAGON");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (25,3,"BASE24");
+			     INSERT INTO product (PRODUCT_ID,PRODUCT_TYPE_ID,PRODUCT_NAME)
+			      VALUES (26,3,"AUTHENTIC");
+            ]]>
+        </sql>
+    </changeSet>
+    <changeSet id="49" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+			     INSERT INTO status (STATUS_ID,STATUS_NAME)
+			      VALUES (1, "PRE-SALES");
+			     INSERT INTO status (STATUS_ID,STATUS_NAME)
+			      VALUES (2, "ONHOLD");
+			     INSERT INTO status (STATUS_ID,STATUS_NAME)
+			      VALUES (3, "INPROGRESS");
+			     INSERT INTO status (STATUS_ID,STATUS_NAME)
+			      VALUES (4, "COMPLETE");
+			     INSERT INTO status (STATUS_ID,STATUS_NAME)
+			      VALUES (5, "SCRAP");
+            ]]>
+        </sql>
+    </changeSet>
 </databaseChangeLog>
