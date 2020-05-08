@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @Log4j2
 @RequestMapping("/projects")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class ProjectController {
 
 
