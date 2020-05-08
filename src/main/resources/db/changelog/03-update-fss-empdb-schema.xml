@@ -102,6 +102,17 @@ based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Sp
         </sql>
     </changeSet>
 
+    <changeSet id="107" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+       ALTER TABLE employee_db.project_service_type
+       ADD COLUMN PROJECT_SERVICE_TYPE_ID INT(11) NOT NULL AUTO_INCREMENT FIRST,
+       DROP PRIMARY KEY,
+       ADD PRIMARY KEY (PROJECT_SERVICE_TYPE_ID);
+            ]]>
+        </sql>
+    </changeSet>
+
 
 
 
