@@ -4,12 +4,13 @@ import com.fss.empdb.domain.*;
 import com.fss.empdb.service.MasterService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @Log4j2
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/masters")
 public class MasterController {
 
@@ -76,14 +77,25 @@ public class MasterController {
         return masterService.getAllTools();
     }
 
-//    @GetMapping("/master/get-all-project-tagging")
-//    public List<Role> getAllRole() {
-//        return masterService.getAllRole();
-//    }
-//
-//    @GetMapping("/master/get-all-project-tagging")
-//    public List<Project> getAllProject() {
-//        return masterService.getAllProject();
-//    }
+    @GetMapping("/roles")
+    public List<Role> getAllRole() {
+        return masterService.getAllRole();
+    }
+
+    @GetMapping("/service-type")
+    public List<ServiceType> getAllServiceType() {
+        return masterService.getAllServiceType();
+    }
+
+    @GetMapping("/product-type")
+    public List<ProductType> getAllProductType() {
+        return masterService.getAllProductType();
+    }
+
+    @GetMapping("/product/{id}")
+    public List<Product> getAllProduct(@PathVariable(value = "id") Long productTypeId) {
+        log.info("Controller --------------------" + productTypeId);
+        return masterService.getAllProduct(productTypeId);
+    }
 
 }

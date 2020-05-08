@@ -23,6 +23,9 @@ public class User {
     @Column(name = "USER_ID")
     private Long userId;
 
+    @Column(name = "USER_ROLE_ID")
+    private Long userRoleId;
+
     //@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_SQID")

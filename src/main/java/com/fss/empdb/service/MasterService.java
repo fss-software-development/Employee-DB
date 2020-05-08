@@ -2,14 +2,19 @@ package com.fss.empdb.service;
 
 import com.fss.empdb.domain.*;
 import com.fss.empdb.repository.*;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.*;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Log4j2
 @Service
 public class MasterService {
 
@@ -54,6 +59,15 @@ public class MasterService {
 
     @Autowired
     ToolsRepository toolsRepository;
+
+    @Autowired
+    ServiceTypeRepository serviceTypeREpository;
+
+    @Autowired
+    ProductTypeRepository productTypeRepository;
+
+    @Autowired
+    ProductRepository productRepository;
 
     public List<Department> getAllDepartment() {
         return departmentRepository.findAll();
@@ -111,5 +125,27 @@ public class MasterService {
         return toolsRepository.findAll();
     }
 
+    public List<ServiceType> getAllServiceType() {
+        return serviceTypeREpository.findAll();
+    }
+
+    public List<ProductType> getAllProductType() {
+        return productTypeRepository.findAll();
+    }
+
+    public List<Product> getAllProduct(Long productTypeId) {
+        return productRepository.findAll(new Specification<Product>() {
+            @Override
+            public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+
+                List<Predicate> predicates = new ArrayList<>();
+                if (productTypeId != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("productTypeId"), productTypeId)));
+                }
+                log.info("Search filter Size :" + predicates.size());
+                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+            }
+        });
+    }
 
 }
