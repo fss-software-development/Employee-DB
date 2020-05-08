@@ -39,6 +39,9 @@ public class User {
 
     private String userJwt;
 
+    @Column(name = "IS_RESET_REQUIRED")
+    private String isResetRequired;
+
     /*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     private Set<Role> roles;*/

@@ -1,5 +1,7 @@
 package com.fss.empdb.controller;
 
+import com.fss.empdb.constants.EmpdbConstants;
+import com.fss.empdb.constants.ErrorConstants;
 import com.fss.empdb.domain.User;
 import com.fss.empdb.repository.UserRepository;
 import com.fss.empdb.service.UsersService;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
 
 @Log4j2
 @RestController
@@ -29,7 +33,6 @@ public class UserController {
 
     @Autowired
     UsersService usersService;
-
 
     @PostMapping("/add")
     public String addUserByAdmin(@RequestBody User user) {
@@ -77,6 +80,13 @@ public class UserController {
             ex.printStackTrace();
             return null;
         }
+    }
+
+    @PostMapping("/forget-password")
+    public void forgetPassword(@RequestBody User user) throws MessagingException {
+        System.out.println("Inside forget password");
+        User getUserDetails = usersService.userById(user.getUserId());
+        usersService.forgetPasswordMail(getUserDetails, EmpdbConstants.FORGOT_PWD,ErrorConstants.MAIL_BODY);
     }
 
     @GetMapping("/home")
