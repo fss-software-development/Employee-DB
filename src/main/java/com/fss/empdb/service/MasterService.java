@@ -69,6 +69,9 @@ public class MasterService {
     @Autowired
     ProductRepository productRepository;
 
+    @Autowired
+    StatusRepository statusRepository;
+
     public List<Department> getAllDepartment() {
         return departmentRepository.findAll();
     }
@@ -146,6 +149,10 @@ public class MasterService {
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }
         });
+    }
+
+    public List<Status> getAllStatus() {
+        return statusRepository.findAll();
     }
 
 }

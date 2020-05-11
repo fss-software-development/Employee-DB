@@ -18,23 +18,8 @@ public class Project {
     @Column(name="PROJECT_ID")
     Long projectId;
 
-    /*@OneToMany(cascade = CascadeType.MERGE, mappedBy = "departmentId")
-    private Collection<Department> department;*/
-
-    /*@ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "DEPARTMENT_ID")
-    private Department department;*/
-
-
-
     @Column(name="PROJECT_NAME",nullable = false)
     String projectName;
-
-   /* @Column(name="PROJECT_MANAGER",nullable = false)
-    String projectManager;
-
-    @Column(name="PROJECT_STATUS",nullable = false)
-    String projectStatus;*/
 
     @Temporal(TemporalType.DATE)
     @Column(name = "PROJECT_START_DATE", nullable = false)
@@ -55,14 +40,30 @@ public class Project {
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
 
-//    @JsonIgnore
-//    @ManyToMany(mappedBy = "projects")
-//    List<Employee> employee;
+    @ManyToOne
+    @JoinColumn(name = "SERVICE_LINE_ID")
+    private ServiceLine serviceLine;
 
-    //@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "projectTaggingId")
-    /*@ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "PROJECT_TAGGING_ID")
-    private ProjectTagging projectTagging;*/
+    @ManyToMany
+    @JoinTable(name = "project_service_type",
+            joinColumns = {@JoinColumn(name = "PROJECT_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "SERVICE_TYPE_ID")})
+    private Collection<ServiceType> serviceTypes;
+
+    @ManyToOne
+    @JoinColumn(name = "PRODUCT_TYPE_ID")
+    private ProductType productType;
+
+    @ManyToOne
+    @JoinColumn(name = "PRODUCT_ID")
+     private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "STATUS_ID")
+    private Status status;
+
+    @Column(name="REMARK",nullable = false)
+    String remark;
 
     @JsonIgnore
     @Column(name="INS_USER")
