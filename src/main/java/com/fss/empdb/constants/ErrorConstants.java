@@ -10,7 +10,6 @@ public class ErrorConstants {
 
     public static final String DATA_NOT_FOUND= "Data not found for this id ::";
     public static final String FORGOT_PWD="Password Reset Successfully ";
-    public static final String MAIL_BODY="Your Auto Generated Password Is";
 
     public  static  final String IS_RESET_REQUIRED="Y";
 

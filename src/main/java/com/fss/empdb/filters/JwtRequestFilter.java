@@ -1,13 +1,14 @@
 package com.fss.empdb.filters;
 
 import com.fss.empdb.domain.User;
-import com.fss.empdb.service.MyUserDetailsService;
+import com.fss.empdb.service.CustomUserDetailsService;
 import com.fss.empdb.service.UsersService;
 import com.fss.empdb.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -22,7 +23,7 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private MyUserDetailsService userDetailsService;
+    private CustomUserDetailsService userDetailsService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -52,7 +53,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             System.out.println("before usersService :"+userId);
-            //User userDetails = this.userDetailsService.loadUserByUsername(username);
+            // doesn't have userId parameter
+            //UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
             User userDetails = usersService.userById(userId);
             System.out.println("Inside usersService :"+userDetails.getUserName());
             if (jwtUtil.validateToken(jwt, userDetails)) {

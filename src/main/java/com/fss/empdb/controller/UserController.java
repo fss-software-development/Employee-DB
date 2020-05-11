@@ -2,7 +2,6 @@ package com.fss.empdb.controller;
 
 import com.fss.empdb.constants.EmpdbConstants;
 import com.fss.empdb.constants.ErrorConstants;
-import com.fss.empdb.domain.Employee;
 import com.fss.empdb.domain.User;
 import com.fss.empdb.repository.UserRepository;
 import com.fss.empdb.service.UsersService;
@@ -88,7 +87,7 @@ public class UserController {
     public void forgetPassword(@RequestBody User user) throws MessagingException {
         System.out.println("Inside forget password");
         User getUserDetails = usersService.userById(user.getUserId());
-        usersService.forgetPasswordMail(getUserDetails, EmpdbConstants.FORGOT_PWD,ErrorConstants.MAIL_BODY);
+        usersService.forgetPasswordMail(getUserDetails, EmpdbConstants.FORGOT_PWD,EmpdbConstants.MAIL_BODY);
     }
 
     @GetMapping("/")
