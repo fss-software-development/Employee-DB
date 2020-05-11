@@ -2,6 +2,7 @@ package com.fss.empdb.controller;
 
 import com.fss.empdb.constants.EmpdbConstants;
 import com.fss.empdb.constants.ErrorConstants;
+import com.fss.empdb.domain.Employee;
 import com.fss.empdb.domain.User;
 import com.fss.empdb.repository.UserRepository;
 import com.fss.empdb.service.UsersService;
@@ -13,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import java.util.List;
 
 @Log4j2
 @RestController
@@ -87,6 +89,16 @@ public class UserController {
         System.out.println("Inside forget password");
         User getUserDetails = usersService.userById(user.getUserId());
         usersService.forgetPasswordMail(getUserDetails, EmpdbConstants.FORGOT_PWD,ErrorConstants.MAIL_BODY);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<User>> getAllPermissions() {
+        return ResponseEntity.ok().body(usersService.getAllPermissions());
+    }
+
+    @GetMapping("/{id}/permissions")
+    public ResponseEntity<User> getPermissionsById(@PathVariable(value = "id") Long userId) {
+        return ResponseEntity.ok().body(usersService.getPermissionsById(userId));
     }
 
     @GetMapping("/home")

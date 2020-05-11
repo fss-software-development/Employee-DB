@@ -2,6 +2,7 @@ package com.fss.empdb.service;
 
 import com.fss.empdb.constants.EmpdbConstants;
 import com.fss.empdb.constants.ErrorConstants;
+import com.fss.empdb.domain.Employee;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.text.RandomStringGenerator;
 import com.fss.empdb.domain.User;
@@ -18,6 +19,7 @@ import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Base64;
+import java.util.List;
 
 @Service
 @Log4j2
@@ -72,4 +74,13 @@ public class UsersService {
         return pwdGenerator.generate(length);
     }
 
+    public List<User> getAllPermissions() {
+
+        return userRepository.findAll();
+    }
+
+    public User getPermissionsById(Long userId) {
+        return userRepository.findById(userId).
+                orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.DATA_NOT_FOUND + userId));
+    }
 }

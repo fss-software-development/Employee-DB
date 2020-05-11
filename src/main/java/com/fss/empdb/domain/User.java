@@ -40,10 +40,15 @@ public class User {
     @Column(name = "EMAIL")
     private String email;
 
+    @Column(name = "USER_JWT")
     private String userJwt;
 
     @Column(name = "IS_RESET_REQUIRED")
     private String isResetRequired;
+
+    @ManyToMany
+    @JoinTable(name = "USER_ROLE_PERMISSION", joinColumns = @JoinColumn(name = "USER_ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_PERMISSION_ID"))
+    private Collection<UserPermission> userPermission;
 
     /*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
