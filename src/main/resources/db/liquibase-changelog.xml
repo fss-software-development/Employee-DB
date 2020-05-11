@@ -9,6 +9,5 @@
   <include file="changelog/01-create-fss-empdb-schema.xml" relativeToChangelogFile="true"/>
   <include file="changelog/02-insert-fss-empdb-schema.xml" relativeToChangelogFile="true"/>
   <include file="changelog/03-update-fss-empdb-schema.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/04-delete-fss-empdb-schema.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

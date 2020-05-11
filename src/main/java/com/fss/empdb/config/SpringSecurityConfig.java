@@ -46,14 +46,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/users/login/**")
                 .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
+                .anyRequest().permitAll();
+                /*.authenticated()
+                .and()*/
                 /*.httpBasic()
                 .and().
                 exceptionHandling().and()*/
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                /*.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);*/
     }
 
     @Bean

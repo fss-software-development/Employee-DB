@@ -1,27 +1,27 @@
-package com.fss.empdb;
-
-import com.fss.empdb.domain.Account;
-import com.fss.empdb.domain.AccountSearchCriteria;
-import com.fss.empdb.domain.Region;
-import com.fss.empdb.service.AccountService;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-@DirtiesContext
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ActiveProfiles("local")
-@SpringBootTest
-public class AccountServiceTest {
-
-
+//package com.fss.empdb;
+//
+//import com.fss.empdb.domain.Account;
+//import com.fss.empdb.domain.AccountSearchCriteria;
+//import com.fss.empdb.domain.Region;
+//import com.fss.empdb.service.AccountService;
+//import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.TestInstance;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.test.annotation.DirtiesContext;
+//import org.springframework.test.context.ActiveProfiles;
+//
+//import java.util.List;
+//
+//import static org.junit.jupiter.api.Assertions.assertNotNull;
+//
+//@DirtiesContext
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+//@ActiveProfiles("local")
+//@SpringBootTest
+//public class AccountServiceTest {
+//
+//
 //    @Autowired
 //    AccountService accountService;
 //
@@ -86,6 +86,6 @@ public class AccountServiceTest {
 //        List<Account> newAcc = accountService.accountBySearch(acc);
 //        assertNotNull(newAcc);
 //    }
-
-
-}
+//
+//
+//}
