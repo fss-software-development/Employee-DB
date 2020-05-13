@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,26 +17,21 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class User {
-
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getUserRole().getUserPermission().stream()
-                .map(userPermission -> new SimpleGrantedAuthority(userPermission.getUserPermissionName()))
-                .collect(Collectors.toList());
-    }
+@Table(name = "user")
+public class User  implements Serializable {
+    //@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "USER_SQID")
+    Long userSqId;
 
     @Id
     @Column(name = "USER_ID")
-    private Long userId;
+    private String userId;
 
     @ManyToOne
     @JoinColumn(name = "USER_ROLE_ID")
     private UserRole userRole;
 
-    //@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "USER_SQID")
-    Long userSqId;
 
     @Column(name = "USER_NAME")
     private String userName;
@@ -51,6 +47,12 @@ public class User {
 
     @Column(name = "IS_RESET_REQUIRED")
     private String isResetRequired;
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getUserRole().getUserPermission().stream()
+                .map(userPermission -> new SimpleGrantedAuthority(userPermission.getUserPermissionName()))
+                .collect(Collectors.toList());
+    }
 
 //    @ManyToMany
 //    @JoinTable(name = "USER_ROLE_PERMISSION", joinColumns = @JoinColumn(name = "USER_ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_PERMISSION_ID"))

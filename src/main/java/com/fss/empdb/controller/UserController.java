@@ -38,7 +38,6 @@ public class UserController {
     @Autowired
     UsersService usersService;
 
-    //@Preauthorize (hasAuthority)
     @PreAuthorize("hasAnyAuthority('ADD_EMPLOYEE')")
     @PostMapping("/add")
     public String addUserByAdmin(@RequestBody User user) {
@@ -63,7 +62,7 @@ public class UserController {
     }
 
     @GetMapping("/permissions/{id}")
-    public ResponseEntity<User> getPermissionsByIdTest(@PathVariable(value = "id") Long userId) {
+    public ResponseEntity<User> getPermissionsByIdTest(@PathVariable(value = "id") String userId) {
         return ResponseEntity.ok().body(usersService.getPermissionsById(userId));
     }
 

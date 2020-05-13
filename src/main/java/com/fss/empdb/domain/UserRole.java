@@ -3,6 +3,7 @@ package com.fss.empdb.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 
 @Getter
@@ -12,7 +13,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @ToString
 @Table(name = "user_role")
-public class UserRole {
+public class UserRole  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_ROLE_ID")

@@ -40,9 +40,8 @@ public class UsersService {
     @Autowired
     private JwtUtil jwtTokenUtil;
 
-    public User userById(Long userId) {
-        return userRepository.findById(userId).
-                orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.DATA_NOT_FOUND + userId));
+    public User userById(String userId) {
+        return userRepository.findByUserId(userId);
     }
 
     public static String sha256Hash(String originalPassword) throws Exception {
@@ -88,47 +87,9 @@ public class UsersService {
         return userRepository.findAll();
     }
 
-    public User getPermissionsById(Long userId) {
-        return userRepository.findById(userId).
-                orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.DATA_NOT_FOUND + userId));
+    public User getPermissionsById(String userId) {
+        return userRepository.findByUserId(userId);
     }
-
-   /* public List<User> getPermissionsById(User user) {
-        log.info("User Search Service" + user);
-        return userRepository.findAll(new Specification<User>() {
-            @Override
-            public Predicate toPredicate(Root<User> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                List<Predicate> predicates = new ArrayList<>();
-                if (!(user.getUserId()!=null)) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("userId"), user.getUserId())));
-                }
-               *//* log.info("User Search Service ----------role " + user.getUserRoleId());
-                if (user.getUserRoleId() != null) {
-                    log.info("User Search Service ----------role1 " + user.getUserRoleId());
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("userRoleId"), user.getUserRoleId())));
-                }*//*
-
-                *//*if (user.getUserRole() != null) {
-                    log.info("User Search Service ----------role1 " + user.getUserRole());
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("userRoleId"), user.getUserRole())));
-                }*//*
-                *//*if (user.getUserRoleId()  != null) {
-                    Join<User, UserPermission> phoneJoin = root.join("userPermission");
-                    predicates.add(phoneJoin.in(user.getUserRoleId()));
-
-                }*//*
-
-                if (user.getUserRole()  != null) {
-                    Join<User, UserRole> phoneJoin = root.join("userRole");
-                    predicates.add(phoneJoin.in(user.getUserRole()));
-
-                }
-
-                log.info("Search filter Size :" + predicates.size());
-                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
-            }
-        });
-    }*/
 
     public String addUserByAdmin(User user) {
         try
@@ -154,8 +115,8 @@ public class UsersService {
             String pwd = user.getUserPassword();
             User getUserDetails = userById(user.getUserId());
             String encryptPwd = sha256Hash(pwd) ;
-            isPasswordMatch =encryptPwd.equals(getUserDetails.getUserPassword());
             System.out.println("encryptPwd ::"+encryptPwd);
+            isPasswordMatch =encryptPwd.equals(getUserDetails.getUserPassword());
            /* String decryptedPwd = usersService.decrypt(getUserDetails.getUserPassword(), secretKey) ;
             isPasswordMatch = pwd.equals(decryptedPwd);*/
             if (isPasswordMatch == true) {
