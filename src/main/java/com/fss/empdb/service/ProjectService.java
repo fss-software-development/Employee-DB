@@ -20,7 +20,6 @@ import java.util.Optional;
 public class ProjectService {
 
 
-
     @Autowired
     ProjectRepository projectRepository;
 
@@ -40,7 +39,7 @@ public class ProjectService {
 
     public void deleteProject(Long projectId) {
 
-        Project project=new Project();
+        Project project = new Project();
         project.setProjectId(projectId);
         projectRepository.delete(project);
     }
@@ -59,17 +58,17 @@ public class ProjectService {
     }*/
 
     public Project createProject(Project project) {
-       project.setInsUser(Long.valueOf(1));
-       project.setLastUpdateUser(Long.valueOf(1));
-       project.setInsDate(new Date());
-       project.setLastUpdateDate(new Date());
+        project.setInsUser(Long.valueOf(1));
+        project.setLastUpdateUser(Long.valueOf(1));
+        project.setInsDate(new Date());
+        project.setLastUpdateDate(new Date());
         return projectRepository.save(project);
     }
 
-    public Project updateProject(Project project){
+    public Project updateProject(Project project) {
 
-        Optional<Project> pro =projectRepository.findById(project.getProjectId());
-        Project proEntity=pro.get();
+        Optional<Project> pro = projectRepository.findById(project.getProjectId());
+        Project proEntity = pro.get();
 
         project.setInsUser(proEntity.getInsUser());
         project.setLastUpdateUser(Long.valueOf(1));
@@ -81,48 +80,90 @@ public class ProjectService {
         return projectRepository.save(project);
     }
 
+//    public List<Project> projectsBySearch(ProjectSearchCriteria proj) {
+//        return projectRepository.findAll(new Specification<Project>() {
+//            @Override
+//            public Predicate toPredicate(Root<Project> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+//                List<Predicate> predicates = new ArrayList<>();
+//                /*if (proj.getProjectId() != null) {
+//                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("projectId"), proj.getProjectId())));
+//                }*/
+//                if (proj.getProjectName() != null) {
+//                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectName"), "%" + proj.getProjectName() + "%")));
+//                }
+//               /* if (proj.getProjectManager() != null) {
+//                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectManager"), "%" + proj.getProjectManager() + "%")));
+//                }
+//                if (proj.getProjectStatus() != null) {
+//                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectStatus"), "%" + proj.getProjectStatus() + "%")));
+//                }*/
+//
+//                /*if (proj.getProjectStatus() != null) {
+//                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectStatus"), "%" + proj.getProjectStatus() + "%")));
+//                }
+//
+//                if (proj.getProjectStatus() != null) {
+//                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectStatus"), "%" + proj.getProjectStatus() + "%")));
+//                } */
+//
+//                /*if (proj.getDepartment().length > 0) {
+//                    Join<Employee, Department> phoneJoin = root.join("department");
+//                    predicates.add(phoneJoin.in(proj.getDepartment()));
+//                }*/
+//                if (proj.getRegion().length > 0) {
+//                    Join<Employee, Region> phoneJoin = root.join("region");
+//                    predicates.add(phoneJoin.in(proj.getRegion()));
+//                }
+//                if (proj.getAccount().length > 0) {
+//                    Join<Employee, Account> phoneJoin = root.join("account");
+//                    predicates.add(phoneJoin.in(proj.getAccount()));
+//                }
+//                /*if (proj.getProjectTagging().length > 0l) {
+//                    Join<Employee, Account> phoneJoin = root.join("projectTagging");
+//                    predicates.add(phoneJoin.in(proj.getProjectTagging()));
+//                }*/
+//                log.info("Search filter Size :" + predicates.size());
+//                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+//            }
+//        });
+//    }
+
     public List<Project> projectsBySearch(ProjectSearchCriteria proj) {
+
+        log.info("Project  " + proj);
         return projectRepository.findAll(new Specification<Project>() {
             @Override
             public Predicate toPredicate(Root<Project> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new ArrayList<>();
-                /*if (proj.getProjectId() != null) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("projectId"), proj.getProjectId())));
-                }*/
-                if (proj.getProjectName() != null) {
+
+                if (!(proj.getProjectName().isEmpty())) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectName"), "%" + proj.getProjectName() + "%")));
                 }
-               /* if (proj.getProjectManager() != null) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectManager"), "%" + proj.getProjectManager() + "%")));
+                if (proj.getProducts().length > 0) {
+                    Join<Project, Product> phoneJoin = root.join("product");
+                    predicates.add(phoneJoin.in(proj.getProducts()));
                 }
-                if (proj.getProjectStatus() != null) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectStatus"), "%" + proj.getProjectStatus() + "%")));
-                }*/
-
-                /*if (proj.getProjectStatus() != null) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectStatus"), "%" + proj.getProjectStatus() + "%")));
-                }
-
-                if (proj.getProjectStatus() != null) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectStatus"), "%" + proj.getProjectStatus() + "%")));
-                } */
-
-                /*if (proj.getDepartment().length > 0) {
-                    Join<Employee, Department> phoneJoin = root.join("department");
-                    predicates.add(phoneJoin.in(proj.getDepartment()));
-                }*/
                 if (proj.getRegion().length > 0) {
-                    Join<Employee, Region> phoneJoin = root.join("region");
+                    Join<Project, Region> phoneJoin = root.join("region");
                     predicates.add(phoneJoin.in(proj.getRegion()));
                 }
                 if (proj.getAccount().length > 0) {
-                    Join<Employee, Account> phoneJoin = root.join("account");
+                    Join<Project, Account> phoneJoin = root.join("account");
                     predicates.add(phoneJoin.in(proj.getAccount()));
                 }
-                /*if (proj.getProjectTagging().length > 0l) {
-                    Join<Employee, Account> phoneJoin = root.join("projectTagging");
-                    predicates.add(phoneJoin.in(proj.getProjectTagging()));
-                }*/
+                if (proj.getServiceLine().length > 0) {
+                    Join<Project, ServiceLine> phoneJoin = root.join("serviceLine");
+                    predicates.add(phoneJoin.in(proj.getServiceLine()));
+                }
+                if (proj.getServiceTypes().length > 0) {
+                    Join<Project, ServiceType> phoneJoin = root.join("serviceTypes");
+                    predicates.add(phoneJoin.in(proj.getServiceTypes()));
+                }
+                if (proj.getProjectStatus().length > 0) {
+                    Join<Project, Status> phoneJoin = root.join("status");
+                    predicates.add(phoneJoin.in(proj.getProjectStatus()));
+                }
+
                 log.info("Search filter Size :" + predicates.size());
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }

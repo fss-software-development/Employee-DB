@@ -13,21 +13,13 @@ import java.util.Date;
 @ToString
 public class ProjectSearchCriteria {
 
-    Long projectId;
     String projectName;
-    String projectManager;
-    String projectStatus;
-    Date projectStartDate;
-    Date projectEndDate;
-    private Department[] department;
+    private Product[]  products;
     private Region[] region;
     private Account[] account;
-    private ProjectTagging[] projectTagging;
-    Long insUser;
-    Date insDate;
-    Long lastUpdateUser;
-    Date lastUpdateDate;
-
+    private ServiceLine[] serviceLine;
+    private ServiceType[] serviceTypes;
+    private Status[]  projectStatus;
 }
 
 

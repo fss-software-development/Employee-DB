@@ -23,8 +23,8 @@ public class ServiceLine {
     @Column(name = "SERVICE_LINE_NAME", nullable = false)
     String serviceLineName;
 
-    @OneToMany(mappedBy = "serviceLine", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Employee> employees;
+//    @OneToMany(mappedBy = "serviceLine", cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private List<Employee> employees;
 }
 

@@ -46,12 +46,12 @@ public class MasterController {
         return masterService.getAllSkill();
     }
 
-    @GetMapping("/service-line")
+    @GetMapping("/serviceLine")
     public List<ServiceLine> getAllServiceLine() {
         return masterService.getAllServiceLine();
     }
 
-    @GetMapping("/billable-status")
+    @GetMapping("/billableStatus")
     public List<BillableStatus> getAllBillableStatus() {
         return masterService.getAllBillableStatus();
     }
@@ -66,7 +66,7 @@ public class MasterController {
         return masterService.getAllAcademics();
     }
 
-    @GetMapping("/project-tagging")
+    @GetMapping("/projectTagging")
     public List<ProjectTagging> getAllProjectTagging() {
         return masterService.getAllProjectTagging();
     }
@@ -81,12 +81,12 @@ public class MasterController {
         return masterService.getAllRole();
     }
 
-    @GetMapping("/service-type")
+    @GetMapping("/serviceType")
     public List<ServiceType> getAllServiceType() {
         return masterService.getAllServiceType();
     }
 
-    @GetMapping("/product-type")
+    @GetMapping("/productType")
     public List<ProductType> getAllProductType() {
         return masterService.getAllProductType();
     }
@@ -97,7 +97,7 @@ public class MasterController {
         return masterService.getAllProduct(productTypeId);
     }
 
-    @GetMapping("/status")
+    @GetMapping("/projectStatus")
     public List<Status> getAllStatus() {
         return masterService.getAllStatus();
     }
