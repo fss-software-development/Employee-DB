@@ -2,6 +2,8 @@ package com.fss.empdb.controller;
 
 import com.fss.empdb.constants.EmpdbConstants;
 import com.fss.empdb.constants.ErrorConstants;
+import com.fss.empdb.domain.Employee;
+import com.fss.empdb.domain.EmployeeSearchCriteria;
 import com.fss.empdb.domain.User;
 import com.fss.empdb.repository.UserRepository;
 import com.fss.empdb.service.UsersService;
@@ -9,6 +11,7 @@ import com.fss.empdb.util.JwtUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,57 +38,21 @@ public class UserController {
     @Autowired
     UsersService usersService;
 
+    //@Preauthorize (hasAuthority)
+    @PreAuthorize("hasAnyAuthority('ADD_EMPLOYEE')")
     @PostMapping("/add")
     public String addUserByAdmin(@RequestBody User user) {
-        try
-        {
-            String pwd = user.getUserPassword();
-            String encryptPwd = usersService.sha256Hash(pwd) ;
-            /*String encryptPwd = usersService.encrypt(pwd, secretKey) ;*/
-            user.setUserPassword(encryptPwd);
-            userRepository.save(user);
-            return "User added successfully....";
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error while encrypting: " + e.toString());
-            e.printStackTrace();
-            return "Exception";
-        }
+            String responseMessage = usersService.addUserByAdmin(user);
+            return responseMessage;
     }
 
     @PostMapping("/login")
     public ResponseEntity<User> loginByUser(@RequestBody User user) {
-        try {
-            log.info("Inside Login");
-            boolean isPasswordMatch;
-            String pwd = user.getUserPassword();
-            User getUserDetails = usersService.userById(user.getUserId());
-            String encryptPwd = usersService.sha256Hash(pwd) ;
-            isPasswordMatch =encryptPwd.equals(getUserDetails.getUserPassword());
-            System.out.println("encryptPwd ::"+encryptPwd);
-           /* String decryptedPwd = usersService.decrypt(getUserDetails.getUserPassword(), secretKey) ;
-            isPasswordMatch = pwd.equals(decryptedPwd);*/
-            if (isPasswordMatch == true) {
-                user.setUserPassword(getUserDetails.getUserPassword());
-            /*final UserDetails userDetails = userDetailsService
-                    .loadUserByUsername(getUserDetails.getUserName());*/
-                final String jwt = jwtTokenUtil.generateToken(user);
-                user.setUserJwt(jwt);
-                log.info("Jwt Token :" + jwt);
-                return ResponseEntity.ok(user);
-            }else{
-                return ResponseEntity.ok(user);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
+            return ResponseEntity.ok().body(usersService.loginByUser(user));
     }
 
     @PostMapping("/forget-password")
     public void forgetPassword(@RequestBody User user) throws MessagingException {
-        System.out.println("Inside forget password");
         User getUserDetails = usersService.userById(user.getUserId());
         usersService.forgetPasswordMail(getUserDetails, EmpdbConstants.FORGOT_PWD,EmpdbConstants.MAIL_BODY);
     }
@@ -95,8 +62,8 @@ public class UserController {
         return ResponseEntity.ok().body(usersService.getAllPermissions());
     }
 
-    @GetMapping("/{id}/permissions")
-    public ResponseEntity<User> getPermissionsById(@PathVariable(value = "id") Long userId) {
+    @GetMapping("/permissions/{id}")
+    public ResponseEntity<User> getPermissionsByIdTest(@PathVariable(value = "id") Long userId) {
         return ResponseEntity.ok().body(usersService.getPermissionsById(userId));
     }
 

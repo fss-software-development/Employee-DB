@@ -24,14 +24,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsService myUserDetailsService;
+    private UserDetailsService customUserDetailsService;
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(myUserDetailsService);
+        auth.userDetailsService(customUserDetailsService);
     }
 
     @Override
@@ -46,20 +46,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().
                 disable()
                 .authorizeRequests()
-                .antMatchers("/users/login/**")
-                .permitAll()
-                .anyRequest().permitAll();
-                /*.authenticated()
-                .and()*/
-                /*.httpBasic()
-                .and().
-                exceptionHandling().and()*/
-                /*.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);*/
+                .antMatchers("/users/permissions/**").permitAll()
+                .antMatchers("/users/login/**").permitAll()
+                //.antMatchers("/users/add/**").authenticated().anyRequest().hasAnyAuthority("ADD_EMPLOYEE")
+                .and()
+                .httpBasic().and().
+                exceptionHandling().and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
     public PasswordEncoder encodePWD(){
         return NoOpPasswordEncoder.getInstance();
     }
+
 }

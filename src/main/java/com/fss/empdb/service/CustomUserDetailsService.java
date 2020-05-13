@@ -13,6 +13,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     UserDetailsService userDetailsService;
 
@@ -26,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUserName(username);
         //Optional<User> optionalUsers = usersRepository.findByName(username);
         //User user = userRepository.findByName(username);
-        System.out.println("username ::"+username);
+        System.out.println("username :::"+username);
         CustomUserDetails userDetails = null;
         if (user != null) {
             userDetails = new CustomUserDetails();
