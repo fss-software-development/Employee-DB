@@ -113,6 +113,16 @@ based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Sp
         </sql>
     </changeSet>
 
+    <changeSet id="108" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+    ALTER TABLE employee_db.user_role_permission
+    ADD COLUMN USER_ROLE_PERMISSION_ID INT(11) NOT NULL FIRST,
+    DROP PRIMARY KEY,
+    ADD PRIMARY KEY (USER_ROLE_PERMISSION_ID);
+            ]]>
+        </sql>
+    </changeSet>
 
 
 
