@@ -48,11 +48,11 @@ public class User  implements Serializable {
     @Column(name = "IS_RESET_REQUIRED")
     private String isResetRequired;
 
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    /*public Collection<? extends GrantedAuthority> getAuthorities() {
         return getUserRole().getUserPermission().stream()
                 .map(userPermission -> new SimpleGrantedAuthority(userPermission.getUserPermissionName()))
                 .collect(Collectors.toList());
-    }
+    }*/
 
 //    @ManyToMany
 //    @JoinTable(name = "USER_ROLE_PERMISSION", joinColumns = @JoinColumn(name = "USER_ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_PERMISSION_ID"))
