@@ -138,13 +138,14 @@ public class UsersService {
         }
         User fetchUser = userRepository.findByUserId(user.getUserId());
         if(fetchUser!=null){
-            if((user.getUserPassword()).equals(user.getUserOldPassword())){
+            if((fetchUser.getUserPassword()).equals(user.getUserOldPassword())){
                 String newPwd = user.getUserConfirmPassword();
                 String encryptPwd = sha256Hash(newPwd);
                 fetchUser.setUserPassword(encryptPwd);
                 userRepository.save(fetchUser);
                 return "User added successfully....";
             }
+            return "Old password is incorrect";
         }
         return responseMsg;
     }
