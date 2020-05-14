@@ -137,8 +137,9 @@ public class UsersService {
          return responseMsg;
         }
         User fetchUser = userRepository.findByUserId(user.getUserId());
+        String enteredEncryptPwd = sha256Hash(user.getUserPassword());
         if(fetchUser!=null){
-            if((fetchUser.getUserPassword()).equals(user.getUserOldPassword())){
+            if((fetchUser.getUserPassword()).equals(enteredEncryptPwd)){
                 String newPwd = user.getUserConfirmPassword();
                 String encryptPwd = sha256Hash(newPwd);
                 fetchUser.setUserPassword(encryptPwd);
