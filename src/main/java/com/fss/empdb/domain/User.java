@@ -1,5 +1,6 @@
 package com.fss.empdb.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.WhereJoinTable;
 import org.springframework.security.core.GrantedAuthority;
@@ -39,6 +40,15 @@ public class User  implements Serializable {
     @Column(name = "PASSWORD")
     private String userPassword;
 
+/*  //  @JsonIgnore
+    private String userOldPassword;
+
+  //  @JsonIgnore
+    private String userNewPassword;
+
+   // @JsonIgnore
+    private String userConfirmPassword;*/
+
     @Column(name = "EMAIL")
     private String email;
 
@@ -53,21 +63,5 @@ public class User  implements Serializable {
                 .map(userPermission -> new SimpleGrantedAuthority(userPermission.getUserPermissionName()))
                 .collect(Collectors.toList());
     }*/
-
-//    @ManyToMany
-//    @JoinTable(name = "USER_ROLE_PERMISSION", joinColumns = @JoinColumn(name = "USER_ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_PERMISSION_ID"))
-//    private Collection<UserPermission> userPermission;
-
-    /*@ManyToMany
-    @JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "USER_ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ROLE_ID"))
-    private Collection<UserRole> userRole;*/
-
-    /*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
-    private Set<Role> roles;*/
-
-    /*@ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "ROLE_ID")
-    private String role;*/
 
 }

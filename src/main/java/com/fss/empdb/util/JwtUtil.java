@@ -41,7 +41,7 @@ public class JwtUtil {
     public String generateToken(User userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userName",String.valueOf(userDetails.getUserName()));
-        //claims.put("userPassword",userDetails.getUserPassword());
+        claims.put("userPassword",String.valueOf(userDetails.getUserPassword()));
         return createToken(claims, userDetails.getUserId());
     }
 
@@ -54,7 +54,8 @@ public class JwtUtil {
     public Boolean validateToken(String token, UserDetails userDetails) {
         final Claims claims = extractAllClaims(token);
         String userId = (String)claims.getSubject();
-        System.out.println("userId :"+userId+"Next User Id :"+userDetails.getUsername());
-        return (userId.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        String userPassword = (String)claims.get("userPassword");
+        System.out.println("userId :"+userId+"Next User Id :"+userDetails.getUsername()+"Password :"+userPassword);
+        return (userId.equals(userDetails.getUsername()) && !isTokenExpired(token) && userDetails.getPassword().equals(userPassword));
     }
 }

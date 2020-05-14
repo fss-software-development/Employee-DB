@@ -1,29 +1,22 @@
 package com.fss.empdb.service;
 
 import com.fss.empdb.constants.EmpdbConstants;
-import com.fss.empdb.constants.ErrorConstants;
 import com.fss.empdb.domain.*;
 import com.fss.empdb.util.JwtUtil;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.text.RandomStringGenerator;
-import com.fss.empdb.exception.ResourceNotFoundException;
 import com.fss.empdb.repository.UserRepository;
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
 import static org.apache.commons.text.CharacterPredicates.LETTERS;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.persistence.criteria.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -134,5 +127,25 @@ public class UsersService {
             ex.printStackTrace();
             return null;
         }
+    }
+
+    public String changePassword(ChangeUserPassword user) throws Exception {
+        log.info("Inside change password2");
+        String responseMsg = "";
+        if(!(user.getUserNewPassword().equals(user.getUserConfirmPassword()))){
+            responseMsg ="New password & confirm password should be same ";
+         return responseMsg;
+        }
+        User fetchUser = userRepository.findByUserId(user.getUserId());
+        if(fetchUser!=null){
+            if((user.getUserPassword()).equals(user.getUserOldPassword())){
+                String newPwd = user.getUserConfirmPassword();
+                String encryptPwd = sha256Hash(newPwd);
+                fetchUser.setUserPassword(encryptPwd);
+                userRepository.save(fetchUser);
+                return "User added successfully....";
+            }
+        }
+        return responseMsg;
     }
 }
