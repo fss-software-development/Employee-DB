@@ -17,8 +17,14 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Service
 @Log4j2
@@ -32,6 +38,9 @@ public class UsersService {
 
     @Autowired
     private JwtUtil jwtTokenUtil;
+
+    @Autowired
+    EmpdbProperties empdbProperties;
 
     public User userById(String userId) {
         return userRepository.findByUserId(userId);
@@ -49,7 +58,7 @@ public class UsersService {
             StringBuilder mailBody = new StringBuilder();
             mailBody.append(body);
             String to= userDetails.getEmail();
-            String generatedPassword = generateRandomSpecialCharacters(8);
+            String generatedPassword = generateSecureRandomPassword();
             mailBody.append(generatedPassword);
             String encryptPwd = sha256Hash(generatedPassword) ;
             userDetails.setUserPassword(encryptPwd);
@@ -59,21 +68,23 @@ public class UsersService {
             MimeMessageHelper helper;
             helper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
             helper.setSubject(subject);
+            helper.setFrom(empdbProperties.getSpring().getMail().getUsername());
             helper.setTo(to);
             helper.setText(String.valueOf(mailBody), true);
             javaMailSender.send(message);
+            log.info("Execution has finished");
         }catch(Exception ex){
             log.error("forgetPasswordMail Exception :"+ex.toString());
         }
     }
 
-    public String generateRandomSpecialCharacters(int length) {
+    /*public String generateRandomSpecialCharacters(int length) {
         RandomStringGenerator pwdGenerator = new RandomStringGenerator.Builder()
                 .withinRange('0', 'z')
                 .filteredBy(LETTERS, DIGITS)
                 .build();
         return pwdGenerator.generate(length);
-    }
+    }*/
 
     public List<User> getAllPermissions() {
 
@@ -149,5 +160,39 @@ public class UsersService {
             return "Old password is incorrect";
         }
         return responseMsg;
+    }
+
+    public static String generateSecureRandomPassword() {
+        Stream<Character> pwdStream = Stream.concat(getRandomNumbers(2),
+                Stream.concat(getRandomSpecialChars(2),
+                        Stream.concat(getRandomAlphabets(2, true), getRandomAlphabets(4, false))));
+        List<Character> charList = pwdStream.collect(Collectors.toList());
+        Collections.shuffle(charList);
+        String password = charList.stream()
+                .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
+                .toString();
+        return password;
+    }
+
+    public static Stream<Character> getRandomSpecialChars(int count) {
+        Random random = new SecureRandom();
+        IntStream specialChars = random.ints(count, 33, 45);
+        return specialChars.mapToObj(data -> (char) data);
+    }
+
+    public static Stream<Character> getRandomNumbers(int count) {
+        Random random = new SecureRandom();
+        IntStream numChars = random.ints(count, 48, 57);
+        return numChars.mapToObj(data -> (char) data);
+    }
+
+    public static Stream<Character> getRandomAlphabets(int count,boolean flag) {
+        Random random = new SecureRandom();
+        IntStream alphaChars = null;
+        if(flag)
+            alphaChars = random.ints(count, 65, 90);
+        else
+            alphaChars = random.ints(count, 97, 122);
+        return alphaChars.mapToObj(data -> (char) data);
     }
 }
