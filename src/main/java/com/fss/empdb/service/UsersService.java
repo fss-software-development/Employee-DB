@@ -1,31 +1,30 @@
 package com.fss.empdb.service;
 
 import com.fss.empdb.constants.EmpdbConstants;
-import com.fss.empdb.constants.ErrorConstants;
 import com.fss.empdb.domain.*;
 import com.fss.empdb.util.JwtUtil;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.text.RandomStringGenerator;
-import com.fss.empdb.exception.ResourceNotFoundException;
 import com.fss.empdb.repository.UserRepository;
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
 import static org.apache.commons.text.CharacterPredicates.LETTERS;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.persistence.criteria.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.util.ArrayList;
+import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Service
 @Log4j2
@@ -40,9 +39,11 @@ public class UsersService {
     @Autowired
     private JwtUtil jwtTokenUtil;
 
-    public User userById(Long userId) {
-        return userRepository.findById(userId).
-                orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.DATA_NOT_FOUND + userId));
+    @Autowired
+    EmpdbProperties empdbProperties;
+
+    public User userById(String userId) {
+        return userRepository.findByUserId(userId);
     }
 
     public static String sha256Hash(String originalPassword) throws Exception {
@@ -57,7 +58,7 @@ public class UsersService {
             StringBuilder mailBody = new StringBuilder();
             mailBody.append(body);
             String to= userDetails.getEmail();
-            String generatedPassword = generateRandomSpecialCharacters(8);
+            String generatedPassword = generateSecureRandomPassword();
             mailBody.append(generatedPassword);
             String encryptPwd = sha256Hash(generatedPassword) ;
             userDetails.setUserPassword(encryptPwd);
@@ -67,68 +68,32 @@ public class UsersService {
             MimeMessageHelper helper;
             helper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
             helper.setSubject(subject);
+            helper.setFrom(empdbProperties.getSpring().getMail().getUsername());
             helper.setTo(to);
             helper.setText(String.valueOf(mailBody), true);
             javaMailSender.send(message);
+            log.info("Execution has finished");
         }catch(Exception ex){
             log.error("forgetPasswordMail Exception :"+ex.toString());
         }
     }
 
-    public String generateRandomSpecialCharacters(int length) {
+    /*public String generateRandomSpecialCharacters(int length) {
         RandomStringGenerator pwdGenerator = new RandomStringGenerator.Builder()
                 .withinRange('0', 'z')
                 .filteredBy(LETTERS, DIGITS)
                 .build();
         return pwdGenerator.generate(length);
-    }
+    }*/
 
     public List<User> getAllPermissions() {
 
         return userRepository.findAll();
     }
 
-    public User getPermissionsById(Long userId) {
-        return userRepository.findById(userId).
-                orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.DATA_NOT_FOUND + userId));
+    public User getPermissionsById(String userId) {
+        return userRepository.findByUserId(userId);
     }
-
-   /* public List<User> getPermissionsById(User user) {
-        log.info("User Search Service" + user);
-        return userRepository.findAll(new Specification<User>() {
-            @Override
-            public Predicate toPredicate(Root<User> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                List<Predicate> predicates = new ArrayList<>();
-                if (!(user.getUserId()!=null)) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("userId"), user.getUserId())));
-                }
-               *//* log.info("User Search Service ----------role " + user.getUserRoleId());
-                if (user.getUserRoleId() != null) {
-                    log.info("User Search Service ----------role1 " + user.getUserRoleId());
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("userRoleId"), user.getUserRoleId())));
-                }*//*
-
-                *//*if (user.getUserRole() != null) {
-                    log.info("User Search Service ----------role1 " + user.getUserRole());
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("userRoleId"), user.getUserRole())));
-                }*//*
-                *//*if (user.getUserRoleId()  != null) {
-                    Join<User, UserPermission> phoneJoin = root.join("userPermission");
-                    predicates.add(phoneJoin.in(user.getUserRoleId()));
-
-                }*//*
-
-                if (user.getUserRole()  != null) {
-                    Join<User, UserRole> phoneJoin = root.join("userRole");
-                    predicates.add(phoneJoin.in(user.getUserRole()));
-
-                }
-
-                log.info("Search filter Size :" + predicates.size());
-                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
-            }
-        });
-    }*/
 
     public String addUserByAdmin(User user) {
         try
@@ -154,8 +119,8 @@ public class UsersService {
             String pwd = user.getUserPassword();
             User getUserDetails = userById(user.getUserId());
             String encryptPwd = sha256Hash(pwd) ;
-            isPasswordMatch =encryptPwd.equals(getUserDetails.getUserPassword());
             System.out.println("encryptPwd ::"+encryptPwd);
+            isPasswordMatch =encryptPwd.equals(getUserDetails.getUserPassword());
            /* String decryptedPwd = usersService.decrypt(getUserDetails.getUserPassword(), secretKey) ;
             isPasswordMatch = pwd.equals(decryptedPwd);*/
             if (isPasswordMatch == true) {
@@ -173,5 +138,61 @@ public class UsersService {
             ex.printStackTrace();
             return null;
         }
+    }
+
+    public String changePassword(ChangeUserPassword user) throws Exception {
+        log.info("Inside change password2");
+        String responseMsg = "";
+        if(!(user.getUserNewPassword().equals(user.getUserConfirmPassword()))){
+            responseMsg ="New password & confirm password should be same ";
+         return responseMsg;
+        }
+        User fetchUser = userRepository.findByUserId(user.getUserId());
+        String enteredEncryptPwd = sha256Hash(user.getUserPassword());
+        if(fetchUser!=null){
+            if((fetchUser.getUserPassword()).equals(enteredEncryptPwd)){
+                String newPwd = user.getUserConfirmPassword();
+                String encryptPwd = sha256Hash(newPwd);
+                fetchUser.setUserPassword(encryptPwd);
+                userRepository.save(fetchUser);
+                return "User added successfully....";
+            }
+            return "Old password is incorrect";
+        }
+        return responseMsg;
+    }
+
+    public static String generateSecureRandomPassword() {
+        Stream<Character> pwdStream = Stream.concat(getRandomNumbers(2),
+                Stream.concat(getRandomSpecialChars(2),
+                        Stream.concat(getRandomAlphabets(2, true), getRandomAlphabets(4, false))));
+        List<Character> charList = pwdStream.collect(Collectors.toList());
+        Collections.shuffle(charList);
+        String password = charList.stream()
+                .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
+                .toString();
+        return password;
+    }
+
+    public static Stream<Character> getRandomSpecialChars(int count) {
+        Random random = new SecureRandom();
+        IntStream specialChars = random.ints(count, 33, 45);
+        return specialChars.mapToObj(data -> (char) data);
+    }
+
+    public static Stream<Character> getRandomNumbers(int count) {
+        Random random = new SecureRandom();
+        IntStream numChars = random.ints(count, 48, 57);
+        return numChars.mapToObj(data -> (char) data);
+    }
+
+    public static Stream<Character> getRandomAlphabets(int count,boolean flag) {
+        Random random = new SecureRandom();
+        IntStream alphaChars = null;
+        if(flag)
+            alphaChars = random.ints(count, 65, 90);
+        else
+            alphaChars = random.ints(count, 97, 122);
+        return alphaChars.mapToObj(data -> (char) data);
     }
 }

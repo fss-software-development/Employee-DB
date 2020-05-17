@@ -4,6 +4,7 @@ import com.fss.empdb.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -40,20 +41,21 @@ public class JwtUtil {
     public String generateToken(User userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userName",String.valueOf(userDetails.getUserName()));
-        //claims.put("userPassword",userDetails.getUserPassword());
+        claims.put("userPassword",String.valueOf(userDetails.getUserPassword()));
         return createToken(claims, userDetails.getUserId());
     }
 
-    private String createToken(Map<String, Object> claims, Long subject) {
+    private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder().setClaims(claims).setSubject(String.valueOf(subject)).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 
-    public Boolean validateToken(String token, User userDetails) {
+    public Boolean validateToken(String token, UserDetails userDetails) {
         final Claims claims = extractAllClaims(token);
-        Long userId = Long.parseLong((String)claims.getSubject());
-        System.out.println("userId :"+userId+"Next User Id :"+userDetails.getUserId());
-        return (userId.equals(userDetails.getUserId()) && !isTokenExpired(token));
+        String userId = (String)claims.getSubject();
+        String userPassword = (String)claims.get("userPassword");
+        System.out.println("userId :"+userId+"Next User Id :"+userDetails.getUsername()+"Password :"+userPassword);
+        return (userId.equals(userDetails.getUsername()) && !isTokenExpired(token) && userDetails.getPassword().equals(userPassword));
     }
 }

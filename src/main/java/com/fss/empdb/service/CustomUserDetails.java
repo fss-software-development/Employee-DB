@@ -24,14 +24,17 @@ public class CustomUserDetails implements UserDetails {
     //private static final long serialVersionUID = 1256711395932122675L;
     private  String userName;
     public CustomUserDetails(String userName){
+        log.info("Username ::::"+userName);
         this.userName=userName;
     }
 
     public User getUser() {
+        log.info("get Username ::::"+userName);
         return user;
     }
 
     public void setUser(User user) {
+        log.info("set Username ::::"+userName);
         this.user = user;
     }
 
@@ -40,10 +43,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        System.out.println("--------------getAuthorities--------");
         log.info("getAuthorities ::--::");
-/*return user.getRole().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-                .collect(Collectors.toList());*/
         return user.getUserRole().getUserPermission().stream()
                 .map(userPermission -> new SimpleGrantedAuthority(userPermission.getUserPermissionName()))
                 .collect(Collectors.toList());
@@ -51,14 +51,13 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        System.out.println("--------------test--------");
         return user.getUserPassword();
     }
 
 
     @Override
     public String getUsername() {
-        return user.getUserName();
+        return user.getUserId();
     }
 
     @Override

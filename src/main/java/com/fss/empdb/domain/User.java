@@ -1,11 +1,13 @@
 package com.fss.empdb.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.WhereJoinTable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,32 +18,36 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class User {
-
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getUserRole().getUserPermission().stream()
-                .map(userPermission -> new SimpleGrantedAuthority(userPermission.getUserPermissionName()))
-                .collect(Collectors.toList());
-    }
+@Table(name = "user")
+public class User  implements Serializable {
+    //@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "USER_SQID")
+    Long userSqId;
 
     @Id
     @Column(name = "USER_ID")
-    private Long userId;
+    private String userId;
 
     @ManyToOne
     @JoinColumn(name = "USER_ROLE_ID")
     private UserRole userRole;
 
-    //@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "USER_SQID")
-    Long userSqId;
 
     @Column(name = "USER_NAME")
     private String userName;
 
     @Column(name = "PASSWORD")
     private String userPassword;
+
+/*  //  @JsonIgnore
+    private String userOldPassword;
+
+  //  @JsonIgnore
+    private String userNewPassword;
+
+   // @JsonIgnore
+    private String userConfirmPassword;*/
 
     @Column(name = "EMAIL")
     private String email;
@@ -52,20 +58,10 @@ public class User {
     @Column(name = "IS_RESET_REQUIRED")
     private String isResetRequired;
 
-//    @ManyToMany
-//    @JoinTable(name = "USER_ROLE_PERMISSION", joinColumns = @JoinColumn(name = "USER_ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_PERMISSION_ID"))
-//    private Collection<UserPermission> userPermission;
-
-    /*@ManyToMany
-    @JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "USER_ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ROLE_ID"))
-    private Collection<UserRole> userRole;*/
-
-    /*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
-    private Set<Role> roles;*/
-
-    /*@ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "ROLE_ID")
-    private String role;*/
+    /*public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getUserRole().getUserPermission().stream()
+                .map(userPermission -> new SimpleGrantedAuthority(userPermission.getUserPermissionName()))
+                .collect(Collectors.toList());
+    }*/
 
 }

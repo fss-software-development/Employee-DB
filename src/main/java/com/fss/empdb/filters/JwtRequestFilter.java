@@ -5,6 +5,7 @@ import com.fss.empdb.service.CustomUserDetailsService;
 import com.fss.empdb.service.UsersService;
 import com.fss.empdb.util.JwtUtil;
 import io.jsonwebtoken.Claims;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Log4j2
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -39,24 +41,21 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         String username = null;
         String jwt = null;
-        Long userId = null;
+        String userId = null;
+        String userPassword =null;
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
             //username = jwtUtil.extractUsername(jwt);
             final Claims claims = jwtUtil.extractAllClaims(jwt);
-            userId = Long.parseLong((String)claims.getSubject());
+            userId = (String)claims.getSubject();
             username = (String)claims.get("userId");
-            System.out.println("username userId :"+userId+"username ::"+username);
+            userPassword = (String)claims.get("userPassword");
         }
-
-
         if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            System.out.println("before usersService :"+userId);
-            // doesn't have userId parameter
-            //UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            User userDetails = usersService.userById(userId);
-            System.out.println("Inside usersService :"+userDetails.getUserName());
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userId);
+           // User userDetails1 = usersService.userById(userId);
+            log.info("Inside usersService :"+userDetails.getUsername());
             if (jwtUtil.validateToken(jwt, userDetails)) {
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(

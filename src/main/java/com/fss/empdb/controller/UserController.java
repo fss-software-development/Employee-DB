@@ -1,9 +1,7 @@
 package com.fss.empdb.controller;
 
 import com.fss.empdb.constants.EmpdbConstants;
-import com.fss.empdb.constants.ErrorConstants;
-import com.fss.empdb.domain.Employee;
-import com.fss.empdb.domain.EmployeeSearchCriteria;
+import com.fss.empdb.domain.ChangeUserPassword;
 import com.fss.empdb.domain.User;
 import com.fss.empdb.repository.UserRepository;
 import com.fss.empdb.service.UsersService;
@@ -38,7 +36,6 @@ public class UserController {
     @Autowired
     UsersService usersService;
 
-    //@Preauthorize (hasAuthority)
     @PreAuthorize("hasAnyAuthority('ADD_EMPLOYEE')")
     @PostMapping("/add")
     public String addUserByAdmin(@RequestBody User user) {
@@ -62,44 +59,20 @@ public class UserController {
         return ResponseEntity.ok().body(usersService.getAllPermissions());
     }
 
-    @GetMapping("/permissions/{id}")
-    public ResponseEntity<User> getPermissionsByIdTest(@PathVariable(value = "id") Long userId) {
+    @GetMapping("/{id}/permissions")
+    public ResponseEntity<User> getPermissionsById(@PathVariable(value = "id") String userId) {
         return ResponseEntity.ok().body(usersService.getPermissionsById(userId));
+    }
+
+    @PostMapping(value = "/changePassword", produces = "application/json")
+    public String changePassword(@RequestBody ChangeUserPassword changeUserPassword) throws Exception  {
+        String responseMessage = usersService.changePassword(changeUserPassword);
+        return responseMessage;
     }
 
     @GetMapping("/home")
     public String addUserByAdmin() {
         return "Hello";
     }
-
-    /*@PostMapping("/add")
-    public String addUserByAdmin(@RequestBody User user) {
-        try {
-            String pwd = user.getUserPassword();
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String encryptPwd = passwordEncoder.encode(pwd);
-            user.setUserPassword(encryptPwd);
-            userRepository.save(user);
-            return "User added successfully....";
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return "Exception";
-        }
-    }*/
-
-
-    /*@PostMapping("/login")
-    public Boolean loginByUser(@RequestBody User user) {
-        try {
-            String pwd = user.getUserPassword();
-            User getProj = usersService.userById(user.getUserId());
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            boolean isPasswordMatch = encoder.matches(pwd, getProj.getUserPassword());
-            return isPasswordMatch;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }*/
 }
 
