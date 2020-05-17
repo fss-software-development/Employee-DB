@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -29,11 +30,13 @@ public class ProjectController {
     @Autowired
     ProjectRepository projectRepository;
 
+    @PreAuthorize("hasAnyAuthority('VIEW_PROJECT')")
     @GetMapping("/")
     public ResponseEntity<List<Project>> allProject() {
             return ResponseEntity.ok().body(projectService.allProject());
     }
 
+    @PreAuthorize("hasAnyAuthority('VIEW_PROJECT')")
     @GetMapping("/{id}")
     public ResponseEntity<Project> projectsById(@PathVariable(value = "id") Long projectId) {
         try {
@@ -44,21 +47,25 @@ public class ProjectController {
         }
     }
 
+    @PreAuthorize("hasAnyAuthority('VIEW_PROJECT')")
     @PostMapping(value = "/search", produces = "application/json")
     public ResponseEntity<List<Project>> projectsBySearch(@RequestBody ProjectSearchCriteria projSearch)  {
         return ResponseEntity.ok().body(projectService.projectsBySearch(projSearch));
     }
 
+    @PreAuthorize("hasAnyAuthority('ADD_PROJECT')")
     @PostMapping
     public ResponseEntity<Project> createProject(@RequestBody Project project)  {
         return ResponseEntity.ok().body(projectService.createProject(project));
     }
 
+    @PreAuthorize("hasAnyAuthority('EDIT_PROJECT')")
     @PutMapping
     public ResponseEntity<Project> updateProject(@RequestBody Project project){
         return ResponseEntity.ok().body(projectService.updateProject(project));
     }
 
+    @PreAuthorize("hasAnyAuthority('DELETE_PROJECT')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Project> deleteProject(@PathVariable(value = "id") Long projectId){
         projectService.deleteProject(projectId);
