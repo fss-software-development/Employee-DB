@@ -159,9 +159,9 @@ public class ProjectService {
                     Join<Project, ServiceType> phoneJoin = root.join("serviceTypes");
                     predicates.add(phoneJoin.in(proj.getServiceTypes()));
                 }
-                if (proj.getProjectStatus().length > 0) {
+                if (proj.getStatus().length > 0) {
                     Join<Project, Status> phoneJoin = root.join("status");
-                    predicates.add(phoneJoin.in(proj.getProjectStatus()));
+                    predicates.add(phoneJoin.in(proj.getStatus()));
                 }
 
                 log.info("Search filter Size :" + predicates.size());
