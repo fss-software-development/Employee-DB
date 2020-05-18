@@ -46,12 +46,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().
                 disable()
                 .authorizeRequests()
-                .antMatchers("/users/permissions/**").permitAll()
+                .antMatchers("/users/forgotPassword/**").permitAll()
                 .antMatchers("/users/login/**").permitAll()
                 //.antMatchers("/users/add/**").authenticated().anyRequest().hasAnyAuthority("ADD_EMPLOYEE")
-                .and()
-                .httpBasic().and().
-                exceptionHandling().and()
+                .anyRequest().authenticated().and()
+                .exceptionHandling().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
