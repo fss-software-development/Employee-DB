@@ -70,9 +70,5 @@ public class UserController {
         return responseMessage;
     }
 
-    @GetMapping("/home")
-    public String addUserByAdmin() {
-        return "Hello";
-    }
 }
 
