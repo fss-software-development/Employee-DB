@@ -73,7 +73,7 @@ public class UsersService {
             helper.setText(String.valueOf(mailBody), true);
             javaMailSender.send(message);
             log.info("Execution has finished");
-            return "Auto generated password mailed successfully";
+            return "Auto generated password sent successfully";
         }catch(Exception ex){
             log.error("Forgot Password Mail Exception :"+ex.toString());
             return "Forgot Password Mail Exception";
