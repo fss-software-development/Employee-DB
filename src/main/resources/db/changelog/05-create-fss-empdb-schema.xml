@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- This change set defines the initial table definition for the consent service
+    based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Spike+PAYBA-1428+-+Consent+Service+DB -->
+
+
+    <changeSet id="051" author="Rakesh M">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+			CREATE TABLE employee_db.project_mmr (
+            PROJECT_MMR_ID int(11) NOT NULL AUTO_INCREMENT,
+            PROJECT_ID INT(11) NOT NULL,
+	        FINANCIAL_YEAR INT(4) NOT NULL,
+	        MONTH_OF_YEAR VARCHAR(4) NOT NULL,
+	        BUDGETED_VALUE DECIMAL(19,2) NULL DEFAULT NULL,
+	        FORECASTED_VALUE DECIMAL(19,2) NULL DEFAULT NULL,
+	        ACTUAL_VALUE DECIMAL(19,2) NULL DEFAULT NULL,
+	        REMARKS VARCHAR(100),
+	    	INS_USER INT(11) NOT NULL,
+		    INS_DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		    LAST_UPDATE_USER INT(11) NULL,
+		    LAST_UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (PROJECT_MMR_ID),
+            UNIQUE KEY uk_project_mmr (PROJECT_ID,FINANCIAL_YEAR,MONTH_OF_YEAR),
+            KEY PROJECT_ID_idx (PROJECT_ID),
+            CONSTRAINT PROJECT_ID FOREIGN KEY (PROJECT_ID) REFERENCES project (PROJECT_ID)
+            )  ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
+            ]]>
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
