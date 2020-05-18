@@ -30,7 +30,7 @@ public class Project {
     Date projectEndDate;
 
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "REGION_ID")
     private Region region;
 

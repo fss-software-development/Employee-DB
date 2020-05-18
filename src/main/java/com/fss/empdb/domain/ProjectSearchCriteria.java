@@ -19,7 +19,7 @@ public class ProjectSearchCriteria {
     private Account[] account;
     private ServiceLine[] serviceLine;
     private ServiceType[] serviceTypes;
-    private Status[]  projectStatus;
+    private Status[]  status;
 }
 
 
