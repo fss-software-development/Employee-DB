@@ -53,7 +53,7 @@ public class UsersService {
         return Base64.getEncoder().encodeToString(encodedHash);
     }
 
-    public void forgetPasswordMail(User userDetails,String subject, String body) throws MessagingException {
+    public String forgotPasswordMail(User userDetails,String subject, String body) throws MessagingException {
         try {
             StringBuilder mailBody = new StringBuilder();
             mailBody.append(body);
@@ -73,18 +73,12 @@ public class UsersService {
             helper.setText(String.valueOf(mailBody), true);
             javaMailSender.send(message);
             log.info("Execution has finished");
+            return "Auto generated password mailed successfully";
         }catch(Exception ex){
-            log.error("forgetPasswordMail Exception :"+ex.toString());
+            log.error("Forgot Password Mail Exception :"+ex.toString());
+            return "Forgot Password Mail Exception";
         }
     }
-
-    /*public String generateRandomSpecialCharacters(int length) {
-        RandomStringGenerator pwdGenerator = new RandomStringGenerator.Builder()
-                .withinRange('0', 'z')
-                .filteredBy(LETTERS, DIGITS)
-                .build();
-        return pwdGenerator.generate(length);
-    }*/
 
     public List<User> getAllPermissions() {
 

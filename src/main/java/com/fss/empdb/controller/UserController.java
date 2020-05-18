@@ -48,10 +48,11 @@ public class UserController {
             return ResponseEntity.ok().body(usersService.loginByUser(user));
     }
 
-    @PostMapping("/forget-password")
-    public void forgetPassword(@RequestBody User user) throws MessagingException {
+    @PostMapping("/forgotPassword")
+    public String forgotPassword(@RequestBody User user) throws MessagingException {
         User getUserDetails = usersService.userById(user.getUserId());
-        usersService.forgetPasswordMail(getUserDetails, EmpdbConstants.FORGOT_PWD,EmpdbConstants.MAIL_BODY);
+        String responseMessage = usersService.forgotPasswordMail(getUserDetails, EmpdbConstants.FORGOT_PWD,EmpdbConstants.MAIL_BODY);
+        return responseMessage;
     }
 
     @GetMapping("/")
