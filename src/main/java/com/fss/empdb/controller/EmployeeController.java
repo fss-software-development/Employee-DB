@@ -24,13 +24,13 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-    @PreAuthorize("hasAnyAuthority('SEARCH_EMPLOYEE')")
+    @PreAuthorize("hasAnyAuthority('VIEW_EMPLOYEE')")
     @GetMapping("/")
     public ResponseEntity<List<Employee>> getAllEmployee() {
         return ResponseEntity.ok().body(employeeService.getAllEmployees());
     }
 
-    @PreAuthorize("hasAnyAuthority('SEARCH_EMPLOYEE')")
+    @PreAuthorize("hasAnyAuthority('VIEW_EMPLOYEE')")
     @GetMapping("/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId) {
         return ResponseEntity.ok().body(employeeService.getEmployeeById(employeeId));

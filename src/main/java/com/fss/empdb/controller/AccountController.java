@@ -22,13 +22,13 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
-    @PreAuthorize("hasAnyAuthority('SEARCH_CUSTOMER')")
+    @PreAuthorize("hasAnyAuthority('VIEW_CUSTOMER')")
     @GetMapping("/")
     public ResponseEntity<List<Account>> allAccount() {
         return ResponseEntity.ok().body(accountService.allAccount());
     }
 
-    @PreAuthorize("hasAnyAuthority('SEARCH_CUSTOMER')")
+    @PreAuthorize("hasAnyAuthority('VIEW_CUSTOMER')")
     @GetMapping("/{id}")
     public ResponseEntity<Account> accountById(@PathVariable(value = "id") Long accountId) {
         return ResponseEntity.ok().body(accountService.accountById(accountId));
