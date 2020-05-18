@@ -36,7 +36,7 @@ public class UserController {
     @Autowired
     UsersService usersService;
 
-    @PreAuthorize("hasAnyAuthority('ADD_EMPLOYEE')")
+    @PreAuthorize("hasAnyAuthority('ADD_USER')")
     @PostMapping("/add")
     public String addUserByAdmin(@RequestBody User user) {
             String responseMessage = usersService.addUserByAdmin(user);
@@ -48,10 +48,11 @@ public class UserController {
             return ResponseEntity.ok().body(usersService.loginByUser(user));
     }
 
-    @PostMapping("/forget-password")
-    public void forgetPassword(@RequestBody User user) throws MessagingException {
-        User getUserDetails = usersService.userById(user.getUserId());
-        usersService.forgetPasswordMail(getUserDetails, EmpdbConstants.FORGOT_PWD,EmpdbConstants.MAIL_BODY);
+    @GetMapping("/forgotPassword/{userId}")
+    public String forgotPassword(@PathVariable(value = "userId") String userId) throws MessagingException {
+        User getUserDetails = usersService.userById(userId);
+        String responseMessage = usersService.forgotPasswordMail(getUserDetails, EmpdbConstants.FORGOT_PWD,EmpdbConstants.MAIL_BODY);
+        return responseMessage;
     }
 
     @GetMapping("/")
@@ -70,9 +71,5 @@ public class UserController {
         return responseMessage;
     }
 
-    @GetMapping("/home")
-    public String addUserByAdmin() {
-        return "Hello";
-    }
 }
 

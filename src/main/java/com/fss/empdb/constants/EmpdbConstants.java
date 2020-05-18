@@ -4,8 +4,8 @@ public class EmpdbConstants {
 
     private EmpdbConstants(){}
 
-    public static final String FORGOT_PWD="Password Reset Successfully ";
-    public static final String MAIL_BODY="Your Auto Generated Password Is";
+    public static final String FORGOT_PWD="Password Auto Generated Successfully ";
+    public static final String MAIL_BODY="Your Auto Generated Password is : ";
 
     public  static  final String IS_RESET_REQUIRED="Y";
 
