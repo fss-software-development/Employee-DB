@@ -40,7 +40,23 @@ public class ProjectMmrController {
             count++;
             projectMmrService.createProjectMmr(projectMMR[i]);
         }
-        result = "Inserted " + count + " successfully";
+        result = "Inserted " + count + " record successfully";
         return ResponseEntity.ok().body(result);
     }
+
+    @PutMapping
+    public ResponseEntity<String> updateProjectMmr(@RequestBody ProjectMMR[] projectMMR) throws JsonProcessingException {
+        log.info("Project MMR ADD " + projectMMR);
+
+        String result = "";
+        int count = 0;
+
+        for (int i = 0; i < projectMMR.length; i++) {
+            count++;
+            projectMmrService.updateProjectMmr(projectMMR[i]);
+        }
+        result = "Updated " + count + " record successfully";
+        return ResponseEntity.ok().body(result);
+    }
+
 }
