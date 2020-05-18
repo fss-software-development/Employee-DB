@@ -36,7 +36,7 @@ public class UserController {
     @Autowired
     UsersService usersService;
 
-    @PreAuthorize("hasAnyAuthority('ADD_EMPLOYEE')")
+    @PreAuthorize("hasAnyAuthority('ADD_USER')")
     @PostMapping("/add")
     public String addUserByAdmin(@RequestBody User user) {
             String responseMessage = usersService.addUserByAdmin(user);
@@ -70,9 +70,5 @@ public class UserController {
         return responseMessage;
     }
 
-    @GetMapping("/home")
-    public String addUserByAdmin() {
-        return "Hello";
-    }
 }
 
