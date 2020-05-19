@@ -47,7 +47,7 @@ public class ProjectController {
         }
     }
 
-    @PreAuthorize("hasAnyAuthority('VIEW_PROJECT')")
+    @PreAuthorize("hasAnyAuthority('SEARCH_PROJECT')")
     @PostMapping(value = "/search", produces = "application/json")
     public ResponseEntity<List<Project>> projectsBySearch(@RequestBody ProjectSearchCriteria projSearch)  {
         return ResponseEntity.ok().body(projectService.projectsBySearch(projSearch));
