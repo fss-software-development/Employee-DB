@@ -130,6 +130,7 @@ public class UsersService {
                 return user;
             }
         } catch (Exception ex) {
+            log.info("Exception during login");
             ex.printStackTrace();
             return null;
         }
