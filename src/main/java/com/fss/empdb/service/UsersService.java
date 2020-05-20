@@ -123,6 +123,7 @@ public class UsersService {
                     .loadUserByUsername(getUserDetails.getUserName());*/
                 final String jwt = jwtTokenUtil.generateToken(user);
                 user.setUserJwt(jwt);
+                user.setIsResetRequired(getUserDetails.getIsResetRequired());
                 log.info("Jwt Token :" + jwt);
                 return user;
             }else{
