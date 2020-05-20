@@ -2,6 +2,7 @@ package com.fss.empdb.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fss.empdb.domain.ProjectMMR;
+import com.fss.empdb.domain.ProjectMMRDto;
 import com.fss.empdb.service.ProjectMmrService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,43 +21,39 @@ public class ProjectMmrController {
     ProjectMmrService projectMmrService;
 
     @GetMapping("/")
-    public ResponseEntity<List<ProjectMMR>> allProjectMmr() {
+    public ResponseEntity<ProjectMMRDto> allProjectMmr() {
         return ResponseEntity.ok().body(projectMmrService.allProjectMmr());
     }
 
     @PostMapping("/search/{projectId}/{year}")
-    public ResponseEntity<List<ProjectMMR>> accountById(@PathVariable(value = "projectId") Long projectId,
+    public ResponseEntity<ProjectMMRDto> accountById(@PathVariable(value = "projectId") Long projectId,
                                                   @PathVariable(value = "year") Long year) {
         return ResponseEntity.ok().body(projectMmrService.projectMmrBySearch(projectId,year));
     }
     @PostMapping
-    public ResponseEntity<String> createProjectMmr(@RequestBody ProjectMMR[] projectMMR) throws JsonProcessingException {
-        log.info("Project MMR ADD " + projectMMR);
+    public ResponseEntity<String> createProjectMmr(@RequestBody ProjectMMRDto dto) throws JsonProcessingException {
+        log.info("Project MMR ADD " + dto);
 
-        String result = "";
-        int count = 0;
-
-        for (int i = 0; i < projectMMR.length; i++) {
-            count++;
-            projectMmrService.createProjectMmr(projectMMR[i]);
+        for (ProjectMMR mmr: dto.getMmr().values()
+        ) {
+            mmr.setProject(dto.getProject());
+            mmr.setYear(dto.getFinancialYear().longValue());
+            projectMmrService.createProjectMmr(mmr);
         }
-        result = "Inserted " + count + " record successfully";
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity.ok().body("success");
     }
 
     @PutMapping
-    public ResponseEntity<String> updateProjectMmr(@RequestBody ProjectMMR[] projectMMR) throws JsonProcessingException {
-        log.info("Project MMR ADD " + projectMMR);
+    public ResponseEntity<String> updateProjectMmr(@RequestBody ProjectMMRDto dto) throws JsonProcessingException {
+        log.info("Project MMR ADD " + dto);
 
-        String result = "";
-        int count = 0;
-
-        for (int i = 0; i < projectMMR.length; i++) {
-            count++;
-            projectMmrService.updateProjectMmr(projectMMR[i]);
+        for (ProjectMMR mmr: dto.getMmr().values()
+        ) {
+            mmr.setProject(dto.getProject());
+            mmr.setYear(dto.getFinancialYear().longValue());
+            projectMmrService.updateProjectMmr(mmr);
         }
-        result = "Updated " + count + " record successfully";
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity.ok().body("updated");
     }
 
 }

@@ -12,10 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Log4j2
 @Service
@@ -26,11 +23,13 @@ public class ProjectMmrService {
     @Autowired
     ProjectRepository projectRepository;
 
-    public List<ProjectMMR> allProjectMmr() {
-        return projectMmrRepository.findAll();
+    public ProjectMMRDto allProjectMmr() {
+        List<ProjectMMR> list = projectMmrRepository.findAll();
+        Map<String, ProjectMMRDto> map = mmrListAsMap(list);
+        return (ProjectMMRDto) map.values().toArray()[0];
     }
 
-    public List<ProjectMMR> projectMmrBySearch(Long projectId, Long Year) {
+    public ProjectMMRDto projectMmrBySearch(Long projectId, Long Year) {
         List<ProjectMMR> projectMMRS = null;
         Optional<Project> proj = projectRepository.findById(projectId);
         Project projEntity = proj.get();
@@ -54,7 +53,15 @@ public class ProjectMmrService {
         } catch (Exception e) {
             log.error("ERROR_LOG" + e);
         }
-        return projectMMRS;
+        log.info("mmr ----- " + projectMMRS);
+
+        if((projectMMRS.isEmpty())){
+            new ResourceNotFoundException(ErrorConstants.SEARCH_DATA_NOT_FOUND);
+        }else {
+            Map<String, ProjectMMRDto> map = mmrListAsMap(projectMMRS);
+            return (ProjectMMRDto) map.values().toArray()[0];
+        }
+         return null;
     }
 
     public ProjectMMR createProjectMmr(ProjectMMR projectMMR) {
@@ -73,5 +80,26 @@ public class ProjectMmrService {
         projectMMR.setInsDate(new Date());
         projectMMR.setLastUpdateDate(new Date());
         return projectMmrRepository.save(projectMMR);
+    }
+
+    private Map<String, ProjectMMRDto> mmrListAsMap(List<ProjectMMR> list) {
+        Map<String, ProjectMMRDto> map = new HashMap<>();
+
+        for (ProjectMMR mmr : list) {
+            String key = mmr.getProject().getProjectId() + ":" + mmr.getYear();
+            ProjectMMRDto dto = map.get(key);
+            if (dto == null) {
+                dto = new ProjectMMRDto();
+                dto.setProject(mmr.getProject());
+                dto.setFinancialYear(mmr.getYear().longValue());
+                dto.setMmr(new HashMap<>());
+                map.put(key, dto);
+            }
+            dto.getMmr().put(mmr.getMonth(), mmr);
+//            mmr.setVariance1(mmr.getBudgetedValue().subtract(mmr.getActualValue()));
+//            mmr.setVariance2(mmr.getForecastedValue().subtract(mmr.getActualValue()));
+        }
+
+        return map;
     }
 }
