@@ -41,9 +41,9 @@ public class Region {
     @Column(name="LAST_UPDATE_DATE",nullable = false)
     Date lastUpdateDate;
 
-    @OneToMany(mappedBy = "region",  cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Employee> employees;
+//    @OneToMany(mappedBy = "region",  cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private List<Employee> employees;
 
 //    @OneToMany(mappedBy = "region",  cascade = CascadeType.ALL)
 //    @JsonIgnore
