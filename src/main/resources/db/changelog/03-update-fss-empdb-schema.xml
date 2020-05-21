@@ -134,6 +134,27 @@ based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Sp
         </sql>
     </changeSet>
 
+    <changeSet id="110" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+           UPDATE employee_db.academics SET ACADEMICS_NAME = 'BSC IT' WHERE (ACADEMICS_ID = '3');
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="111" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+           ALTER TABLE employee_db.project
+           CHANGE COLUMN PROJECT_START_DATE PROJECT_START_DATE DATE NULL ,
+           CHANGE COLUMN PROJECT_END_DATE PROJECT_END_DATE DATE NULL ;
+
+            ]]>
+        </sql>
+    </changeSet>
+
+
+
 
 
 
