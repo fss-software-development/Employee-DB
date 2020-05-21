@@ -1,6 +1,7 @@
 package com.fss.empdb.service;
 
 import com.fss.empdb.constants.EmpdbConstants;
+import com.fss.empdb.constants.ErrorConstants;
 import com.fss.empdb.domain.*;
 import com.fss.empdb.util.JwtUtil;
 import lombok.extern.log4j.Log4j2;
@@ -150,8 +151,9 @@ public class UsersService {
                 String newPwd = user.getUserConfirmPassword();
                 String encryptPwd = sha256Hash(newPwd);
                 fetchUser.setUserPassword(encryptPwd);
+                fetchUser.setIsResetRequired(ErrorConstants.RESET_NOT_REQUIRED);
                 userRepository.save(fetchUser);
-                return "User added successfully....";
+                return "Password changed successfully....";
             }
             return "Old password is incorrect";
         }
