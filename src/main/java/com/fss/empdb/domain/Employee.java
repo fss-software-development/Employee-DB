@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotEmpty;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.*;
@@ -24,7 +25,6 @@ import java.util.*;
 @XmlRootElement
 @EqualsAndHashCode
 @ToString
-@Transactional
 public class Employee implements Serializable {
 
     @Id
@@ -32,6 +32,7 @@ public class Employee implements Serializable {
     @Column(name = "EMPLOYEE_SQID")
     Long employeeSqId;
 
+//    @NotEmpty(message = "{employee.employeeId}")
     @Column(name = "EMPLOYEE_ID")
     String employeeId;
 
@@ -65,7 +66,6 @@ public class Employee implements Serializable {
 
     @Column(name = "TOTAL_EXPERIENCE", nullable = false)
     Long totalExperience;
-
 
     @ManyToOne
     @JoinColumn(name = "DEPARTMENT_ID")

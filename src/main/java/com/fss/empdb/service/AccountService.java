@@ -2,12 +2,15 @@ package com.fss.empdb.service;
 
 import com.fss.empdb.constants.ErrorConstants;
 import com.fss.empdb.domain.*;
+import com.fss.empdb.exception.DuplicateRecordException;
 import com.fss.empdb.exception.GlobalExceptionHandler;
 import com.fss.empdb.exception.ResourceNotFoundException;
 import com.fss.empdb.repository.AccountRepository;
 import com.fss.empdb.repository.RegionRepository;
+import com.fss.empdb.util.ExceptionHandlerValidation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -38,7 +41,7 @@ public class AccountService {
                 orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.CUSTOMER_NOT_FOUND + accountId));
     }
 
-    public List<Account> accountBySearch(AccountSearchCriteria accountSearchCriteria)   {
+    public List<Account> accountBySearch(AccountSearchCriteria accountSearchCriteria) {
         List<Account> acc = null;
         try {
             acc = accountRepository.findAll(new Specification<Account>() {
@@ -63,23 +66,44 @@ public class AccountService {
     }
 
     public Account createAccount(Account account) {
-        account.setInsUser(Long.valueOf(1));
-        account.setLastUpdateUser(Long.valueOf(1));
-        account.setInsDate(new Date());
-        account.setLastUpdateDate(new Date());
-        return accountRepository.save(account);
+        Account saveAccount = null;
+        try {
+            account.setInsUser(Long.valueOf(1));
+            account.setLastUpdateUser(Long.valueOf(1));
+            account.setInsDate(new Date());
+            account.setLastUpdateDate(new Date());
+            saveAccount = accountRepository.save(account);
+        } catch (DataIntegrityViolationException ex) {
+            log.error("duplicate record", ex);
+            String exceptionType = ExceptionHandlerValidation.accountDuplicateHandler(ex);
+            throw new DuplicateRecordException(exceptionType);
+        } catch (NullPointerException ex) {
+            log.error("null record", ex);
+            //   throw new MethodArgumentNotValidException();
+        }
+        return saveAccount;
     }
 
     public Account updateAccount(Account account) {
 
-        Optional<Account> acc =accountRepository.findById(account.getAccountId());
-        Account accEntity=acc.get();
-
-        account.setInsUser(accEntity.getInsUser());
-        account.setLastUpdateUser(Long.valueOf(1));
-        account.setInsDate(accEntity.getInsDate());
-        account.setLastUpdateDate(new Date());
-        return accountRepository.save(account);
+        Account updateAccount = null;
+        try {
+            Optional<Account> acc = accountRepository.findById(account.getAccountId());
+            Account accEntity = acc.get();
+            account.setInsUser(accEntity.getInsUser());
+            account.setLastUpdateUser(Long.valueOf(1));
+            account.setInsDate(accEntity.getInsDate());
+            account.setLastUpdateDate(new Date());
+            updateAccount = accountRepository.save(account);
+        } catch (DataIntegrityViolationException ex) {
+            log.error("duplicate record", ex);
+            String exceptionType = ExceptionHandlerValidation.accountDuplicateHandler(ex);
+            throw new DuplicateRecordException(exceptionType);
+        } catch (NullPointerException ex) {
+            log.error("null record", ex);
+            //   throw new MethodArgumentNotValidException();
+        }
+        return updateAccount;
     }
 
     public void deleteAccount(Long accountId) {
