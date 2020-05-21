@@ -2,10 +2,13 @@ package com.fss.empdb.service;
 
 import com.fss.empdb.constants.ErrorConstants;
 import com.fss.empdb.domain.*;
+import com.fss.empdb.exception.DuplicateRecordException;
 import com.fss.empdb.exception.ResourceNotFoundException;
 import com.fss.empdb.repository.*;
+import com.fss.empdb.util.ExceptionHandlerValidation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -44,89 +47,46 @@ public class ProjectService {
         projectRepository.delete(project);
     }
 
- /*   public void deleteProject(Long projectId) throws RecordNotFoundException
-    {
-        Optional<Project> project = projectRepository.findById(projectId);
-
-        if(project.isPresent())
-        {
-            projectRepository.deleteById(projectId);
-        } else {
-            response = new BaseResponse(SUCCESS_STATUS, CODE_SUCCESS);
-            throw new RecordNotFoundException("No project record exist for given id");
-        }
-    }*/
-
     public Project createProject(Project project) {
-        project.setInsUser(Long.valueOf(1));
-        project.setLastUpdateUser(Long.valueOf(1));
-        project.setInsDate(new Date());
-        project.setLastUpdateDate(new Date());
-        return projectRepository.save(project);
+        Project savedProject = null;
+        try {
+            project.setInsUser(Long.valueOf(1));
+            project.setLastUpdateUser(Long.valueOf(1));
+            project.setInsDate(new Date());
+            project.setLastUpdateDate(new Date());
+            savedProject = projectRepository.save(project);
+
+        } catch (DataIntegrityViolationException ex) {
+            log.error("duplicate record", ex);
+            String exceptionType = ExceptionHandlerValidation.projectDuplicateHandler(ex);
+            throw new DuplicateRecordException(exceptionType);
+        } catch (NullPointerException ex) {
+            log.error("null record", ex);
+            //   throw new MethodArgumentNotValidException();
+        }
+        return savedProject;
     }
 
     public Project updateProject(Project project) {
-
-        Optional<Project> pro = projectRepository.findById(project.getProjectId());
-        Project proEntity = pro.get();
-
-        project.setInsUser(proEntity.getInsUser());
-        project.setLastUpdateUser(Long.valueOf(1));
-        project.setInsDate(proEntity.getInsDate());
-        project.setLastUpdateDate(new Date());
-        /*projectRepository.findById(project.getProjectId())
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.CUSTOMER_NOT_FOUND
-                        + project.getProjectId()));*/
-        return projectRepository.save(project);
+        Project updateProject = null;
+        try {
+            Optional<Project> pro = projectRepository.findById(project.getProjectId());
+            Project proEntity = pro.get();
+            project.setInsUser(proEntity.getInsUser());
+            project.setLastUpdateUser(Long.valueOf(1));
+            project.setInsDate(proEntity.getInsDate());
+            project.setLastUpdateDate(new Date());
+            updateProject = projectRepository.save(project);
+        } catch (DataIntegrityViolationException ex) {
+            log.error("duplicate record", ex);
+            String exceptionType = ExceptionHandlerValidation.projectDuplicateHandler(ex);
+            throw new DuplicateRecordException(exceptionType);
+        } catch (NullPointerException ex) {
+            log.error("null record", ex);
+            //  throw new MethodArgumentNotValidException();
+        }
+        return updateProject;
     }
-
-//    public List<Project> projectsBySearch(ProjectSearchCriteria proj) {
-//        return projectRepository.findAll(new Specification<Project>() {
-//            @Override
-//            public Predicate toPredicate(Root<Project> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-//                List<Predicate> predicates = new ArrayList<>();
-//                /*if (proj.getProjectId() != null) {
-//                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("projectId"), proj.getProjectId())));
-//                }*/
-//                if (proj.getProjectName() != null) {
-//                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectName"), "%" + proj.getProjectName() + "%")));
-//                }
-//               /* if (proj.getProjectManager() != null) {
-//                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectManager"), "%" + proj.getProjectManager() + "%")));
-//                }
-//                if (proj.getProjectStatus() != null) {
-//                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectStatus"), "%" + proj.getProjectStatus() + "%")));
-//                }*/
-//
-//                /*if (proj.getProjectStatus() != null) {
-//                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectStatus"), "%" + proj.getProjectStatus() + "%")));
-//                }
-//
-//                if (proj.getProjectStatus() != null) {
-//                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("projectStatus"), "%" + proj.getProjectStatus() + "%")));
-//                } */
-//
-//                /*if (proj.getDepartment().length > 0) {
-//                    Join<Employee, Department> phoneJoin = root.join("department");
-//                    predicates.add(phoneJoin.in(proj.getDepartment()));
-//                }*/
-//                if (proj.getRegion().length > 0) {
-//                    Join<Employee, Region> phoneJoin = root.join("region");
-//                    predicates.add(phoneJoin.in(proj.getRegion()));
-//                }
-//                if (proj.getAccount().length > 0) {
-//                    Join<Employee, Account> phoneJoin = root.join("account");
-//                    predicates.add(phoneJoin.in(proj.getAccount()));
-//                }
-//                /*if (proj.getProjectTagging().length > 0l) {
-//                    Join<Employee, Account> phoneJoin = root.join("projectTagging");
-//                    predicates.add(phoneJoin.in(proj.getProjectTagging()));
-//                }*/
-//                log.info("Search filter Size :" + predicates.size());
-//                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
-//            }
-//        });
-//    }
 
     public List<Project> projectsBySearch(ProjectSearchCriteria proj) {
 

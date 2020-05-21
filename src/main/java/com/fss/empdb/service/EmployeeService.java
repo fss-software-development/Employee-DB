@@ -3,8 +3,10 @@ package com.fss.empdb.service;
 import com.fss.empdb.constants.ErrorConstants;
 import com.fss.empdb.controller.EmployeeController;
 import com.fss.empdb.domain.*;
+import com.fss.empdb.exception.DuplicateRecordException;
 import com.fss.empdb.exception.ResourceNotFoundException;
 import com.fss.empdb.repository.*;
+import com.fss.empdb.util.ExceptionHandlerValidation;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -13,6 +15,7 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -100,24 +103,38 @@ public class EmployeeService {
     }
 
     public Employee createEmployee(Employee employee) {
-
-        log.info("SAVE " + employee.toString());
-        employee.setInsUser(Long.valueOf(1));
-        employee.setLastUpdateUser(Long.valueOf(1));
-        employee.setInsDate(new Date());
-        employee.setLastUpdateDate(new Date());
-        return employeeRepository.save(employee);
+        Employee empSave = null;
+        try {
+            log.info("SAVE " + employee.toString());
+            employee.setInsUser(Long.valueOf(1));
+            employee.setLastUpdateUser(Long.valueOf(1));
+            employee.setInsDate(new Date());
+            employee.setLastUpdateDate(new Date());
+            empSave = employeeRepository.save(employee);
+        } catch (DataIntegrityViolationException ex) {
+            log.error("duplicate record", ex);
+            String exceptionType = ExceptionHandlerValidation.employeeDuplicateHandler(ex);
+            throw new DuplicateRecordException(exceptionType);
+        }
+        return empSave;
     }
 
     public Employee updateEmployee(Employee employee) {
-
-        Optional<Employee> emp =employeeRepository.findById(employee.getEmployeeSqId());
-        Employee empEntity=emp.get();
-        employee.setInsUser(empEntity.getInsUser());
-        employee.setLastUpdateUser(Long.valueOf(1));
-        employee.setInsDate(empEntity.getInsDate());
-        employee.setLastUpdateDate(new Date());
-        return employeeRepository.save(employee);
+        Employee empUpdate = null;
+        try {
+            Optional<Employee> emp = employeeRepository.findById(employee.getEmployeeSqId());
+            Employee empEntity = emp.get();
+            employee.setInsUser(empEntity.getInsUser());
+            employee.setLastUpdateUser(Long.valueOf(1));
+            employee.setInsDate(empEntity.getInsDate());
+            employee.setLastUpdateDate(new Date());
+            empUpdate = employeeRepository.save(employee);
+        } catch (DataIntegrityViolationException ex) {
+            log.error("duplicate record", ex);
+            String exceptionType = ExceptionHandlerValidation.employeeDuplicateHandler(ex);
+            throw new DuplicateRecordException(exceptionType);
+        }
+        return empUpdate;
     }
 
     public List<String> getValuesForGivenKey(JSONArray jsonArrayStr, String key) {
