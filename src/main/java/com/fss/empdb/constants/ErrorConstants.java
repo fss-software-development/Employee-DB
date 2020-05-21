@@ -10,7 +10,7 @@ public class ErrorConstants {
     public static final String DATA_NOT_FOUND= "Data not found for this id ::";
     public static final String FORGOT_PWD="Password Reset Successfully ";
     public  static  final String IS_RESET_REQUIRED="Y";
-
+    public  static  final String RESET_NOT_REQUIRED="N";
     private static final String SUCCESS_STATUS = "success";
     private static final String ERROR_STATUS = "error";
     private static final int CODE_SUCCESS = 100;
