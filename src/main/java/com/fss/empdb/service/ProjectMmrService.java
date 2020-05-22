@@ -23,6 +23,9 @@ public class ProjectMmrService {
     @Autowired
     ProjectRepository projectRepository;
 
+    @Autowired
+    ProjectService projectService;
+
     public ProjectMMRDto allProjectMmr() {
         List<ProjectMMR> list = projectMmrRepository.findAll();
         Map<String, ProjectMMRDto> map = mmrListAsMap(list);
@@ -30,10 +33,18 @@ public class ProjectMmrService {
     }
 
     public ProjectMMRDto projectMmrBySearch(Long projectId, Long Year) {
+        log.info("Service" + projectId + "," + Year);
         List<ProjectMMR> projectMMRS = null;
+        ProjectMMRDto projectMMRDto = null;
+
+//        Project projEntity = projectService.projectsById(projectId);
+
         Optional<Project> proj = projectRepository.findById(projectId);
         Project projEntity = proj.get();
+
+        log.info("Project :" + projEntity);
         try {
+            log.info("Inside try :" + projectMMRS);
             projectMMRS = projectMmrRepository.findAll(new Specification<ProjectMMR>() {
                 @Override
                 public Predicate toPredicate(Root<ProjectMMR> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
@@ -50,18 +61,22 @@ public class ProjectMmrService {
                     return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
                 }
             });
+
+            if ((projectMMRS.isEmpty())) {
+                log.info("Empty Record");
+                new ResourceNotFoundException(ErrorConstants.SEARCH_DATA_NOT_FOUND);
+            } else {
+                log.info("Record Available");
+                Map<String, ProjectMMRDto> map = mmrListAsMap(projectMMRS);
+                projectMMRDto = (ProjectMMRDto) map.values().toArray()[0];
+                log.info("Record Available 2" + projectMMRDto);
+
+            }
         } catch (Exception e) {
             log.error("ERROR_LOG" + e);
         }
-        log.info("mmr ----- " + projectMMRS);
 
-        if((projectMMRS.isEmpty())){
-            new ResourceNotFoundException(ErrorConstants.SEARCH_DATA_NOT_FOUND);
-        }else {
-            Map<String, ProjectMMRDto> map = mmrListAsMap(projectMMRS);
-            return (ProjectMMRDto) map.values().toArray()[0];
-        }
-         return null;
+        return projectMMRDto;
     }
 
     public ProjectMMR createProjectMmr(ProjectMMR projectMMR) {
@@ -83,6 +98,8 @@ public class ProjectMmrService {
     }
 
     private Map<String, ProjectMMRDto> mmrListAsMap(List<ProjectMMR> list) {
+
+        log.info("in list map :" + list.toString());
         Map<String, ProjectMMRDto> map = new HashMap<>();
 
         for (ProjectMMR mmr : list) {
@@ -99,7 +116,7 @@ public class ProjectMmrService {
 //            mmr.setVariance1(mmr.getBudgetedValue().subtract(mmr.getActualValue()));
 //            mmr.setVariance2(mmr.getForecastedValue().subtract(mmr.getActualValue()));
         }
-
+        log.info("Map : " + map);
         return map;
     }
 }

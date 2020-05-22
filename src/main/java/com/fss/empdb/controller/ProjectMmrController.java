@@ -26,15 +26,16 @@ public class ProjectMmrController {
     }
 
     @PostMapping("/search/{projectId}/{year}")
-    public ResponseEntity<ProjectMMRDto> accountById(@PathVariable(value = "projectId") Long projectId,
-                                                  @PathVariable(value = "year") Long year) {
-        return ResponseEntity.ok().body(projectMmrService.projectMmrBySearch(projectId,year));
+    public ResponseEntity<ProjectMMRDto> projectMMRSearch(@PathVariable(value = "projectId") Long projectId,
+                                                          @PathVariable(value = "year") Long year) {
+           return ResponseEntity.ok().body(projectMmrService.projectMmrBySearch(projectId, year));
     }
+
     @PostMapping
     public ResponseEntity<String> createProjectMmr(@RequestBody ProjectMMRDto dto) throws JsonProcessingException {
         log.info("Project MMR ADD " + dto);
 
-        for (ProjectMMR mmr: dto.getMmr().values()
+        for (ProjectMMR mmr : dto.getMmr().values()
         ) {
             mmr.setProject(dto.getProject());
             mmr.setYear(dto.getFinancialYear().longValue());
@@ -47,7 +48,7 @@ public class ProjectMmrController {
     public ResponseEntity<String> updateProjectMmr(@RequestBody ProjectMMRDto dto) throws JsonProcessingException {
         log.info("Project MMR ADD " + dto);
 
-        for (ProjectMMR mmr: dto.getMmr().values()
+        for (ProjectMMR mmr : dto.getMmr().values()
         ) {
             mmr.setProject(dto.getProject());
             mmr.setYear(dto.getFinancialYear().longValue());
