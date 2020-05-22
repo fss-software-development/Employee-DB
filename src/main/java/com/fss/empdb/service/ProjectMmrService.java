@@ -7,12 +7,14 @@ import com.fss.empdb.repository.ProjectMmrRepository;
 import com.fss.empdb.repository.ProjectRepository;
 import com.fss.empdb.repository.RegionRepository;
 import lombok.extern.log4j.Log4j2;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -26,15 +28,13 @@ public class ProjectMmrService {
     @Autowired
     ProjectService projectService;
 
-    public List<ProjectMMR> allProjectMmr() {
+    public ProjectMMRDto allProjectMmr() {
         List<ProjectMMR> list = projectMmrRepository.findAll();
-//        Map<String, ProjectMMRDto> map = mmrListAsMap(list);
-//        List<ProjectMMRDto> map = mmrList(list);
-//        return (ProjectMMRDto) map.values().toArray()[0];
-        return list;
+        ProjectMMRDto map = mmrList(list);
+        return map;
     }
 
-    public List<ProjectMMR> projectMmrBySearch(Long projectId, Long Year) {
+    public ProjectMMRDto projectMmrBySearch(Long projectId, Long Year) {
         log.info("Service" + projectId + "," + Year);
         List<ProjectMMR> projectMMRS = null;
         ProjectMMRDto projectMMRDto = null;
@@ -62,21 +62,18 @@ public class ProjectMmrService {
                 }
             });
 
-//            if ((projectMMRS.isEmpty())) {
-//                log.info("Empty Record");
-//                new ResourceNotFoundException(ErrorConstants.SEARCH_DATA_NOT_FOUND);
-//            } else {
-//                log.info("Record Available");
-////                Map<String, ProjectMMRDto> map = mmrListAsMap(projectMMRS);
-////                projectMMRDto = (ProjectMMRDto) map.values().toArray()[0];
-////                log.info("Record Available 2" + projectMMRDto);
-//
-//            }
+            if ((projectMMRS.isEmpty())) {
+                log.info("Empty Record");
+                new ResourceNotFoundException(ErrorConstants.SEARCH_DATA_NOT_FOUND);
+            } else {
+                log.info("Record Available");
+                projectMMRDto = mmrList(projectMMRS);
+                         }
         } catch (Exception e) {
             log.error("ERROR_LOG" + e);
         }
 
-        return projectMMRS;
+        return projectMMRDto;
     }
 
     public ProjectMMR createProjectMmr(ProjectMMR projectMMR) {
@@ -97,62 +94,13 @@ public class ProjectMmrService {
         return projectMmrRepository.save(projectMMR);
     }
 
-//    private Map<String, ProjectMMRDto> mmrListAsMap(List<ProjectMMR> list) {
-//
-//        log.info("in list map :" + list.toString());
-//        Map<String, ProjectMMRDto> map = new HashMap<>();
-//
-//        for (ProjectMMR mmr : list) {
-//            String key = mmr.getProject().getProjectId() + ":" + mmr.getYear();
-//            ProjectMMRDto dto = map.get(key);
-//            if (dto == null) {
-//                dto = new ProjectMMRDto();
-//                dto.setProject(mmr.getProject());
-//                dto.setFinancialYear(mmr.getYear().longValue());
-//                dto.setMmr(new HashMap<>());
-//                map.put(key, dto);
-//            }
-//            dto.getMmr().put(mmr.getMonth(), mmr);
-////            mmr.setVariance1(mmr.getBudgetedValue().subtract(mmr.getActualValue()));
-////            mmr.setVariance2(mmr.getForecastedValue().subtract(mmr.getActualValue()));
-//        }
-//        log.info("Map : " + map);
-//        return map;
-//    }
-
-
-//    private List<ProjectMMRDto> mmrList(List<ProjectMMR> list) {
-//
-//        log.info("in list map :" + list.toString());
-////        Map<String, ProjectMMRDto> map = new HashMap<>();
-//        List<ProjectMMRDto> map = new ArrayList<>();
-//
-//        for (ProjectMMR mmr : list) {
-//            log.info("MMR -- " + mmr);
-//            ProjectMMRDto dto = new ProjectMMRDto();
-//            dto.setProject(mmr.getProject());
-//            dto.setFinancialYear(mmr.getYear().longValue());
-//            dto.setMmr(new ArrayList<>());
-//            map.add(dto);
-//            dto.getMmr().add(mmr);
-//        }
-//
-////        for (ProjectMMR mmr : list) {
-////            log.info("in list mmr :" + mmr);
-////            String key = mmr.getProject().getProjectId() + ":" + mmr.getYear();
-////            ProjectMMRDto dto = new ProjectMMRDto();
-////            if (dto == null) {
-////                dto = new ProjectMMRDto();
-////                dto.setProject(mmr.getProject());
-////                dto.setFinancialYear(mmr.getYear().longValue());
-////                dto.setMmr(new ArrayList<>());
-////                map.add(dto);
-////            }
-////            dto.getMmr().add(mmr);
-//////            mmr.setVariance1(mmr.getBudgetedValue().subtract(mmr.getActualValue()));
-//////            mmr.setVariance2(mmr.getForecastedValue().subtract(mmr.getActualValue()));
-////        }
-//        log.info("Map : " + map);
-//        return map;
-//    }
+    private ProjectMMRDto mmrList(List<ProjectMMR> list) {
+        ProjectMMRDto map = new ProjectMMRDto();
+        for (ProjectMMR mmr : list) {
+            map.setProject(mmr.getProject());
+            map.setFinancialYear(mmr.getYear().longValue());
+        }
+        map.setMmr(list);
+        return map;
+    }
 }

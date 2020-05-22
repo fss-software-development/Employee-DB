@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -13,6 +14,6 @@ public class ProjectMMRDto {
 
     Project project;
     Long financialYear;
-    Map<String, ProjectMMR> mmr;
+    List<ProjectMMR> mmr;
 
 }

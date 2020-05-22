@@ -19,12 +19,12 @@ public class ProjectMMR {
     @Column(name="PROJECT_MMR_ID")
     Long projectMmrId;
 
-//    @JsonIgnore
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "PROJECT_ID")
     private Project project;
 
-//    @JsonIgnore
+    @JsonIgnore
     @Column(name = "FINANCIAL_YEAR", nullable = false)
     Long year;
 
