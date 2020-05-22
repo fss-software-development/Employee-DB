@@ -3,7 +3,8 @@ spring:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3307/employee_db
     #url: jdbc:mysql://10.44.72.122:3306/employee_db?useSSL=false
     username: root
-    password: Mysql@123
+    #password: Mysql@123
+    password: ENC(f4idyhe7pq7mbhhcDl7elhPqdLahln8D)
 #  security:
 #    user:
 #      name: rama
@@ -12,6 +13,7 @@ spring:
     change-log: classpath:db/liquibase-changelog.xml
 server:
   port: 8081
+
 
 
 
