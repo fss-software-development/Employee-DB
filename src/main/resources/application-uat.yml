@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:mysql://10.44.72.122:3306/employee_db?useSSL=false
+    username: root
+    #password: fss123
+    password: ENC(UtzQRKVu6ptmPBW6UNdnLA==)
+#  security:
+#    user:
+#      name: rama
+#      password: pass123
+
+  liquibase:
+    change-log: classpath:db/liquibase-changelog.xml
+server:
+  port: 8082
+
+
+
+
