@@ -8,6 +8,7 @@ spring:
 #    user:
 #      name: rama
 #      password: pass123
+
   liquibase:
     change-log: classpath:db/liquibase-changelog.xml
 server:
