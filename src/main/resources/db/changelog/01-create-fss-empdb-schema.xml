@@ -122,7 +122,7 @@
         <sql dbms="mysql" splitStatements="true" stripComments="true">
             <![CDATA[
 			CREATE TABLE IF NOT EXISTS employee_db.user (
-			    USER_SQID INT(11) NOT NULL,
+			    USER_SQID INT(11) NOT NULL AUTO_INCREMENT ,
 				USER_ID VARCHAR(45) NOT NULL,
 				USER_NAME VARCHAR(16) NOT NULL,
 				EMAIL VARCHAR(255) NOT NULL,
