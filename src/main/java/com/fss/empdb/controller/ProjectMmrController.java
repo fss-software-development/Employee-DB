@@ -25,7 +25,7 @@ public class ProjectMmrController {
         return ResponseEntity.ok().body(projectMmrService.allProjectMmr());
     }
 
-    @PostMapping("/search/{projectId}/{year}")
+    @GetMapping("/search/{projectId}/{year}")
     public ResponseEntity<ProjectMMRDto> projectMMRSearch(@PathVariable(value = "projectId") Long projectId,
                                                           @PathVariable(value = "year") Long year) {
         return ResponseEntity.ok().body(projectMmrService.projectMmrBySearch(projectId, year));
