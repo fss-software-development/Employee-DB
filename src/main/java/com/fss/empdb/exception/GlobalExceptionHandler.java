@@ -20,14 +20,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponse> globleExcpetionHandler(Exception ex, WebRequest request) {
-        System.out.println("Exception :" + ex.toString());
-        String exceptionType = ExceptionHandlerValidation.NullCheck(ex);
-        System.out.println("ExceptionType :" + exceptionType);
-        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), exceptionType, request.getDescription(false), HttpStatus.BAD_REQUEST.getReasonPhrase(), HttpStatus.BAD_REQUEST.value());
-        return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ExceptionResponse> globleExcpetionHandler(Exception ex, WebRequest request) {
+//        System.out.println("Exception :" + ex.toString());
+//        String exceptionType = ExceptionHandlerValidation.NullCheck(ex);
+//        System.out.println("ExceptionType :" + exceptionType);
+//        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), exceptionType, request.getDescription(false), HttpStatus.BAD_REQUEST.getReasonPhrase(), HttpStatus.BAD_REQUEST.value());
+//        return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.BAD_REQUEST);
+//    }
 
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<Object> handleAnyException(WebRequest request, NullPointerException ex) {
