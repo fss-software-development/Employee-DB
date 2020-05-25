@@ -84,16 +84,6 @@ public class ProjectMmrService {
         return projectMmrRepository.save(projectMMR);
     }
 
-    public ProjectMMR updateProjectMmr(ProjectMMR projectMMR) {
-        Optional<ProjectMMR> pro = projectMmrRepository.findById(projectMMR.getProjectMmrId());
-        ProjectMMR proMmrEntity = pro.get();
-        projectMMR.setInsUser(proMmrEntity.getInsUser());
-        projectMMR.setLastUpdateUser(proMmrEntity.getLastUpdateUser());
-        projectMMR.setInsDate(new Date());
-        projectMMR.setLastUpdateDate(new Date());
-        return projectMmrRepository.save(projectMMR);
-    }
-
     private ProjectMMRDto mmrList(List<ProjectMMR> list) {
         ProjectMMRDto map = new ProjectMMRDto();
         for (ProjectMMR mmr : list) {

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.Date;
 
 @Getter
@@ -13,6 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 @Table(name="project_mmr")
+@Transactional
 public class ProjectMMR {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

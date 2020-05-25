@@ -44,17 +44,4 @@ public class ProjectMmrController {
         return ResponseEntity.ok().body("success");
     }
 
-    @PutMapping
-    public ResponseEntity<String> updateProjectMmr(@RequestBody ProjectMMRDto dto) throws JsonProcessingException {
-        log.info("Project MMR ADD " + dto);
-
-        for (ProjectMMR mmr : dto.getMmr()
-        ) {
-            mmr.setProject(dto.getProject());
-            mmr.setYear(dto.getFinancialYear().longValue());
-            projectMmrService.updateProjectMmr(mmr);
-        }
-        return ResponseEntity.ok().body("success");
-    }
-
 }
