@@ -7,6 +7,7 @@ import org.hibernate.annotations.*;
 
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.transaction.Transactional;
@@ -25,6 +26,7 @@ import java.util.*;
 @XmlRootElement
 @EqualsAndHashCode
 @ToString
+@Builder
 public class Employee implements Serializable {
 
     @Id
@@ -108,6 +110,9 @@ public class Employee implements Serializable {
             joinColumns = {@JoinColumn(name = "EMPLOYEE_SQID")},
             inverseJoinColumns = {@JoinColumn(name = "PROJECT_ID")})
     private Collection<Project> projects;
+
+//    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+//    private Set<EmployeeProject> employeeProjects;
 
     @ManyToMany
     @JoinTable(name = "employee_skill",

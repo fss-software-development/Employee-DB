@@ -11,7 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -26,13 +30,13 @@ public class EmployeeController {
 
     @PreAuthorize("hasAnyAuthority('VIEW_EMPLOYEE')")
     @GetMapping("/")
-    public ResponseEntity<List<Employee>> getAllEmployee() {
+    public ResponseEntity<List<Employee>> getAllEmployee() throws ParseException {
         return ResponseEntity.ok().body(employeeService.getAllEmployees());
     }
 
     @PreAuthorize("hasAnyAuthority('VIEW_EMPLOYEE')")
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId) {
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId) throws ParseException {
         return ResponseEntity.ok().body(employeeService.getEmployeeById(employeeId));
     }
 
@@ -59,6 +63,30 @@ public class EmployeeController {
     public ResponseEntity<Employee> deleteEmployee(@PathVariable(value = "id") Long employeeId) {
         employeeService.deleteEmployee(employeeId);
         return new ResponseEntity<Employee>(new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<?> uploadFile(
+            @RequestParam("file") MultipartFile uploadfile) {
+
+        log.info("Single file upload! " + uploadfile.getOriginalFilename());
+
+        if (uploadfile.isEmpty()) {
+            return new ResponseEntity("please select a file!", HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+
+            employeeService.saveUploadedFiles(Arrays.asList(uploadfile));
+
+        } catch (IOException e) {
+            log.error("Employee File Upload error:",e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity("Successfully uploaded - " +
+                uploadfile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
+
     }
 
 }
