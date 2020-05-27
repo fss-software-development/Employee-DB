@@ -65,8 +65,12 @@ public class EmployeeCsvDto {
 
 		this.profile = StringUtils.trimToNull(String.valueOf(entry.get("Profile")));
 
+		this.projects = StringUtils.trimToNull(String.valueOf(entry.get("Projects [Projects]")));
 
-		Object[] keys = entry.keySet().toArray();
+		this.skills = StringUtils.trimToNull(String.valueOf(entry.get("Skills [Skills]")));
+
+
+		/*Object[] keys = entry.keySet().toArray();
 
 		// Map project details
 		this.projects = new HashMap<>();
@@ -96,7 +100,7 @@ public class EmployeeCsvDto {
 		this.skills.put(keys[46].toString(), StringUtils.trimToNull(String.valueOf(entry.get(keys[46].toString()))));
 		this.skills.put(keys[47].toString(), StringUtils.trimToNull(String.valueOf(entry.get(keys[47].toString()))));
 		this.skills.put(keys[48].toString(), StringUtils.trimToNull(String.valueOf(entry.get(keys[48].toString()))));
-		this.skills.put(keys[49].toString(), StringUtils.trimToNull(String.valueOf(entry.get(keys[49].toString()))));
+		this.skills.put(keys[49].toString(), StringUtils.trimToNull(String.valueOf(entry.get(keys[49].toString()))));*/
 	}
 
 	private String employeeId;
@@ -149,8 +153,12 @@ public class EmployeeCsvDto {
 
 	private String profile;
 
-	private Map<String, String> projects;
+	private String projects;
 
-	private Map<String, String> skills;
+	private String skills;
+
+//	private Map<String, String> projects;
+//
+//	private Map<String, String> skills;
 
 }

@@ -8,15 +8,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -25,6 +17,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.tools.Tool;
 import javax.transaction.Transactional;
 
 import com.fss.empdb.exception.DuplicateRecordException;
@@ -339,120 +332,125 @@ public class EmployeeService {
                 .lastUpdateDate(new Date())
                 .build();
 
-//        setEmployeeProjects(masterDataDto.getProjects(), employeeCsvDto, employee);
+        setEmployeeProjects(masterDataDto.getProjects(), employeeCsvDto, employee);
 
-//        setEmployeeSkills(masterDataDto.getSkills(), employeeCsvDto, employee);
+        setEmployeeSkills(masterDataDto.getSkills(), employeeCsvDto, employee);
 
-//        setEmployeeTools(masterDataDto.getTools(), employeeCsvDto, employee);
-//
-//        setEmployeeDefiniteRoles(masterDataDto.getRoles(), employeeCsvDto, employee);
+        setEmployeeTools(masterDataDto.getTools(), employeeCsvDto, employee);
 
-//        setEmployeePossibleRoles(masterDataDto.getRoles(), employeeCsvDto, employee);
+        setEmployeeDefiniteRoles(masterDataDto.getRoles(), employeeCsvDto, employee);
+
+        setEmployeePossibleRoles(masterDataDto.getRoles(), employeeCsvDto, employee);
 
         return employee;
     }
 
-//    private void setEmployeePossibleRoles(final Map<String, Role> rolesMap, final EmployeeCsvDto employeeCsvDto, Employee employee) {
-//        Set<EmployeePossibleRole> employeePossibleRoles = new HashSet<>();
-//
-//        String[] possibleRoles = StringUtils.split(employeeCsvDto.getPossibleRole(), ';');
-//        for (String roleName : possibleRoles) {
-//            if (rolesMap.containsKey(roleName)) {
-//                employeePossibleRoles.add(EmployeePossibleRole.builder()
-//                        .employee(employee)
-//                        .role(rolesMap.get(roleName))
-//                        .build());
-//            } else {
-//                throw new ResourceNotFoundException("Role Name : " + roleName + " not found in Master Data");
-//            }
-//        }
-//
-//        if (!CollectionUtils.isEmpty(employeePossibleRoles)) {
-//            employee.setEmployeePossibleRoles(employeePossibleRoles);
-//        }
-//    }
+    private void setEmployeePossibleRoles(final Map<String, Role> rolesMap, final EmployeeCsvDto employeeCsvDto, Employee employee) {
+        Collection<Role> employeePossibleRoles = new HashSet<>();
 
-//    private void setEmployeeDefiniteRoles(final Map<String, Role> rolesMap, final EmployeeCsvDto employeeCsvDto, Employee employee) {
-//        Set<EmployeeDefiniteRole> employeeDefiniteRoles = new HashSet<>();
-//
-//        String[] definiteRoles = StringUtils.split(employeeCsvDto.getDefineRole(), ';');
-//        for (String roleName : definiteRoles) {
-//            if (rolesMap.containsKey(roleName)) {
-//                employeeDefiniteRoles.add(EmployeeDefiniteRole.builder()
-//                        .employee(employee)
-//                        .role(rolesMap.get(roleName))
-//                        .build());
-//            } else {
-//                throw new ResourceNotFoundException("Role Name : " + roleName + " not found in Master Data");
-//            }
-//        }
-//
-//        if (!CollectionUtils.isEmpty(employeeDefiniteRoles)) {
-//            employee.setEmployeeDefiniteRoles(employeeDefiniteRoles);
-//        }
-//
-//    }
+        String[] possibleRoles = StringUtils.split(employeeCsvDto.getPossibleRole(), ';');
+        for (String roleName : possibleRoles) {
+            if (rolesMap.containsKey(roleName)) {
+                Role empPossibleRoles= new Role();
+                empPossibleRoles.setRoleId(rolesMap.get(roleName).getRoleId());
+                employeePossibleRoles.add(empPossibleRoles);
+            } else {
+                throw new ResourceNotFoundException("Role Name : " + roleName + " not found in Master Data");
+            }
+        }
 
-//    private void setEmployeeTools(final Map<String, Tools> toolsMap, final EmployeeCsvDto employeeCsvDto, Employee employee) {
-//        Set<EmployeeTools> employeeTools = new HashSet<>();
-//
-//        String[] tools = StringUtils.split(employeeCsvDto.getTools(), ';');
-//        for (String toolName : tools) {
-//            if (toolsMap.containsKey(toolName)) {
-//                employeeTools.add(EmployeeTools.builder()
-//                        .employee(employee)
-//                        .tools(toolsMap.get(toolName))
-//                        .build());
-//            } else {
-//                throw new ResourceNotFoundException("Tool Name : " + toolName + " not found in Master Data");
-//            }
-//        }
-//
-//        if (!CollectionUtils.isEmpty(employeeTools)) {
-//            employee.setEmployeeTools(employeeTools);
-//        }
-//    }
+        if (!CollectionUtils.isEmpty(employeePossibleRoles)) {
+            employee.setPossibleRole(employeePossibleRoles);
+        }
+    }
 
-//    private void setEmployeeSkills(final Map<String, Skill> skillsMap, final EmployeeCsvDto employeeCsvDto, Employee employeeEntity) {
-//        Set<EmployeeSkill> employeeSkills = new HashSet<>();
-//
-//        Map<String, String> entries = employeeCsvDto.getSkills();
-//
-//        if (!CollectionUtils.isEmpty(entries)) {
-//            for (Map.Entry<String, String> entry : entries.entrySet()) {
-//
-//                final String skillName = entry.getKey();
-//                final String value = entry.getValue();
-//
-//                if (skillsMap.containsKey(skillName)) {
-//                    if (!StringUtils.isEmpty(value)) {
-//                        EmployeeSkill employeeSkill = new EmployeeSkill();
-//                        employeeSkill.setEmployee(employeeEntity);
-//                        employeeSkill.setSkill(skillsMap.get(skillName));
-//                        employeeSkill.setInsUser(1L);
-//                        if ("Certified".equalsIgnoreCase(value)) {
-//                            employeeSkill.setCertified(1L);
-//                            employeeSkill.setUsedInProject(1L);
-//                        } else if ("Not Certified".equalsIgnoreCase(value)) {
-//                            employeeSkill.setCertified(0L);
-//                        }
-//
-//                        employeeSkills.add(employeeSkill);
-//                    }
-//
-//                } else {
-//                    throw new ResourceNotFoundException("Skill Name : " + skillName + " not found in Master Data");
-//                }
-//            }
-//
-//            if (!CollectionUtils.isEmpty(employeeSkills)) {
-//                employeeEntity.setEmployeeSkills(employeeSkills);
-//            }
-//        }
-//    }
+    private void setEmployeeDefiniteRoles(final Map<String, Role> rolesMap, final EmployeeCsvDto employeeCsvDto, Employee employee) {
+        Collection<Role> employeeDefiniteRoles = new HashSet<>();
+
+        String[] definiteRoles = StringUtils.split(employeeCsvDto.getDefineRole(), ';');
+        for (String roleName : definiteRoles) {
+            if (rolesMap.containsKey(roleName)) {
+                Role empDefiniteRoles= new Role();
+                empDefiniteRoles.setRoleId(rolesMap.get(roleName).getRoleId());
+                employeeDefiniteRoles.add(empDefiniteRoles);
+            } else {
+                throw new ResourceNotFoundException("Role Name : " + roleName + " not found in Master Data");
+            }
+        }
+
+        if (!CollectionUtils.isEmpty(employeeDefiniteRoles)) {
+            employee.setDefiniteRole(employeeDefiniteRoles);
+        }
+
+    }
+
+    private void setEmployeeTools(final Map<String, Tools> toolsMap, final EmployeeCsvDto employeeCsvDto, Employee employee) {
+        Collection<Tools> employeeTools = new HashSet<>();
+        String[] tools = StringUtils.split(employeeCsvDto.getTools(), ';');
+        for (String toolName : tools) {
+            if (toolsMap.containsKey(toolName)) {
+                Tools employeeTool=new Tools();
+                employeeTool.setToolId(toolsMap.get(toolName).getToolId());
+                employeeTool.setToolName(toolsMap.get(toolName).getToolName());
+                employeeTools.add(employeeTool);
+            } else {
+                throw new ResourceNotFoundException("Tool Name : " + toolName + " not found in Master Data");
+            }
+        }
+
+        if (!CollectionUtils.isEmpty(employeeTools)) {
+            employee.setTools(employeeTools);
+        }
+    }
+
+    private void setEmployeeSkills(final Map<String, Skill> skillsMap, final EmployeeCsvDto employeeCsvDto, Employee employeeEntity) {
+        Collection<Skill> employeeSkills = new HashSet<>();
+        String[] skills = StringUtils.split(employeeCsvDto.getSkills(), ';');
+        for (String skillName : skills) {
+                if (skillsMap.containsKey(skillName)) {
+                        Skill employeeSkill = new Skill();
+                        employeeSkill.setSkillId(skillsMap.get(skillName).getSkillId());
+                        employeeSkill.setSkillName(skillsMap.get(skillName).getSkillName());
+
+                        employeeSkills.add(employeeSkill);
+
+                } else {
+                    throw new ResourceNotFoundException("Skill Name : " + skillName + " not found in Master Data");
+                }
+            }
+
+            if (!CollectionUtils.isEmpty(employeeSkills)) {
+                employeeEntity.setSkills(employeeSkills);
+            }
+    }
+
+private void setEmployeeProjects(final Map<String, Project> projectsMap, final EmployeeCsvDto employeeCsvDto, Employee employeeEntity) throws ParseException {
+    Collection<Project> employeeProjects = new HashSet<>();
+    String[] projects = StringUtils.split(employeeCsvDto.getProjects(), ';');
+    for (String projectName : projects) {
+        if (projectsMap.containsKey(projectName)) {
+            Project employeeProject = new Project();
+            employeeProject.setProjectId(projectsMap.get(projectName).getProjectId());
+            employeeProject.setProjectName(projectsMap.get(projectName).getProjectName());
+            employeeProject.setProjectStartDate(projectsMap.get(projectName).getProjectStartDate());
+            employeeProject.setProjectEndDate(projectsMap.get(projectName).getProjectEndDate());
+            employeeProject.setInsDate(projectsMap.get(projectName).getInsDate());
+            employeeProject.setInsUser(Long.valueOf(projectsMap.get(projectName).getInsUser()));
+            log.info("Ins User ::" + projectsMap.get(projectName).getInsUser());
+            employeeProjects.add(employeeProject);
+
+        } else {
+            throw new ResourceNotFoundException("Project Name : " + projectName + " not found in Master Data");
+        }
+    }
+        if (!CollectionUtils.isEmpty(employeeProjects)) {
+            employeeEntity.setProjects(employeeProjects);
+        }
+    }
 
 //    private void setEmployeeProjects(final Map<String, Project> projectsMap, final EmployeeCsvDto employeeCsvDto, Employee employeeEntity) throws ParseException{
-//        Set<EmployeeProject> employeeProjects = new HashSet<>();
+//        //Set<EmployeeProject> employeeProjects = new HashSet<>();
+//        Collection<Project> employeeProjects = new HashSet<>();
 //
 //        Map<String, String> entries = employeeCsvDto.getProjects();
 //
@@ -461,18 +459,18 @@ public class EmployeeService {
 //
 //                final String projectName = entry.getKey();
 //                final String duration = entry.getValue();
-//
+//                log.info("projectName--------projectName ::"+projectName);
 //                if (projectsMap.containsKey(projectName)) {
 //                    if (!StringUtils.isEmpty(duration)) {
-//                        EmployeeProject employeeProject = new EmployeeProject();
-//                        employeeProject.setEmployee(employeeEntity);
-//                        employeeProject.setProject(projectsMap.get(projectName));
+////                        EmployeeProject employeeProject = new EmployeeProject();
+//                        Project employeeProject = new Project();
+//                        //employeeProject.setEmployee(employeeEntity);
+//                        employeeProject.setProjectName(String.valueOf(projectsMap.get(projectName)));
 //                        employeeProject.setInsUser(1L);
-//
 //                        // spilt project durations
 //                        String[] durations = StringUtils.split(duration, '/');
-//                        employeeProject.setStartDate(Util.convertStringToDate(durations[0]));
-//                        employeeProject.setEndDate(Util.convertStringToDate(durations[1]));
+//                        employeeProject.setProjectStartDate(Util.convertStringToDate(durations[0]));
+//                        employeeProject.setProjectEndDate(Util.convertStringToDate(durations[1]));
 //
 //                        employeeProjects.add(employeeProject);
 //                    }
@@ -483,7 +481,8 @@ public class EmployeeService {
 //            }
 //
 //            if (!CollectionUtils.isEmpty(employeeProjects)) {
-//                employeeEntity.setEmployeeProjects(employeeProjects);
+//                employeeEntity.setProjects(employeeProjects);
+//                //employeeEntity.setEmployeeProjects(employeeProjects);
 //            }
 //        }
 //    }
@@ -760,11 +759,11 @@ public class EmployeeService {
     private Map<String, Project> constructMasterProjectMap(){
         Map<String, Project> projectMap = new HashMap<>();
 
+        //List<Project> listOfProjects = masterService.getAllProject();
         List<Project> listOfProjects = masterService.getAllProject();
 
         if (!CollectionUtils.isEmpty(listOfProjects)) {
-            projectMap = listOfProjects.stream()
-                    .collect(Collectors.toMap(Project::getProjectName, project -> project));
+            projectMap = listOfProjects.stream().collect(Collectors.toMap(Project::getProjectName, project -> project));
         }
 
         return projectMap;
