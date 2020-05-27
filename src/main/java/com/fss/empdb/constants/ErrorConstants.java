@@ -15,5 +15,5 @@ public class ErrorConstants {
     private static final String ERROR_STATUS = "error";
     private static final int CODE_SUCCESS = 100;
     private static final int AUTH_FAILURE = 102;
-    public static final String SEARCH_DATA_NOT_FOUND= "Data not found for this filter";
+    public static final String SEARCH_MMR_NOT_FOUND= "MMR not found";
 }

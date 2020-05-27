@@ -69,13 +69,14 @@ public class ProjectMmrService {
 
             if ((projectMMRS.isEmpty())) {
                 log.info("Empty Record");
-                new ResourceNotFoundException(ErrorConstants.SEARCH_DATA_NOT_FOUND);
+                throw new ResourceNotFoundException(ErrorConstants.SEARCH_MMR_NOT_FOUND);
             } else {
                 log.info("Record Available");
                 projectMMRDto = mmrList(projectMMRS);
             }
-        } catch (Exception e) {
+        } catch (ResourceNotFoundException e) {
             log.error("ERROR_LOG" + e);
+            throw new ResourceNotFoundException(ErrorConstants.SEARCH_MMR_NOT_FOUND);
         }
 
         return projectMMRDto;
@@ -111,45 +112,50 @@ public class ProjectMmrService {
 
         Project[] pro = (Project[]) projectList.toArray(new Project[0]);
 
-        projectMMRS = projectMmrRepository.findAll(new Specification<ProjectMMR>() {
-            @Override
-            public Predicate toPredicate(Root<ProjectMMR> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                List<Predicate> predicates = new ArrayList<>();
-                if (pro != null) {
-                    Join<ProjectMMR, Project> phoneJoin = root.join("project");
-                    predicates.add(phoneJoin.in(pro));
+        try {
+
+            projectMMRS = projectMmrRepository.findAll(new Specification<ProjectMMR>() {
+                @Override
+                public Predicate toPredicate(Root<ProjectMMR> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                    List<Predicate> predicates = new ArrayList<>();
+                    if (pro != null) {
+                        Join<ProjectMMR, Project> phoneJoin = root.join("project");
+                        predicates.add(phoneJoin.in(pro));
+                    }
+                    if (searchCriteria.getReportYear() != null) {
+                        predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("year"), +searchCriteria.getReportYear())));
+                    }
+                    log.info("Search filter Size :" + predicates.size());
+                    criteriaQuery.orderBy(criteriaBuilder.asc(root.get("projectMmrId")));
+                    return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
                 }
-                if (searchCriteria.getReportYear() != null) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("year"), +searchCriteria.getReportYear())));
+            });
+
+            if ((projectMMRS.isEmpty())) {
+                log.info("Empty Record");
+                throw new ResourceNotFoundException(ErrorConstants.SEARCH_MMR_NOT_FOUND);
+            } else {
+                log.info("Record Available Search" + searchCriteria.getReportType());
+
+                if (!(searchCriteria.getReportType().isEmpty())) {
+
+                    log.info("searchCriteria.getMonQutYear()" + searchCriteria.getReportType());
+
+                    switch (searchCriteria.getReportType().toUpperCase()) {
+                        case "MONTHLY":
+                            projectMMRDto = mmrListDto(projectMMRS);
+                            break;
+                        case "QUATERLY":
+                            projectMMRDto = mmrQuarterly(projectMMRS);
+                            break;
+                        case "YEARLY":
+                            projectMMRDto = mmrYearly(projectMMRS);
+                            break;
+                    }
                 }
-                log.info("Search filter Size :" + predicates.size());
-                criteriaQuery.orderBy(criteriaBuilder.asc(root.get("projectMmrId")));
-                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }
-        });
-
-        if ((projectMMRS.isEmpty())) {
-            log.info("Empty Record");
-            new ResourceNotFoundException(ErrorConstants.SEARCH_DATA_NOT_FOUND);
-        } else {
-            log.info("Record Available Search" + searchCriteria.getReportType());
-
-            if (!(searchCriteria.getReportType().isEmpty())) {
-
-                log.info("searchCriteria.getMonQutYear()" + searchCriteria.getReportType());
-
-                switch (searchCriteria.getReportType().toUpperCase()) {
-                    case "MONTHLY":
-                        projectMMRDto = mmrListDto(projectMMRS);
-                        break;
-                    case "QUATERLY":
-                        projectMMRDto = mmrQuarterly(projectMMRS);
-                        break;
-                    case "YEARLY":
-                        projectMMRDto = mmrYearly(projectMMRS);
-                        break;
-                }
-            }
+        } catch (ResourceNotFoundException e) {
+            throw new ResourceNotFoundException(ErrorConstants.SEARCH_MMR_NOT_FOUND);
         }
         return projectMMRDto;
     }
