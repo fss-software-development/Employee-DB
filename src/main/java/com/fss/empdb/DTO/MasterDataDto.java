@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Collection;
 import java.util.Map;
 
 @Getter
@@ -34,7 +35,8 @@ public class MasterDataDto {
 
 	private Map<String, Academics> academics;
 
-	private Map<String, Project> projects;
+	//private Map<String, Collection<Project>> projects;
+    private Map<String, Project> projects;
 
 	private Map<String, Skill> skills;
 
