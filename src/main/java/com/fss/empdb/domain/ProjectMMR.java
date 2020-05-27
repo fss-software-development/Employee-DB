@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
@@ -15,6 +16,7 @@ import java.util.Date;
 @ToString
 @Table(name="project_mmr")
 @Transactional
+
 public class ProjectMMR {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,13 +36,13 @@ public class ProjectMMR {
     String month;
 
     @Column(name = "FORECASTED_VALUE", nullable = false)
-    Long forecastedValue;
+    BigDecimal forecastedValue;
 
     @Column(name = "BUDGETED_VALUE", nullable = false)
-    Long budgetedValue;
+    BigDecimal budgetedValue;
 
     @Column(name = "ACTUAL_VALUE", nullable = false)
-    Long actualValue;
+    BigDecimal actualValue;
 
     @Column(name="REMARKS",nullable = false)
     String remarks;
@@ -62,5 +64,9 @@ public class ProjectMMR {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="LAST_UPDATE_DATE")
     Date lastUpdateDate;
+
+//    BigDecimal variance1; // for json only
+//
+//    BigDecimal variance2; // for json only
 
 }

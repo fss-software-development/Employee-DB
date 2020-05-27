@@ -1,12 +1,12 @@
 package com.fss.empdb.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fss.empdb.domain.ProjectMMR;
-import com.fss.empdb.domain.ProjectMMRDto;
+import com.fss.empdb.domain.*;
 import com.fss.empdb.service.ProjectMmrService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class ProjectMmrController {
     @GetMapping("/search/{projectId}/{year}")
     public ResponseEntity<ProjectMMRDto> projectMMRSearch(@PathVariable(value = "projectId") Long projectId,
                                                           @PathVariable(value = "year") Long year) {
-        return ResponseEntity.ok().body(projectMmrService.projectMmrBySearch(projectId, year));
+        return ResponseEntity.ok().body(projectMmrService.projectMmrByView(projectId, year));
     }
 
     @PostMapping
@@ -42,6 +42,11 @@ public class ProjectMmrController {
             projectMmrService.createProjectMmr(mmr);
         }
         return ResponseEntity.ok().body("success");
+    }
+
+    @PostMapping(value = "/search", produces = "application/json")
+    public ResponseEntity<List<ProjectMMRDto>> projectsBySearch(@RequestBody ProjectMMRSearchCriteria projectMMRSearchCriteria)  {
+        return ResponseEntity.ok().body(projectMmrService.projectsMmrBySearch(projectMMRSearchCriteria));
     }
 
 }
