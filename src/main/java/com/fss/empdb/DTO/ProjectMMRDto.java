@@ -1,5 +1,7 @@
-package com.fss.empdb.domain;
+package com.fss.empdb.DTO;
 
+import com.fss.empdb.domain.Project;
+import com.fss.empdb.domain.ProjectMMR;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
