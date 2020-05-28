@@ -44,6 +44,12 @@ public class ProjectMMR {
     @Column(name = "ACTUAL_VALUE", nullable = false)
     BigDecimal actualValue;
 
+    @Transient
+    BigDecimal variance1; // for json only
+
+    @Transient
+    BigDecimal variance2; // for json only
+
     @Column(name="REMARKS",nullable = false)
     String remarks;
 
@@ -64,9 +70,5 @@ public class ProjectMMR {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="LAST_UPDATE_DATE")
     Date lastUpdateDate;
-
-//    BigDecimal variance1; // for json only
-//
-//    BigDecimal variance2; // for json only
 
 }

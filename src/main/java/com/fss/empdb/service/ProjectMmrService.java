@@ -162,11 +162,26 @@ public class ProjectMmrService {
 
     private ProjectMMRDto mmrList(List<ProjectMMR> list) {
         ProjectMMRDto map = new ProjectMMRDto();
+        List<ProjectMMR> projectMMRSList = new ArrayList<>();
+
+        int count = 0;
         for (ProjectMMR mmr : list) {
+            BigDecimal v1 = BigDecimal.ZERO;
+            BigDecimal v2 = BigDecimal.ZERO;
+            log.info("V1 :" + v1);
+            log.info("V2 :" + v2);
+            log.info("Count ------------------------------" + count++);
             map.setProject(mmr.getProject());
             map.setFinancialYear(mmr.getYear().longValue());
+            v1 = v1.add((mmr.getBudgetedValue().subtract(mmr.getActualValue())));
+            v2 = v2.add((mmr.getForecastedValue().subtract(mmr.getActualValue())));
+            log.info("V1 :" + v1);
+            log.info("V2 :" + v2);
+            mmr.setVariance1(v1);
+            mmr.setVariance2(v2);
+            projectMMRSList.add(mmr);
         }
-        map.setMmr(list);
+        map.setMmr(projectMMRSList);
         return map;
     }
 
@@ -303,12 +318,16 @@ public class ProjectMmrService {
         BigDecimal fv = BigDecimal.ZERO;
         BigDecimal bv = BigDecimal.ZERO;
         BigDecimal av = BigDecimal.ZERO;
+        BigDecimal v1 = BigDecimal.ZERO;
+        BigDecimal v2 = BigDecimal.ZERO;
         log.info("List : " + q1);
 
         for (ProjectMMR amt : q1) {
             fv = fv.add(amt.getForecastedValue());
             bv = bv.add(amt.getBudgetedValue());
             av = av.add(amt.getActualValue());
+            v1 = v1.add((amt.getForecastedValue().subtract(amt.getActualValue())));
+            v2 = v2.add((amt.getBudgetedValue().subtract(amt.getActualValue())));
         }
 
         log.info("DTO : " + Quater + ":fv " + fv + ":bv " + bv + ":av " + av);
@@ -317,6 +336,8 @@ public class ProjectMmrService {
         map.setBudgetedValue(bv);
         map.setActualValue(av);
         map.setMonth(Quater);
+        map.setVariance1(v1);
+        map.setVariance2(v2);
         return map;
     }
 
@@ -342,7 +363,6 @@ public class ProjectMmrService {
         return mapNew;
     }
 
-
     private ProjectMMR projectMMRYearly(String Quater, Project project, Long Year, List<ProjectMMR> list) {
         ProjectMMR map = new ProjectMMR();
         List<ProjectMMR> q1 = null;
@@ -359,12 +379,16 @@ public class ProjectMmrService {
         BigDecimal fv = BigDecimal.ZERO;
         BigDecimal bv = BigDecimal.ZERO;
         BigDecimal av = BigDecimal.ZERO;
+        BigDecimal v1 = BigDecimal.ZERO;
+        BigDecimal v2 = BigDecimal.ZERO;
         log.info("List : " + q1);
 
         for (ProjectMMR amt : q1) {
             fv = fv.add(amt.getForecastedValue());
             bv = bv.add(amt.getBudgetedValue());
             av = av.add(amt.getActualValue());
+            v1 = v1.add((amt.getForecastedValue().subtract(amt.getActualValue())));
+            v2 = v2.add((amt.getBudgetedValue().subtract(amt.getActualValue())));
         }
 
         log.info("DTO : " + Quater + "fv : " + fv + "bv : " + bv + "av : " + av);
@@ -373,7 +397,8 @@ public class ProjectMmrService {
         map.setBudgetedValue(bv);
         map.setActualValue(av);
         map.setMonth(Quater);
+        map.setVariance1(v1);
+        map.setVariance2(v2);
         return map;
     }
-
 }
