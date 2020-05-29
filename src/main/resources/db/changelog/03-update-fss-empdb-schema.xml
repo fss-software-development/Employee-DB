@@ -3,8 +3,8 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-<!-- This change set defines the initial table definition for the consent service
-based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Spike+PAYBA-1428+-+Consent+Service+DB -->
+    <!-- This change set defines the initial table definition for the consent service
+    based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Spike+PAYBA-1428+-+Consent+Service+DB -->
 
     <changeSet id="101" author="Rakesh">
         <sql dbms="mysql" splitStatements="true" stripComments="true">
@@ -153,9 +153,14 @@ based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Sp
         </sql>
     </changeSet>
 
-
-
-
+    <changeSet id="113" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+    ALTER TABLE employee_db.employee
+    ADD COLUMN CV_DOCUMENT MEDIUMBLOB NULL AFTER LAST_UPDATE_DATE;
+            ]]>
+        </sql>
+    </changeSet>
 
 
 </databaseChangeLog>

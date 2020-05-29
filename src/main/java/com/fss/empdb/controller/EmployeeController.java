@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -87,6 +88,41 @@ public class EmployeeController {
         return new ResponseEntity("Successfully uploaded - " +
                 uploadfile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
 
+    }
+
+
+    @PutMapping("/{employeeSqid}/cvUpload")
+    public ResponseEntity<String> uploadCv(@PathVariable(value = "employeeSqid") Long employeeSqid, @RequestParam("file") MultipartFile uploadfile) {
+        log.info("CV Single file upload! " + uploadfile.getOriginalFilename());
+
+        if (uploadfile.isEmpty()) {
+            return new ResponseEntity("please select a file!", HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+
+            employeeService.uploadCv(employeeSqid, Arrays.asList(uploadfile));
+
+        } catch (IOException e) {
+            log.error("Employee File Upload error:", e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity("Successfully uploaded - " +
+                uploadfile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/{employeeSqid}/downloadCv", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<?> exportExcel(@PathVariable(value = "employeeSqid") Long employeeSqid) throws Exception {
+
+        byte[] content = employeeService.downloadCv(employeeSqid);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/octet-stream"));
+        headers.add("Content-Disposition", "attachment; filename=test");
+        return new ResponseEntity<byte[]>(content, headers, HttpStatus.OK);
     }
 
 }

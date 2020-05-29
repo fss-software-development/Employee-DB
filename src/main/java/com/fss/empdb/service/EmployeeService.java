@@ -808,5 +808,34 @@ private void setEmployeeProjects(final Map<String, Project> projectsMap, final E
         return rolesMap;
     }
 
+    //upload cv
+    public void uploadCv(Long employeeSqid, List<MultipartFile> files) throws IOException {
+
+        log.info("File upload dir : " + UPLOADED_FOLDER);
+        for (MultipartFile file : files) {
+
+            if (file.isEmpty()) {
+                log.info("File is empty!!");
+                continue; //next pls
+            }
+
+            Employee employee = employeeRepository.getOne(employeeSqid);
+            //File savedFile = FileUtil.saveFile(UPLOADED_FOLDER,file);
+            employee.setCvDocument(file.getBytes());
+            employeeRepository.save(employee);
+
+        }
+
+    }
+
+    //download cv
+    public byte[] downloadCv(Long employeeSqid) throws IOException {
+
+        Employee employee = employeeRepository.getOne(employeeSqid);
+        return employee.getCvDocument();
+
+
+    }
+
 }
 

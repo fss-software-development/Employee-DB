@@ -157,4 +157,8 @@ public class Employee implements Serializable {
     @Column(name = "LAST_UPDATE_DATE", nullable = true)
     private Date lastUpdateDate;
 
+    @Lob
+    @Column(name = "CV_DOCUMENT", nullable = true)
+    private byte[] cvDocument;
+
 }
