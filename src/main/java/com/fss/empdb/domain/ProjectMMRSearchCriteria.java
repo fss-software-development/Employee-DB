@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class ProjectMMRSearchCriteria {
     private String  reportType;
-    private Long    financialYear;
+    private Long    reportYear;
     private Region[] region;
     private Account[] account;
     private Project[] project;
