@@ -93,7 +93,7 @@ public class ProjectMmrService {
     public List<ProjectMMRDto> projectsMmrBySearch(ProjectMMRSearchCriteria searchCriteria) {
 
         log.info("SEARCH CRITERIA" + searchCriteria.getReportType());
-        log.info("SEARCH CRITERIA" + searchCriteria.getReportYear());
+        log.info("SEARCH CRITERIA" + searchCriteria.getFinancialYear());
 
         List<ProjectMMR> projectMMRS = null;
         List<ProjectMMRDto> projectMMRDto = null;
@@ -122,8 +122,8 @@ public class ProjectMmrService {
                         Join<ProjectMMR, Project> phoneJoin = root.join("project");
                         predicates.add(phoneJoin.in(pro));
                     }
-                    if (searchCriteria.getReportYear() != null) {
-                        predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("year"), +searchCriteria.getReportYear())));
+                    if (searchCriteria.getFinancialYear() != null) {
+                        predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("year"), +searchCriteria.getFinancialYear())));
                     }
                     log.info("Search filter Size :" + predicates.size());
                     criteriaQuery.orderBy(criteriaBuilder.asc(root.get("projectMmrId")));
