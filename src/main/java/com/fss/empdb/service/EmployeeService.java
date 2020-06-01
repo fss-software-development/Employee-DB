@@ -448,45 +448,6 @@ private void setEmployeeProjects(final Map<String, Project> projectsMap, final E
         }
     }
 
-//    private void setEmployeeProjects(final Map<String, Project> projectsMap, final EmployeeCsvDto employeeCsvDto, Employee employeeEntity) throws ParseException{
-//        //Set<EmployeeProject> employeeProjects = new HashSet<>();
-//        Collection<Project> employeeProjects = new HashSet<>();
-//
-//        Map<String, String> entries = employeeCsvDto.getProjects();
-//
-//        if (!CollectionUtils.isEmpty(entries)) {
-//            for (Map.Entry<String, String> entry : entries.entrySet()) {
-//
-//                final String projectName = entry.getKey();
-//                final String duration = entry.getValue();
-//                log.info("projectName--------projectName ::"+projectName);
-//                if (projectsMap.containsKey(projectName)) {
-//                    if (!StringUtils.isEmpty(duration)) {
-////                        EmployeeProject employeeProject = new EmployeeProject();
-//                        Project employeeProject = new Project();
-//                        //employeeProject.setEmployee(employeeEntity);
-//                        employeeProject.setProjectName(String.valueOf(projectsMap.get(projectName)));
-//                        employeeProject.setInsUser(1L);
-//                        // spilt project durations
-//                        String[] durations = StringUtils.split(duration, '/');
-//                        employeeProject.setProjectStartDate(Util.convertStringToDate(durations[0]));
-//                        employeeProject.setProjectEndDate(Util.convertStringToDate(durations[1]));
-//
-//                        employeeProjects.add(employeeProject);
-//                    }
-//
-//                } else {
-//                    throw new ResourceNotFoundException("Project Name : " + projectName + " not found in Master Data");
-//                }
-//            }
-//
-//            if (!CollectionUtils.isEmpty(employeeProjects)) {
-//                employeeEntity.setProjects(employeeProjects);
-//                //employeeEntity.setEmployeeProjects(employeeProjects);
-//            }
-//        }
-//    }
-
     private ProjectTagging getProjectTaggingDtlsByName(final Map<String, ProjectTagging> projectTaggingMap, final String projectTaggingName) {
         ProjectTagging projectTagging = null;
 

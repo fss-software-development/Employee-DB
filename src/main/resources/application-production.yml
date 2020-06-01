@@ -1,9 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://10.44.72.122:3306/employee_db?useSSL=false
-    username: root
-    #password: fss123
-    password: ENC(UtzQRKVu6ptmPBW6UNdnLA==)
+    url: jdbc:mysql://10.22.59.181:3306/employee_db?useSSL=false
+    username: admin
+    password: ENC(vbRvfzRZhtJ2F5k45+R12EvMIyiVeha6)
     hikari:
       minimum-idle: 10
       maximum-pool-size: 50
