@@ -38,7 +38,8 @@ public class ProjectMmrController {
         for (ProjectMMR mmr : dto.getMmr()
         ) {
             mmr.setProject(dto.getProject());
-            mmr.setYear(dto.getFinancialYear().longValue());
+//            mmr.setYear(dto.getFinancialYear().longValue());
+//            mmr.setYear();
             projectMmrService.createProjectMmr(mmr);
         }
         return ResponseEntity.ok().body("success");
