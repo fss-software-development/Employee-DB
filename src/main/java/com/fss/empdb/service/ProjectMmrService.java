@@ -175,7 +175,7 @@ public class ProjectMmrService {
 
                     switch (searchCriteria.getReportType().toUpperCase()) {
                         case "MONTHLY":
-                            projectMMRDto = mmrListDto(projectMMRS,searchCriteria.getReportYear());
+                            projectMMRDto = mmrListDto(projectMMRS, searchCriteria.getReportYear());
                             break;
                         case "QUATERLY":
                             projectMMRDto = mmrQuarterly(projectMMRS, searchCriteria.getReportYear());
@@ -212,7 +212,7 @@ public class ProjectMmrService {
         return map;
     }
 
-    private List<ProjectMMRDto> mmrListDto(List<ProjectMMR> list,Long year) {
+    private List<ProjectMMRDto> mmrListDto(List<ProjectMMR> list, Long year) {
 
         log.info("MOnthly : " + list);
         List<ProjectMMRDto> map = new ArrayList<ProjectMMRDto>();
@@ -220,9 +220,9 @@ public class ProjectMmrService {
         for (ProjectMMR mmr : list) {
             log.info("MOnthly : " + mmr.getYear());
             ProjectMMRDto dto = new ProjectMMRDto();
-            dto = projectMmrByView(mmr.getProject().getProjectId().longValue(), mmr.getYear().longValue());
+            dto = projectMmrByView(mmr.getProject().getProjectId().longValue(), year);
             hashsetList.add(dto);
-            if(dto.getFinancialYear().equals(year)) {
+            if (dto.getFinancialYear().equals(year)) {
                 map.add(dto);
             }
         }
