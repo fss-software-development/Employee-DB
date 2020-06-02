@@ -49,6 +49,8 @@ public class ProjectMmrService {
 
         log.info("Project :" + projEntity);
         try {
+            String yearOld = "APR";
+
             log.info("Inside try :" + projectMMRS);
             projectMMRS = projectMmrRepository.findAll(new Specification<ProjectMMR>() {
                 @Override
@@ -59,8 +61,23 @@ public class ProjectMmrService {
                         predicates.add(phoneJoin.in(projEntity));
                     }
                     if (Year != null) {
-                        predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("year"), +Year)));
+
+                        Predicate month9
+                                = criteriaBuilder.and(criteriaBuilder.equal(root.get("year"), +Year),
+                                criteriaBuilder.in(root.get("month")).value("APR").value("MAY").
+                                        value("JUN").value("JUL").value("AUG").value("SEP").
+                                        value("OCT").value("NOV").value("DEC"));
+
+
+                        Predicate month3 = criteriaBuilder.and(criteriaBuilder.equal(root.get("year"), +(Year + 1)),
+                                criteriaBuilder.in(root.get("month")).
+                                        value("JAN").
+                                        value("FEB").
+                                        value("MAR"));
+
+                        predicates.add(criteriaBuilder.or(month3, month9));
                     }
+
                     log.info("Search filter Size :" + predicates.size());
                     criteriaQuery.orderBy(criteriaBuilder.asc(root.get("projectMmrId")));
                     return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
@@ -123,14 +140,29 @@ public class ProjectMmrService {
                         predicates.add(phoneJoin.in(pro));
                     }
                     if (searchCriteria.getReportYear() != null) {
-                        predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("year"), +searchCriteria.getReportYear())));
+//                        predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("year"), +searchCriteria.getReportYear())));
+                        Predicate month9
+                                = criteriaBuilder.and(criteriaBuilder.equal(root.get("year"), +searchCriteria.getReportYear()),
+                                criteriaBuilder.in(root.get("month")).value("APR").value("MAY").
+                                        value("JUN").value("JUL").value("AUG").value("SEP").
+                                        value("OCT").value("NOV").value("DEC"));
+
+
+                        Predicate month3 = criteriaBuilder.and(criteriaBuilder.equal(root.get("year"), +(searchCriteria.getReportYear() + 1)),
+                                criteriaBuilder.in(root.get("month")).
+                                        value("JAN").
+                                        value("FEB").
+                                        value("MAR"));
+
+                        predicates.add(criteriaBuilder.or(month3, month9));
+
                     }
                     log.info("Search filter Size :" + predicates.size());
                     criteriaQuery.orderBy(criteriaBuilder.asc(root.get("projectMmrId")));
                     return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
                 }
             });
-
+            log.info("List In search :" + projectMMRS);
             if ((projectMMRS.isEmpty())) {
                 log.info("Empty Record");
                 throw new ResourceNotFoundException(ErrorConstants.SEARCH_MMR_NOT_FOUND);
@@ -143,13 +175,13 @@ public class ProjectMmrService {
 
                     switch (searchCriteria.getReportType().toUpperCase()) {
                         case "MONTHLY":
-                            projectMMRDto = mmrListDto(projectMMRS);
+                            projectMMRDto = mmrListDto(projectMMRS,searchCriteria.getReportYear());
                             break;
                         case "QUATERLY":
-                            projectMMRDto = mmrQuarterly(projectMMRS);
+                            projectMMRDto = mmrQuarterly(projectMMRS, searchCriteria.getReportYear());
                             break;
                         case "YEARLY":
-                            projectMMRDto = mmrYearly(projectMMRS);
+                            projectMMRDto = mmrYearly(projectMMRS, searchCriteria.getReportYear());
                             break;
                     }
                 }
@@ -168,15 +200,10 @@ public class ProjectMmrService {
         for (ProjectMMR mmr : list) {
             BigDecimal v1 = BigDecimal.ZERO;
             BigDecimal v2 = BigDecimal.ZERO;
-            log.info("V1 :" + v1);
-            log.info("V2 :" + v2);
-            log.info("Count ------------------------------" + count++);
             map.setProject(mmr.getProject());
-            map.setFinancialYear(mmr.getYear().longValue());
+            map.setFinancialYear(mmr.getYear().longValue() - 1);
             v1 = v1.add((mmr.getBudgetedValue().subtract(mmr.getActualValue())));
             v2 = v2.add((mmr.getForecastedValue().subtract(mmr.getActualValue())));
-            log.info("V1 :" + v1);
-            log.info("V2 :" + v2);
             mmr.setVariance1(v1);
             mmr.setVariance2(v2);
             projectMMRSList.add(mmr);
@@ -185,15 +212,19 @@ public class ProjectMmrService {
         return map;
     }
 
-    private List<ProjectMMRDto> mmrListDto(List<ProjectMMR> list) {
+    private List<ProjectMMRDto> mmrListDto(List<ProjectMMR> list,Long year) {
 
+        log.info("MOnthly : " + list);
         List<ProjectMMRDto> map = new ArrayList<ProjectMMRDto>();
         Set<ProjectMMRDto> hashsetList = new HashSet<ProjectMMRDto>();
         for (ProjectMMR mmr : list) {
+            log.info("MOnthly : " + mmr.getYear());
             ProjectMMRDto dto = new ProjectMMRDto();
             dto = projectMmrByView(mmr.getProject().getProjectId().longValue(), mmr.getYear().longValue());
             hashsetList.add(dto);
-            map.add(dto);
+            if(dto.getFinancialYear().equals(year)) {
+                map.add(dto);
+            }
         }
 
         List<ProjectMMRDto> mapNew = map
@@ -253,10 +284,11 @@ public class ProjectMmrService {
         return list;
     }
 
-    private List<ProjectMMRDto> mmrQuarterly(List<ProjectMMR> list) {
+    private List<ProjectMMRDto> mmrQuarterly(List<ProjectMMR> list, Long year) {
         List<ProjectMMRDto> map = new ArrayList<ProjectMMRDto>();
         for (ProjectMMR mmr : list) {
-            String key = mmr.getProject().getProjectId() + ":" + mmr.getYear();
+
+//            String key = mmr.getProject().getProjectId() + ":" + mmr.getYear();
             ProjectMMRDto dto = new ProjectMMRDto();
             dto.setProject(mmr.getProject());
             dto.setFinancialYear(mmr.getYear());
@@ -267,14 +299,17 @@ public class ProjectMmrService {
             log.info("Q2 ---------" + Q2);
             ProjectMMR Q3 = projectMMRQuaterly("Q3", mmr.getProject(), mmr.getYear(), list);
             log.info("Q3 ---------" + Q3);
-            ProjectMMR Q4 = projectMMRQuaterly("Q4", mmr.getProject(), mmr.getYear(), list);
+            ProjectMMR Q4 = projectMMRQuaterly("Q4", mmr.getProject(), mmr.getYear() + 1, list);
             log.info("Q4 ---------" + Q4);
             projectMMRS.add(Q1);
             projectMMRS.add(Q2);
             projectMMRS.add(Q3);
             projectMMRS.add(Q4);
             dto.setMmr(projectMMRS);
-            map.add(dto);
+
+            if (dto.getFinancialYear().equals(year)) {
+                map.add(dto);
+            }
         }
 
         List<ProjectMMRDto> mapNew = map
@@ -341,7 +376,7 @@ public class ProjectMmrService {
         return map;
     }
 
-    private List<ProjectMMRDto> mmrYearly(List<ProjectMMR> list) {
+    private List<ProjectMMRDto> mmrYearly(List<ProjectMMR> list, Long year) {
         List<ProjectMMRDto> map = new ArrayList<ProjectMMRDto>();
         for (ProjectMMR mmr : list) {
             String key = mmr.getProject().getProjectId() + ":" + mmr.getYear();
@@ -353,7 +388,9 @@ public class ProjectMmrService {
             log.info("Q1 ---------" + Q1);
             projectMMRS.add(Q1);
             dto.setMmr(projectMMRS);
-            map.add(dto);
+            if (dto.getFinancialYear().equals(year)) {
+                map.add(dto);
+            }
         }
 
         List<ProjectMMRDto> mapNew = map
@@ -366,9 +403,10 @@ public class ProjectMmrService {
     private ProjectMMR projectMMRYearly(String Quater, Project project, Long Year, List<ProjectMMR> list) {
         ProjectMMR map = new ProjectMMR();
         List<ProjectMMR> q1 = null;
+        Long yearNew = Year + 1;
 
         q1 = list.stream()
-                .filter(c -> (project.equals(c.getProject()) && Year.equals(c.getYear())))
+                .filter(c -> (project.equals(c.getProject()) && (Year.equals(c.getYear()) || (yearNew.equals(c.getYear())))))
                 .collect(Collectors.toList());
 
 //        q1 = list.stream()

@@ -28,7 +28,7 @@ public class ProjectMMR {
     @JoinColumn(name = "PROJECT_ID")
     private Project project;
 
-    @JsonIgnore
+//    @JsonIgnore
     @Column(name = "FINANCIAL_YEAR", nullable = false)
     Long year;
 
