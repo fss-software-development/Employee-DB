@@ -15,6 +15,8 @@ public class EmployeeCsvDto {
 
 	public EmployeeCsvDto(Map<String, Object> entry){
 
+		this.employeeSqId = StringUtils.trimToNull(String.valueOf(entry.get("EmployeeSqId")));
+
 		this.employeeId = StringUtils.trimToNull(String.valueOf(entry.get("Employee Code/Id")));
 
 		this.employeeName = StringUtils.trimToNull(String.valueOf(entry.get("Employee Name")));
@@ -102,6 +104,8 @@ public class EmployeeCsvDto {
 		this.skills.put(keys[48].toString(), StringUtils.trimToNull(String.valueOf(entry.get(keys[48].toString()))));
 		this.skills.put(keys[49].toString(), StringUtils.trimToNull(String.valueOf(entry.get(keys[49].toString()))));*/
 	}
+
+	private String employeeSqId;
 
 	private String employeeId;
 
