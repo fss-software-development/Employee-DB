@@ -105,4 +105,31 @@
         </sql>
     </changeSet>
 
+    <changeSet id="065" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+
+                 INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (2, 5);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (7, 5);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (12, 5);
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="066" author="Rakesh M">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+	              INSERT INTO designation (DESIGNATION_ID,DESIGNATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (22, "PROJECT ASSOCIATE",1,now(),1,now());
+			      INSERT INTO designation (DESIGNATION_ID,DESIGNATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (23, "TECHNICAL ASSOCIATE",1,now(),1,now());
+			      INSERT INTO designation (DESIGNATION_ID,DESIGNATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (24, "SR. TECHNICAL ASSOCIATE",1,now(),1,now());
+            ]]>
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>
