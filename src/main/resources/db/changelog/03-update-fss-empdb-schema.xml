@@ -172,5 +172,18 @@
         </sql>
     </changeSet>
 
+    <changeSet id="115" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+
+    ALTER TABLE employee_db.account
+    CHANGE COLUMN ACCOUNT_NAME ACCOUNT_NAME VARCHAR(500) NOT NULL ;
+
+            ]]>
+        </sql>
+    </changeSet>
+
+
+
 
 </databaseChangeLog>
