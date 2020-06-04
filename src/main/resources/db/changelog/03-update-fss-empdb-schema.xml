@@ -162,5 +162,15 @@
         </sql>
     </changeSet>
 
+    <changeSet id="114" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+      UPDATE employee_db.user_role SET USER_ROLE_NAME = 'Manager' WHERE (USER_ROLE_ID = 4);
+      UPDATE employee_db.user_role SET USER_ROLE_NAME = 'Coordinator' WHERE (USER_ROLE_ID = 6);
+
+            ]]>
+        </sql>
+    </changeSet>
+
 
 </databaseChangeLog>

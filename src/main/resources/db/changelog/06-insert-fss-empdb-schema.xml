@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- This change set defines the initial table definition for the consent service
+    based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Spike+PAYBA-1428+-+Consent+Service+DB -->
+
+
+    <changeSet id="061" author="Rakesh M">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+	              INSERT INTO designation (DESIGNATION_ID,DESIGNATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (19, "SOFTWARE ENGINEER",1,now(),1,now());
+			      INSERT INTO designation (DESIGNATION_ID,DESIGNATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (20, "SR. SOFTWARE ENGINEER",1,now(),1,now());
+			      INSERT INTO designation (DESIGNATION_ID,DESIGNATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (21, "TRAINEE ENGINEER",1,now(),1,now());
+            ]]>
+        </sql>
+    </changeSet>
+
+
+    <changeSet id="062" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+			     INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (21, "VIEW_MMR");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (22, "SEARCH_MMR");
+			    INSERT INTO user_permission (USER_PERMISSION_ID,USER_PERMISSION_NAME)
+			      VALUES (23, "ADD_MMR");
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="063" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+			     INSERT INTO user_role (USER_ROLE_ID,USER_ROLE_NAME)
+			      VALUES (4, "ADMIN_NO_DELETE");
+			     INSERT INTO user_role (USER_ROLE_ID,USER_ROLE_NAME)
+			      VALUES (5, "ADMIN_DELETE");
+			     INSERT INTO user_role (USER_ROLE_ID,USER_ROLE_NAME)
+			      VALUES (6, "ADMIN_NO_MMR");
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="064" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (2, 4);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (3, 4);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (5, 4);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (7, 4);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (8, 4);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (10, 4);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (12, 4);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (13, 4);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (15, 4);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (21, 4);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (22, 4);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (23, 4);
+
+                 INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (4, 5);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (9, 5);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (14, 5);
+
+			    INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (2, 6);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (3, 6);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (5, 6);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (7, 6);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (8, 6);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (10, 6);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (12, 6);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (13, 6);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (15, 6);
+
+            ]]>
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
