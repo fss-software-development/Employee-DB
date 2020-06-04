@@ -277,13 +277,73 @@ public class EmployeeService {
             for (EmployeeCsvDto employeeCsvDto : employeeRecords) {
                 try {
                     Employee employee = createEmployeeEntity(employeeCsvDto, masterDataDto);
-                    saveEmployeeData(employee);
+                    //saveEmployeeData(employee);
+                    updateEmployeeData(employee);
                 } catch (Exception e) {
                     log.error("Exception occured while process Employee CSV Record with ID: {}, {}", employeeCsvDto.getEmployeeId(), e);
                 }
             }
         }
 
+    }
+
+    @Transactional
+    private void updateEmployeeData(final Employee employee) {
+        log.info("SquenceId:"+employee.getEmployeeId());
+        if (employeeRepository.findByEmployeeId(employee.getEmployeeId()).isPresent()) {
+            log.info("Inside update"+employee.getEmployeeId());
+            try {
+                Optional<Employee> emp = employeeRepository.findByEmployeeId(employee.getEmployeeId());
+                Employee empEntity = emp.get();
+                log.info("EmpseqId: "+empEntity.getEmployeeSqId());
+                empEntity.setEmployeeId(employee.getEmployeeId());
+                empEntity.setDepartment(employee.getDepartment());
+                empEntity.setAccount(employee.getAccount());
+                empEntity.setRegion(employee.getRegion());
+                empEntity.setLocation(employee.getLocation());
+                empEntity.setEmployeeName(employee.getEmployeeName());
+                empEntity.setMobileNum(employee.getMobileNum());
+                empEntity.setEmailId(employee.getEmailId());
+                empEntity.setGrade(employee.getGrade());
+                empEntity.setProjects(employee.getProjects());
+                empEntity.setTools(employee.getTools());
+                empEntity.setDesignation(employee.getDesignation());
+                empEntity.setReportingManager(employee.getReportingManager());
+                empEntity.setPreviousExp(employee.getPreviousExp());
+                empEntity.setJoiningDate(employee.getJoiningDate());
+                empEntity.setBillableStatus(employee.getBillableStatus());
+                empEntity.setServiceLine(employee.getServiceLine());
+                empEntity.setActivityName(employee.getActivityName());
+                empEntity.setSkills(employee.getSkills());
+                empEntity.setExperienceGaps(employee.getExperienceGaps());
+                empEntity.setAcademics(employee.getAcademics());
+                empEntity.setProjectTagging(employee.getProjectTagging()); //  Change is required
+                empEntity.setDefiniteRole(employee.getDefiniteRole());
+                empEntity.setPossibleRole(employee.getPossibleRole());
+                empEntity.setExperienceCurrentRole(employee.getExperienceCurrentRole());
+                empEntity.setTotalExperience(employee.getTotalExperience());
+                empEntity.setInsUser(Long.valueOf(1));  //  Change is required
+                empEntity.setInsDate(employee.getInsDate());
+                empEntity.setLastUpdateUser(Long.valueOf(1));  //  Change is required
+                empEntity.setLastUpdateDate(employee.getLastUpdateDate());
+
+
+                /*employee.setInsUser(empEntity.getInsUser());
+                employee.setLastUpdateUser(Long.valueOf(1));
+                employee.setInsDate(empEntity.getInsDate());
+                employee.setLastUpdateDate(new Date());*/
+                employeeRepository.save(empEntity);
+            } catch (DataIntegrityViolationException ex) {
+                ;
+                log.error("duplicate record", ex);
+                String exceptionType = ExceptionHandlerValidation.employeeDuplicateHandler(ex);
+                throw new DuplicateRecordException(exceptionType);
+            }
+        }else{
+            log.info("Inside insert"+employee.getEmployeeId());
+            employeeRepository.save(employee);
+        }
+        //    employeeRepository.save(employee);
     }
 
     @Transactional
@@ -407,42 +467,43 @@ public class EmployeeService {
         Collection<Skill> employeeSkills = new HashSet<>();
         String[] skills = StringUtils.split(employeeCsvDto.getSkills(), ';');
         for (String skillName : skills) {
-                if (skillsMap.containsKey(skillName)) {
-                        Skill employeeSkill = new Skill();
-                        employeeSkill.setSkillId(skillsMap.get(skillName).getSkillId());
-                        employeeSkill.setSkillName(skillsMap.get(skillName).getSkillName());
+            if (skillsMap.containsKey(skillName)) {
+                Skill employeeSkill = new Skill();
+                employeeSkill.setSkillId(skillsMap.get(skillName).getSkillId());
+                employeeSkill.setSkillName(skillsMap.get(skillName).getSkillName());
 
-                        employeeSkills.add(employeeSkill);
+                employeeSkills.add(employeeSkill);
 
-                } else {
-                    throw new ResourceNotFoundException("Skill Name : " + skillName + " not found in Master Data");
-                }
+            } else {
+                throw new ResourceNotFoundException("Skill Name : " + skillName + " not found in Master Data");
             }
+        }
 
-            if (!CollectionUtils.isEmpty(employeeSkills)) {
-                employeeEntity.setSkills(employeeSkills);
-            }
-    }
-
-private void setEmployeeProjects(final Map<String, Project> projectsMap, final EmployeeCsvDto employeeCsvDto, Employee employeeEntity) throws ParseException {
-    Collection<Project> employeeProjects = new HashSet<>();
-    String[] projects = StringUtils.split(employeeCsvDto.getProjects(), ';');
-    for (String projectName : projects) {
-        if (projectsMap.containsKey(projectName)) {
-            Project employeeProject = new Project();
-            employeeProject.setProjectId(projectsMap.get(projectName).getProjectId());
-            employeeProject.setProjectName(projectsMap.get(projectName).getProjectName());
-            employeeProject.setProjectStartDate(projectsMap.get(projectName).getProjectStartDate());
-            employeeProject.setProjectEndDate(projectsMap.get(projectName).getProjectEndDate());
-            employeeProject.setInsDate(projectsMap.get(projectName).getInsDate());
-            employeeProject.setInsUser(Long.valueOf(projectsMap.get(projectName).getInsUser()));
-            log.info("Ins User ::" + projectsMap.get(projectName).getInsUser());
-            employeeProjects.add(employeeProject);
-
-        } else {
-            throw new ResourceNotFoundException("Project Name : " + projectName + " not found in Master Data");
+        if (!CollectionUtils.isEmpty(employeeSkills)) {
+            employeeEntity.setSkills(employeeSkills);
         }
     }
+
+    private void setEmployeeProjects(final Map<String, Project> projectsMap, final EmployeeCsvDto employeeCsvDto, Employee employeeEntity) throws ParseException {
+        Collection<Project> employeeProjects = new HashSet<>();
+        String[] projects = StringUtils.split(employeeCsvDto.getProjects(), ';');
+        for (String projectName : projects) {
+            if (projectsMap.containsKey(projectName)) {
+                Project employeeProject = new Project();
+                employeeProject.setProjectId(projectsMap.get(projectName).getProjectId());
+                employeeProject.setProjectName(projectsMap.get(projectName).getProjectName());
+                employeeProject.setProjectStartDate(projectsMap.get(projectName).getProjectStartDate());
+                employeeProject.setProjectEndDate(projectsMap.get(projectName).getProjectEndDate());
+                employeeProject.setInsDate(projectsMap.get(projectName).getInsDate());
+                employeeProject.setInsUser(Long.valueOf(projectsMap.get(projectName).getInsUser()));
+                log.info("Ins User getProjectId::" + projectsMap.get(projectName).getProjectId());
+                log.info("Ins User getProjectName::" + projectsMap.get(projectName).getProjectName());
+                employeeProjects.add(employeeProject);
+
+            } else {
+                throw new ResourceNotFoundException("Project Name : " + projectName + " not found in Master Data");
+            }
+        }
         if (!CollectionUtils.isEmpty(employeeProjects)) {
             employeeEntity.setProjects(employeeProjects);
         }
@@ -799,4 +860,3 @@ private void setEmployeeProjects(final Map<String, Project> projectsMap, final E
     }
 
 }
-
