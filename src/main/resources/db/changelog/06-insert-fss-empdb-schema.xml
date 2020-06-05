@@ -490,5 +490,14 @@
         </sql>
     </changeSet>
 
+    <changeSet id="074" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+                 INSERT INTO skill (SKILL_ID,SKILL_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+                  VALUES (33, "BASE24",1,now(),1,now());
+            ]]>
+        </sql>
+    </changeSet>
+
 
 </databaseChangeLog>

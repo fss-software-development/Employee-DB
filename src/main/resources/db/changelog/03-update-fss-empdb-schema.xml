@@ -194,6 +194,14 @@
         </sql>
     </changeSet>
 
+    <changeSet id="117" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+            UPDATE employee_db.region SET REGION_NAME = 'INDIA' WHERE (REGION_ID = '7');
+            UPDATE employee_db.region SET REGION_NAME = 'EUROPE' WHERE (REGION_ID = '4');
+            ]]>
+        </sql>
+    </changeSet>
 
 
 
