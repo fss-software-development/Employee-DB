@@ -199,7 +199,6 @@
         </sql>
     </changeSet>
 
-
     <changeSet id="068" author="Rakesh">
         <sql dbms="mysql" splitStatements="true" stripComments="true">
             <![CDATA[
@@ -330,5 +329,81 @@
             ]]>
         </sql>
     </changeSet>
+
+    <changeSet id="070" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (3, "ABU DHABI",1,now(),1,now());
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (4, "ATLANTA",1,now(),1,now());
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (5, "BANGALORE",1,now(),1,now());
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (6, "BHARAIN",1,now(),1,now());
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (7, "CROATIA",1,now(),1,now());
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (8, "DELHI",1,now(),1,now());
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (9, "DUBAI",1,now(),1,now());
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (10, "HYDERABAD",1,now(),1,now());
+
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (11, "INDONESIA",1,now(),1,now());
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (12, "KOCHI",1,now(),1,now());
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (13, "NEW ZEALAND",1,now(),1,now());
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (14, "PUNE",1,now(),1,now());
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (15, "QATAR",1,now(),1,now());
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (16, "RIYADH",1,now(),1,now());
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (17, "SINGAPORE",1,now(),1,now());
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (18, "SOUTH AFRICA",1,now(),1,now());
+			     INSERT INTO location (LOCATION_ID,LOCATION_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+			      VALUES (19, "TORONTO",1,now(),1,now());
+
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="071" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+			     INSERT INTO billable_status (BILLABLE_STATUS_ID,BILLABLE_STATUS)
+			      VALUES (8, "COMMITTED BUFFER");
+			     INSERT INTO billable_status (BILLABLE_STATUS_ID,BILLABLE_STATUS)
+			      VALUES (9, "CONFIRMED");
+			     INSERT INTO billable_status (BILLABLE_STATUS_ID,BILLABLE_STATUS)
+			      VALUES (10, "OFFICE BOY");
+			     INSERT INTO billable_status (BILLABLE_STATUS_ID,BILLABLE_STATUS)
+			      VALUES (11, "PMO");
+			     INSERT INTO billable_status (BILLABLE_STATUS_ID,BILLABLE_STATUS)
+			      VALUES (12, "PRATICE");
+			     INSERT INTO billable_status (BILLABLE_STATUS_ID,BILLABLE_STATUS)
+			      VALUES (13, "TRAINEE");
+			     INSERT INTO billable_status (BILLABLE_STATUS_ID,BILLABLE_STATUS)
+			      VALUES (14, "TRANSFER");
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="072" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+			     INSERT INTO grade (GRADE_ID,GRADE_NAME)
+			      VALUES (8, "Contractors");
+			     INSERT INTO grade (GRADE_ID,GRADE_NAME)
+			      VALUES (9, "NA");
+            ]]>
+        </sql>
+    </changeSet>
+
 
 </databaseChangeLog>

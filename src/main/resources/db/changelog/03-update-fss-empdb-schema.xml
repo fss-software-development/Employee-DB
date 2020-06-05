@@ -183,6 +183,18 @@
         </sql>
     </changeSet>
 
+    <changeSet id="116" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+
+    UPDATE employee_db.location SET LOCATION_NAME = 'MUMBAI' WHERE (LOCATION_ID = '1');
+    UPDATE employee_db.location SET LOCATION_NAME = 'CHENNAI' WHERE (LOCATION_ID = '2');
+
+            ]]>
+        </sql>
+    </changeSet>
+
+
 
 
 
