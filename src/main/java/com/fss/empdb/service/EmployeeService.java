@@ -289,13 +289,12 @@ public class EmployeeService {
 
     @Transactional
     private void updateEmployeeData(final Employee employee) {
-        log.info("SquenceId:"+employee.getEmployeeId());
+        log.info("Inside updateEmployeeData :"+employee.getEmployeeId());
+        try{
         if (employeeRepository.findByEmployeeId(employee.getEmployeeId()).isPresent()) {
-            log.info("Inside update"+employee.getEmployeeId());
             try {
                 Optional<Employee> emp = employeeRepository.findByEmployeeId(employee.getEmployeeId());
                 Employee empEntity = emp.get();
-                log.info("EmpseqId: "+empEntity.getEmployeeSqId());
                 empEntity.setEmployeeId(employee.getEmployeeId());
                 empEntity.setDepartment(employee.getDepartment());
                 empEntity.setAccount(employee.getAccount());
@@ -340,10 +339,11 @@ public class EmployeeService {
                 throw new DuplicateRecordException(exceptionType);
             }
         }else{
-            log.info("Inside insert"+employee.getEmployeeId());
-            employeeRepository.save(employee);
+                employeeRepository.save(employee);
         }
-        //    employeeRepository.save(employee);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Transactional
@@ -392,15 +392,25 @@ public class EmployeeService {
                 .lastUpdateDate(new Date())
                 .build();
 
-        setEmployeeProjects(masterDataDto.getProjects(), employeeCsvDto, employee);
+        if(employeeCsvDto.getProjects()!=null) {
+            setEmployeeProjects(masterDataDto.getProjects(), employeeCsvDto, employee);
+        }
 
-        setEmployeeSkills(masterDataDto.getSkills(), employeeCsvDto, employee);
+        if(employeeCsvDto.getSkills().length()>0) {
+            setEmployeeSkills(masterDataDto.getSkills(), employeeCsvDto, employee);
+        }
 
-        setEmployeeTools(masterDataDto.getTools(), employeeCsvDto, employee);
+        if(employeeCsvDto.getTools()!=null) {
+            setEmployeeTools(masterDataDto.getTools(), employeeCsvDto, employee);
+        }
 
-        setEmployeeDefiniteRoles(masterDataDto.getRoles(), employeeCsvDto, employee);
+        if(employeeCsvDto.getDefineRole()!=null) {
+            setEmployeeDefiniteRoles(masterDataDto.getRoles(), employeeCsvDto, employee);
+        }
 
-        setEmployeePossibleRoles(masterDataDto.getRoles(), employeeCsvDto, employee);
+        if(employeeCsvDto.getPossibleRole()!=null) {
+            setEmployeePossibleRoles(masterDataDto.getRoles(), employeeCsvDto, employee);
+        }
 
         return employee;
     }
