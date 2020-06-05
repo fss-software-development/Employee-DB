@@ -24,6 +24,16 @@ based off https://tideaccount.atlassian.net/wiki/spaces/PAYM/pages/1178271757/Sp
         </sql>
     </changeSet>
 
+    <changeSet id="202" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+		    DELETE FROM employee_db.designation WHERE (DESIGNATION_ID = '45');
+            ]]>
+        </sql>
+    </changeSet>
+
+
+
 
 
 
