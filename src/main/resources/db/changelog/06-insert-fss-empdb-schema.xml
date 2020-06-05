@@ -498,6 +498,20 @@
             ]]>
         </sql>
     </changeSet>
+    <changeSet id="075" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+                  INSERT INTO skill (SKILL_ID,SKILL_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+                  VALUES (34, "BASE24 IMPLEMENTATION",1,now(),1,now());
+                  INSERT INTO skill (SKILL_ID,SKILL_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+                  VALUES (35, "BASE24 DEVELOPMENT",1,now(),1,now());
+                  INSERT INTO skill (SKILL_ID,SKILL_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+                  VALUES (36, "BASE24 QA",1,now(),1,now());
+                  INSERT INTO skill (SKILL_ID,SKILL_NAME,INS_USER,INS_DATE,LAST_UPDATE_USER,LAST_UPDATE_DATE)
+                  VALUES (37, "NCR - AUTHENTIC",1,now(),1,now());
+            ]]>
+        </sql>
+    </changeSet>
 
 
 </databaseChangeLog>
