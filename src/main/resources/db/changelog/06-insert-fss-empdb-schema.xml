@@ -513,5 +513,18 @@
         </sql>
     </changeSet>
 
+    <changeSet id="076" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+                 INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (21, 1);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (22, 1);
+			     INSERT INTO user_role_permission (USER_PERMISSION_ID,USER_ROLE_ID)
+			      VALUES (23, 1);
+            ]]>
+        </sql>
+    </changeSet>
+
 
 </databaseChangeLog>

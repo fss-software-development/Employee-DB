@@ -81,7 +81,7 @@ public class EmployeeController {
             employeeService.saveUploadedFiles(Arrays.asList(uploadfile));
 
         } catch (IOException e) {
-            log.error("Employee File Upload error:",e);
+            log.error("Employee File Upload error:", e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -125,4 +125,9 @@ public class EmployeeController {
         return new ResponseEntity<byte[]>(content, headers, HttpStatus.OK);
     }
 
+
+    @GetMapping("/Search/ByProject/{id}")
+    public ResponseEntity<List<Employee>> getEmployeeByProject(@PathVariable(value = "id") Long employeeId) throws ParseException {
+        return ResponseEntity.ok().body(employeeService.getEmployeeByProject(employeeId));
+    }
 }

@@ -21,6 +21,7 @@ import javax.tools.Tool;
 import javax.transaction.Transactional;
 
 import com.fss.empdb.exception.DuplicateRecordException;
+import com.fss.empdb.repository.ProjectRepository;
 import com.fss.empdb.util.ExceptionHandlerValidation;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -66,6 +67,7 @@ import com.fss.empdb.util.FileUtil;
 import com.fss.empdb.util.Util;
 
 import lombok.extern.log4j.Log4j2;
+
 @Log4j2
 @Service
 public class EmployeeService {
@@ -79,18 +81,20 @@ public class EmployeeService {
     @Autowired
     MasterService masterService;
 
+    @Autowired
+    ProjectRepository projectRepository;
+
 
     public List<Employee> getAllEmployees() throws ParseException {
-        List <Employee> employeeList= employeeRepository.findAll();
-        for (Employee employee : employeeList)
-        {
+        List<Employee> employeeList = employeeRepository.findAll();
+        for (Employee employee : employeeList) {
             computeTotalExp(employee);
         }
         return employeeRepository.findAll();
     }
 
     public Employee getEmployeeById(Long employeeId) throws ParseException {
-        Employee emp= employeeRepository.findById(employeeId).
+        Employee emp = employeeRepository.findById(employeeId).
                 orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.EMPLOYEE_NOT_FOUND + employeeId));
         Employee empNew = computeTotalExp(emp);
         return emp;
@@ -98,18 +102,18 @@ public class EmployeeService {
 
     public Employee computeTotalExp(Employee emp) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date  date=simpleDateFormat.parse(emp.getJoiningDate().toString());
-        LocalDate joiningDate=convertToLocalDateViaInstant(date);
+        Date date = simpleDateFormat.parse(emp.getJoiningDate().toString());
+        LocalDate joiningDate = convertToLocalDateViaInstant(date);
         LocalDate currentDate = LocalDate.now();
         Period fssExp = Period.between(joiningDate, currentDate);
         long p2 = ChronoUnit.DAYS.between(joiningDate, currentDate);
-        long  totalExp=fssExp.getYears()+emp.getPreviousExp();
+        long totalExp = fssExp.getYears() + emp.getPreviousExp();
 
         //log.info("You are " + p.getYears() + " years, " + p.getMonths() + " months, and " + p.getDays() + " days old. (" + p2 + " days total)");
         log.info("You are " + fssExp.getYears() + " years, ");
 
         emp.setTotalExperience(totalExp);
-        return  emp;
+        return emp;
     }
 
     public static LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
@@ -186,6 +190,34 @@ public class EmployeeService {
             employee.setLastUpdateUser(Long.valueOf(1));
             employee.setInsDate(new Date());
             employee.setLastUpdateDate(new Date());
+
+//            Collection<EmployeeSkill> employeeSkills = employee.getSkills();
+//
+//            for (EmployeeSkill skillName : employeeSkills) {
+//
+//                EmployeeSkill employeeSkill = new EmployeeSkill();
+//
+////                employeeSkill.setEmployeeSkillSqId(skillName.getEmployeeSkillSqId());
+//                employeeSkill.setInsUser(Long.valueOf(1));
+//                employeeSkill.setInsDate(new Date());
+//                employeeSkill.setEmployee(skillName.getEmployee());
+//                employeeSkill.setCertified(skillName.getCertified());
+//                employeeSkill.setSkill(skillName.getSkill());
+//                employeeSkills.add(employeeSkill);
+//            }
+
+
+//            Set<EmployeeSkill> employeeSkill = employee.getSkills();
+//            EmployeeSkill employeeSkill= (EmployeeSkill) employee.getSkills();
+//
+//
+//
+//            employeeSkill.setInsDate(new Date());
+//            employeeSkill.setInsUser(Long.valueOf(1));
+//
+
+//            employee.setSkills(employeeSkills);
+
             empSave = employeeRepository.save(employee);
         } catch (DataIntegrityViolationException ex) {
             log.error("duplicate record", ex);
@@ -242,7 +274,7 @@ public class EmployeeService {
                 continue; //next pls
             }
 
-            File savedFile = FileUtil.saveFile(UPLOADED_FOLDER,file);
+            File savedFile = FileUtil.saveFile(UPLOADED_FOLDER, file);
             processFile(savedFile);
         }
 
@@ -289,13 +321,13 @@ public class EmployeeService {
 
     @Transactional
     private void updateEmployeeData(final Employee employee) {
-        log.info("SquenceId:"+employee.getEmployeeId());
+        log.info("SquenceId:" + employee.getEmployeeId());
         if (employeeRepository.findByEmployeeId(employee.getEmployeeId()).isPresent()) {
-            log.info("Inside update"+employee.getEmployeeId());
+            log.info("Inside update" + employee.getEmployeeId());
             try {
                 Optional<Employee> emp = employeeRepository.findByEmployeeId(employee.getEmployeeId());
                 Employee empEntity = emp.get();
-                log.info("EmpseqId: "+empEntity.getEmployeeSqId());
+                log.info("EmpseqId: " + empEntity.getEmployeeSqId());
                 empEntity.setEmployeeId(employee.getEmployeeId());
                 empEntity.setDepartment(employee.getDepartment());
                 empEntity.setAccount(employee.getAccount());
@@ -339,8 +371,8 @@ public class EmployeeService {
                 String exceptionType = ExceptionHandlerValidation.employeeDuplicateHandler(ex);
                 throw new DuplicateRecordException(exceptionType);
             }
-        }else{
-            log.info("Inside insert"+employee.getEmployeeId());
+        } else {
+            log.info("Inside insert" + employee.getEmployeeId());
             employeeRepository.save(employee);
         }
         //    employeeRepository.save(employee);
@@ -411,7 +443,7 @@ public class EmployeeService {
         String[] possibleRoles = StringUtils.split(employeeCsvDto.getPossibleRole(), ';');
         for (String roleName : possibleRoles) {
             if (rolesMap.containsKey(roleName)) {
-                Role empPossibleRoles= new Role();
+                Role empPossibleRoles = new Role();
                 empPossibleRoles.setRoleId(rolesMap.get(roleName).getRoleId());
                 employeePossibleRoles.add(empPossibleRoles);
             } else {
@@ -430,7 +462,7 @@ public class EmployeeService {
         String[] definiteRoles = StringUtils.split(employeeCsvDto.getDefineRole(), ';');
         for (String roleName : definiteRoles) {
             if (rolesMap.containsKey(roleName)) {
-                Role empDefiniteRoles= new Role();
+                Role empDefiniteRoles = new Role();
                 empDefiniteRoles.setRoleId(rolesMap.get(roleName).getRoleId());
                 employeeDefiniteRoles.add(empDefiniteRoles);
             } else {
@@ -449,7 +481,7 @@ public class EmployeeService {
         String[] tools = StringUtils.split(employeeCsvDto.getTools(), ';');
         for (String toolName : tools) {
             if (toolsMap.containsKey(toolName)) {
-                Tools employeeTool=new Tools();
+                Tools employeeTool = new Tools();
                 employeeTool.setToolId(toolsMap.get(toolName).getToolId());
                 employeeTool.setToolName(toolsMap.get(toolName).getToolName());
                 employeeTools.add(employeeTool);
@@ -480,7 +512,7 @@ public class EmployeeService {
         }
 
         if (!CollectionUtils.isEmpty(employeeSkills)) {
-            employeeEntity.setSkills(employeeSkills);
+//            employeeEntity.setSkills(employeeSkills);
         }
     }
 
@@ -661,7 +693,7 @@ public class EmployeeService {
         return departmentMap;
     }
 
-    private Map<String, Account> constructMasterAccountMap(){
+    private Map<String, Account> constructMasterAccountMap() {
         Map<String, Account> accountMap = new HashMap<>();
 
         List<Account> accounts = masterService.getAllAccount();
@@ -674,7 +706,7 @@ public class EmployeeService {
         return accountMap;
     }
 
-    private Map<String, Region> constructMasterRegionMap(){
+    private Map<String, Region> constructMasterRegionMap() {
         Map<String, Region> regionMap = new HashMap<>();
 
         List<Region> regions = masterService.getAllRegion();
@@ -687,7 +719,7 @@ public class EmployeeService {
         return regionMap;
     }
 
-    private Map<String, Location> constructMasterLocationMap(){
+    private Map<String, Location> constructMasterLocationMap() {
         Map<String, Location> locationMap = new HashMap<>();
 
         List<Location> locations = masterService.getAllLocation();
@@ -700,7 +732,7 @@ public class EmployeeService {
         return locationMap;
     }
 
-    private Map<String, Grade> constructMasterGradeMap(){
+    private Map<String, Grade> constructMasterGradeMap() {
         Map<String, Grade> gradeMap = new HashMap<>();
 
         List<Grade> grades = masterService.getAllGrade();
@@ -713,7 +745,7 @@ public class EmployeeService {
         return gradeMap;
     }
 
-    private Map<String, Designation> constructMasterDesignationMap(){
+    private Map<String, Designation> constructMasterDesignationMap() {
         Map<String, Designation> designationMap = new HashMap<>();
 
         List<Designation> designations = masterService.getAllDesignation();
@@ -726,7 +758,7 @@ public class EmployeeService {
         return designationMap;
     }
 
-    private Map<String, BillableStatus> constructMasterBillableStatusMap(){
+    private Map<String, BillableStatus> constructMasterBillableStatusMap() {
         Map<String, BillableStatus> billableStatusMap = new HashMap<>();
 
         List<BillableStatus> listOfbillableStatus = masterService.getAllBillableStatus();
@@ -739,7 +771,7 @@ public class EmployeeService {
         return billableStatusMap;
     }
 
-    private Map<String, ServiceLine> constructMasterServiceLineMap(){
+    private Map<String, ServiceLine> constructMasterServiceLineMap() {
         Map<String, ServiceLine> serviceLineMap = new HashMap<>();
 
         List<ServiceLine> listOfServiceLine = masterService.getAllServiceLine();
@@ -752,7 +784,7 @@ public class EmployeeService {
         return serviceLineMap;
     }
 
-    private Map<String, ProjectTagging> constructMasterProjectTaggingMap(){
+    private Map<String, ProjectTagging> constructMasterProjectTaggingMap() {
         Map<String, ProjectTagging> projectTaggingMap = new HashMap<>();
 
         List<ProjectTagging> listOfProjectTagging = masterService.getAllProjectTagging();
@@ -765,7 +797,7 @@ public class EmployeeService {
         return projectTaggingMap;
     }
 
-    private Map<String, Academics> constructMasterAcademicsMap(){
+    private Map<String, Academics> constructMasterAcademicsMap() {
         Map<String, Academics> academicsMap = new HashMap<>();
 
         List<Academics> listOfAcademics = masterService.getAllAcademics();
@@ -778,7 +810,7 @@ public class EmployeeService {
         return academicsMap;
     }
 
-    private Map<String, Project> constructMasterProjectMap(){
+    private Map<String, Project> constructMasterProjectMap() {
         Map<String, Project> projectMap = new HashMap<>();
 
         //List<Project> listOfProjects = masterService.getAllProject();
@@ -791,7 +823,7 @@ public class EmployeeService {
         return projectMap;
     }
 
-    private Map<String, Skill> constructMasterSkillsMap(){
+    private Map<String, Skill> constructMasterSkillsMap() {
         Map<String, Skill> skillMap = new HashMap<>();
 
         List<Skill> listOfskills = masterService.getAllSkill();
@@ -804,7 +836,7 @@ public class EmployeeService {
         return skillMap;
     }
 
-    private Map<String, Tools> constructMasterToolsMap(){
+    private Map<String, Tools> constructMasterToolsMap() {
         Map<String, Tools> toolsMap = new HashMap<>();
 
         List<Tools> listOfTools = masterService.getAllTools();
@@ -817,7 +849,7 @@ public class EmployeeService {
         return toolsMap;
     }
 
-    private Map<String, Role> constructMasterRolesMap(){
+    private Map<String, Role> constructMasterRolesMap() {
         Map<String, Role> rolesMap = new HashMap<>();
 
         List<Role> listOfRoles = masterService.getAllRole();
@@ -857,6 +889,24 @@ public class EmployeeService {
         return employee.getCvDocument();
 
 
+    }
+
+    public List<Employee> getEmployeeByProject(Long projectId) {
+        Optional<Project> pro = projectRepository.findById(projectId);
+        Project proEntity = pro.get();
+        return employeeRepository.findAll(new Specification<Employee>() {
+            @Override
+            public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> predicates = new ArrayList<>();
+
+                if (proEntity != null) {
+                    Join<Employee, Project> phoneJoin = root.join("projects");
+                    predicates.add(phoneJoin.in(proEntity));
+                }
+                log.info("Search filter Size :" + predicates.size());
+                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+            }
+        });
     }
 
 }
