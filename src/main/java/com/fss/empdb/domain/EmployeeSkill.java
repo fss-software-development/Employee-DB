@@ -1,13 +1,12 @@
 package com.fss.empdb.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -21,13 +20,15 @@ public class EmployeeSkill implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "EMPLOYEE_DEFINITE_ROLE_SQID")
+	@Column(name = "EMPLOYEE_SKILL_SQID")
 	private Long employeeSkillSqId;
-	
+
+	//@Getter(AccessLevel.NONE)
 	@ManyToOne
 	@JoinColumn(name = "EMPLOYEE_SQID")
 	private Employee employee;
-	
+
+	//@Getter(AccessLevel.NONE)
 	@ManyToOne
 	@JoinColumn(name = "SKILL_ID")
 	private Skill skill;

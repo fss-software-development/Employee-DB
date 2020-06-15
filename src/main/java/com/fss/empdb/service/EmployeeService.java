@@ -318,7 +318,7 @@ public class EmployeeService {
                 empEntity.setBillableStatus(employee.getBillableStatus());
                 empEntity.setServiceLine(employee.getServiceLine());
                 empEntity.setActivityName(employee.getActivityName());
-                empEntity.setSkills(employee.getSkills());
+//                empEntity.setSkills(employee.getSkills());
                 empEntity.setExperienceGaps(employee.getExperienceGaps());
                 empEntity.setAcademics(employee.getAcademics());
                 empEntity.setProjectTagging(employee.getProjectTagging()); //  Change is required
@@ -483,9 +483,9 @@ public class EmployeeService {
             }
         }
 
-        if (!CollectionUtils.isEmpty(employeeSkills)) {
+        /*if (!CollectionUtils.isEmpty(employeeSkills)) {
             employeeEntity.setSkills(employeeSkills);
-        }
+        }*/
     }
 
     private void setEmployeeProjects(final Map<String, Project> projectsMap, final EmployeeCsvDto employeeCsvDto, Employee employeeEntity) throws ParseException {
