@@ -29,7 +29,7 @@ public class User  implements Serializable {
     @Column(name = "USER_ID")
     private String userId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_ROLE_ID")
     private UserRole userRole;
 

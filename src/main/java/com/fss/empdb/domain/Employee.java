@@ -111,6 +111,18 @@ public class Employee implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "PROJECT_ID")})
     private Collection<Project> projects;
 
+//    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+//    private Set<EmployeeProject> employeeProjects;
+
+    @OneToMany(mappedBy = "employee")
+    private Set<EmployeeSkill> skills;
+
+//    @ManyToMany
+//    @JoinTable(name = "employee_skill",
+//            joinColumns = {@JoinColumn(name = "EMPLOYEE_SQID")},
+//            inverseJoinColumns = {@JoinColumn(name = "SKILL_ID")})
+//    private Collection<Skill> skills;
+
     @ManyToMany
     @JoinTable(name = "employee_tools",
             joinColumns = {@JoinColumn(name = "EMPLOYEE_SQID")},

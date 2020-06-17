@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "user_permission")
 public class UserPermission {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_PERMISSION_ID")
     Long userPermissionId;
 

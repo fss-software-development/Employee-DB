@@ -40,7 +40,6 @@ public class CustomUserDetails implements UserDetails {
 
     private User user;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         log.info("getAuthorities ::--::");

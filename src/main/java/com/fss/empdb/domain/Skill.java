@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -37,4 +39,8 @@ public class Skill {
     @Temporal(TemporalType.DATE)
     @Column(name = "LAST_UPDATE_DATE", nullable = false)
     Date lastUpdateDate;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL)
+    private Set<EmployeeSkill> skills;
 }

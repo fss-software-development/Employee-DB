@@ -1,6 +1,7 @@
 package com.fss.empdb.config;
 
 import com.fss.empdb.filters.JwtRequestFilter;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.transaction.annotation.Transactional;
 
+@Log4j2
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -31,6 +33,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        log.info("Auth test :" + auth);
         auth.userDetailsService(customUserDetailsService);
     }
 
@@ -57,7 +61,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder encodePWD(){
+    public PasswordEncoder encodePWD() {
         return NoOpPasswordEncoder.getInstance();
     }
 
