@@ -26,6 +26,9 @@ public class ProjectService {
     @Autowired
     ProjectRepository projectRepository;
 
+    @Autowired
+    StatusRepository statusRepository;
+
 
     public List<Project> allProject() {
         return projectRepository.findAll();
@@ -90,6 +93,9 @@ public class ProjectService {
 
     public List<Project> projectsBySearch(ProjectSearchCriteria proj) {
 
+        Optional<Status> st = statusRepository.findById(Long.valueOf(6));
+        Status statusEntity = st.get();
+
         log.info("Project  " + proj);
         return projectRepository.findAll(new Specification<Project>() {
             @Override
@@ -123,6 +129,10 @@ public class ProjectService {
                     Join<Project, Status> phoneJoin = root.join("status");
                     predicates.add(phoneJoin.in(proj.getStatus()));
                 }
+
+                Join<Project, Status> phoneJoin = root.join("status");
+                Predicate status =phoneJoin.in(statusEntity).not();
+                predicates.add(status);
 
                 log.info("Search filter Size :" + predicates.size());
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));

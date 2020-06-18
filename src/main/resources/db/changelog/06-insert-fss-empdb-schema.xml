@@ -526,5 +526,16 @@
         </sql>
     </changeSet>
 
+    <changeSet id="077" author="Rakesh">
+        <sql dbms="mysql" splitStatements="true" stripComments="true">
+            <![CDATA[
+             INSERT INTO employee_db.status (STATUS_ID,STATUS_NAME) VALUES ('6', 'INACTIVE');
+            ]]>
+        </sql>
+    </changeSet>
+
+
+
+
 
 </databaseChangeLog>
